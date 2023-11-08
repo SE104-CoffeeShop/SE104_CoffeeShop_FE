@@ -29,6 +29,8 @@
     "rules": {
         "no-console": "warn",
         "no-eval": "error",
+        "no-useless-return": "off",
+        "jsx-a11y/label-has-associated-control": "off",
         "import/first": "off",
         "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
         "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],

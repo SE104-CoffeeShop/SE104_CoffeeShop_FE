@@ -8,7 +8,11 @@ module.exports = withMT({
             sans: ['Inter', 'sans-serif'],
             serif: ['Noto Serif', 'serif'],
         },
-        extend: {},
+        extend: {
+            backgroundImage: {
+                'background-image': "url('assets/images/background.jpg')",
+            },
+        },
     },
     plugins: [],
 });
