@@ -5,13 +5,14 @@ import reportWebVitals from './reportWebVitals';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 import AdminLayout from './layout/AdminLayout/AdminLayout';
+import DashboardPage from './pages/AdminPage/DashboardPage/DashboardPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <React.StrictMode>
         {/* <LoginPage /> */}
         {/* <SignupPage /> */}
-        <AdminLayout />
+        <DashboardPage />
     </React.StrictMode>,
 );
 

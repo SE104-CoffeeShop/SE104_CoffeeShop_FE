@@ -3,12 +3,16 @@ import Header from '../../components/Admin/Header/Header';
 import NavBar from '../../components/Admin/NavBar/NavBar';
 import Loading from '../../components/Loading/Loading';
 
-export default function AdminLayout() {
+interface AdminLayoutProps {
+    children: React.ReactNode;
+}
+
+export default function AdminLayout({ children }: AdminLayoutProps) {
     return (
-        <div className="flex h-screen w-full flex-col items-center justify-start bg-[#F2F3F3] pb-[1rem] pt-[0.88rem]">
+        <div className="relative flex min-h-screen w-full flex-col items-center justify-start overflow-scroll bg-[#F2F3F3]">
             <Header />
             <NavBar />
-            <Loading />
+            <div className="flex h-full w-full flex-col items-center justify-start">{children}</div>
         </div>
     );
 }
