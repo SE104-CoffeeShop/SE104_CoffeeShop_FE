@@ -1,10 +1,11 @@
 import React from 'react';
 import LoginForm from '../../components/LoginForm/LoginForm';
+import LoginLayout from '../../layout/LoginLayout/LoginLayout';
 
 export default function LoginPage() {
     return (
-        <div className="flex h-screen w-full items-center justify-center bg-background-image bg-cover bg-center bg-no-repeat ">
+        <LoginLayout>
             <LoginForm />
-        </div>
+        </LoginLayout>
     );
 }
