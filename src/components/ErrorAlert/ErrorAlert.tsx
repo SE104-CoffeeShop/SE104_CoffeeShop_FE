@@ -17,7 +17,8 @@ export function ErrorIcon() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="#ffffff"
-            className="h-6 w-6">
+            className="h-6 w-6"
+        >
             <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -34,7 +35,8 @@ export function ErrorAlert({ message, close, className, onClose }: ErrorAlertPro
             color="red"
             icon={<ErrorIcon />}
             onClose={() => onClose(true)}
-            className={className}>
+            className={className}
+        >
             {message}
         </Alert>
     );

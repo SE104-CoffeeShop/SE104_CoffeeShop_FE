@@ -5,7 +5,6 @@
     "singleQuote": true,
     "trailingComma": "all",
     "bracketSpacing": true,
-    "jsxBracketSameLine": true,
     "endOfLine": "auto",
     "plugins": ["prettier-plugin-tailwindcss"],
     "tailWindConfig": "./tailwind.config.js"

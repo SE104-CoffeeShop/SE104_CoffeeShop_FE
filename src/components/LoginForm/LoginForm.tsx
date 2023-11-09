@@ -36,11 +36,15 @@ export default function LoginForm() {
     }, [close, errorMessage]);
     // Update value for each input
     const handleChangePhone = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPhone(event.target.value);
+        const input = event.target.value;
+        const sanitizedInput = input.replace(/\D/g, ''); // Remove non-digit characters
+        const truncatedInput = sanitizedInput.slice(0, 10);
+        setPhone(truncatedInput);
     };
     const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
     };
+    // TODO: Handle login
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // If not input enough field, show error
@@ -69,7 +73,8 @@ export default function LoginForm() {
                     <div className="mt-[0.81rem] flex flex-col items-start justify-start">
                         <label
                             htmlFor="email"
-                            className="select-none font-sans text-[1rem] font-medium text-[#212B36]">
+                            className="select-none font-sans text-[1rem] font-medium text-[#212B36]"
+                        >
                             Tên đăng nhập
                         </label>
                         <div className="relative w-full">
@@ -90,7 +95,8 @@ export default function LoginForm() {
                                     viewBox="0 0 24 24"
                                     strokeWidth={1.5}
                                     stroke="#ef4444"
-                                    className="absolute right-0 top-5 mr-[1rem] h-6 w-6">
+                                    className="absolute right-0 top-5 mr-[1rem] h-6 w-6"
+                                >
                                     <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
@@ -103,7 +109,8 @@ export default function LoginForm() {
                     <div className="mt-[0.81rem] flex flex-col items-start justify-start">
                         <label
                             htmlFor="password"
-                            className="select-none font-sans text-[1rem] font-medium text-[#212B36]">
+                            className="select-none font-sans text-[1rem] font-medium text-[#212B36]"
+                        >
                             Mật khẩu
                         </label>
                         <div className="relative w-full">
@@ -124,7 +131,8 @@ export default function LoginForm() {
                                     viewBox="0 0 24 24"
                                     strokeWidth={1.5}
                                     stroke="#ef4444"
-                                    className="absolute right-0 top-5 mr-[1rem] h-6 w-6">
+                                    className="absolute right-0 top-5 mr-[1rem] h-6 w-6"
+                                >
                                     <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
@@ -142,7 +150,8 @@ export default function LoginForm() {
                     <div className="mt-[1.62rem] flex items-center justify-center">
                         <button
                             type="submit"
-                            className="h-[3rem] w-[8.6875rem] rounded-[0.375rem] bg-[#3758F9] font-sans text-[1rem] font-medium text-white">
+                            className="h-[3rem] w-[8.6875rem] rounded-[0.375rem] bg-[#3758F9] font-sans text-[1rem] font-medium text-white"
+                        >
                             Đăng nhập
                         </button>
                     </div>
