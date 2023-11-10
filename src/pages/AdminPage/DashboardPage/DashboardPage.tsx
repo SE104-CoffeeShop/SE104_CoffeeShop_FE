@@ -1,6 +1,5 @@
 import React from 'react';
 import AdminLayout from '../../../layout/AdminLayout/AdminLayout';
-import Loading from '../../../components/Loading/Loading';
 import TodayResult from '../../../components/Admin/TodayResult/TodayResult';
 
 export default function DashboardPage() {
