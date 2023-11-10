@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { set } from 'react-hook-form';
 import logo from '../../assets/images/logo_form.png';
 import CheckBoxAgree from '../CheckBoxAgree/CheckBoxAgree';
 import { ErrorAlert } from '../ErrorAlert/ErrorAlert';
@@ -151,7 +150,7 @@ export default function SignupForm() {
                     message={errorMessage}
                     close={close}
                     onClose={setClose}
-                    className="absolute right-0 top-0 mr-[1.25rem] mt-[1.25rem] h-[3.75rem] w-[30.5625rem] items-center"
+                    className="absolute right-0 top-0 mr-[1.25rem] mt-[1.25rem] h-[3.75rem] w-[30.5625rem] items-center "
                 />
             )}
             <div className="ml-[29.06rem] flex h-full w-1/2 flex-col items-center justify-start bg-white pb-[15rem] pl-[11.44rem] pr-[11.44rem] pt-[10.38rem]">
