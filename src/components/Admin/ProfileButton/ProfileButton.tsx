@@ -6,7 +6,7 @@ interface ProfileButtonProps {
 
 export default function ProfileButton({ username }: ProfileButtonProps) {
     return (
-        <div className="flex h-[2.6875rem] w-[11.125rem] cursor-pointer flex-row items-center justify-between rounded-[0.375rem] border-[1px] border-black px-[1rem] py-[0.75rem] hover:bg-gray-300">
+        <div className="flex h-[2.6875rem] w-[11.125rem] cursor-pointer flex-row items-center justify-between rounded-md border-[1px] border-black px-[1rem] py-[0.75rem] hover:bg-gray-300">
             <h1 className="select-none font-sans text-[1rem] font-bold">{username}</h1>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
