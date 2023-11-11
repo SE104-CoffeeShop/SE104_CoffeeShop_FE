@@ -84,7 +84,7 @@ export default function LoginForm() {
                                 maxLength={10}
                                 value={phone}
                                 onChange={handleChangePhone}
-                                className={`mt-[0.63rem] h-[2.875rem] w-[21.875rem] rounded-[0.375rem] border-[1px] ${
+                                className={`mt-[0.63rem] h-[2.875rem] w-[21.875rem] rounded-md border-[1px] ${
                                     hasError ? 'border-red-500' : 'border-[#DFE4EA]'
                                 } py-[0.75rem] pl-[1.25rem] pr-[1rem]`}
                             />
@@ -120,7 +120,7 @@ export default function LoginForm() {
                                 maxLength={50}
                                 value={password}
                                 onChange={handleChangePassword}
-                                className={`mt-[0.63rem] h-[2.875rem] w-[21.875rem] rounded-[0.375rem] border-[1px] ${
+                                className={`mt-[0.63rem] h-[2.875rem] w-[21.875rem] rounded-md border-[1px] ${
                                     hasError ? 'border-red-500' : 'border-[#DFE4EA]'
                                 } py-[0.75rem] pl-[1.25rem] pr-[1rem]`}
                             />
@@ -150,7 +150,7 @@ export default function LoginForm() {
                     <div className="mt-[1.62rem] flex items-center justify-center">
                         <button
                             type="submit"
-                            className="h-[3rem] w-[8.6875rem] rounded-[0.375rem] bg-[#3758F9] font-sans text-[1rem] font-medium text-white"
+                            className="h-[3rem] w-[8.6875rem] rounded-md bg-[#3758F9] font-sans text-[1rem] font-medium text-white"
                         >
                             Đăng nhập
                         </button>

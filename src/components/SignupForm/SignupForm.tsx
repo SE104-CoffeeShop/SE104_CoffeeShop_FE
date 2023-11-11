@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { set } from 'react-hook-form';
 import logo from '../../assets/images/logo_form.png';
 import CheckBoxAgree from '../CheckBoxAgree/CheckBoxAgree';
 import { ErrorAlert } from '../ErrorAlert/ErrorAlert';
@@ -151,7 +150,7 @@ export default function SignupForm() {
                     message={errorMessage}
                     close={close}
                     onClose={setClose}
-                    className="absolute right-0 top-0 mr-[1.25rem] mt-[1.25rem] h-[3.75rem] w-[30.5625rem] items-center"
+                    className="absolute right-0 top-0 mr-[1.25rem] mt-[1.25rem] h-[3.75rem] w-[30.5625rem] items-center "
                 />
             )}
             <div className="ml-[29.06rem] flex h-full w-1/2 flex-col items-center justify-start bg-white pb-[15rem] pl-[11.44rem] pr-[11.44rem] pt-[10.38rem]">
@@ -167,7 +166,7 @@ export default function SignupForm() {
                         <input
                             type="tel"
                             id="phone"
-                            className={`mt-[0.63rem] h-[2.5rem] w-[28.125rem] rounded-[0.375rem] border-[1px] ${
+                            className={`mt-[0.63rem] h-[2.5rem] w-[28.125rem] rounded-md border-[1px] ${
                                 phoneError === true ? 'border-red-500' : 'border-[#DFE4EA]'
                             } py-[0.75rem] pl-[1.25rem] pr-[1rem] font-sans placeholder:text-[#9CA3AF] `}
                             maxLength={10}
@@ -186,7 +185,7 @@ export default function SignupForm() {
                         <input
                             type="text"
                             id="email"
-                            className={`mt-[0.63rem] h-[2.5rem]  w-[28.125rem] rounded-[0.375rem] border-[1px] ${
+                            className={`mt-[0.63rem] h-[2.5rem]  w-[28.125rem] rounded-md border-[1px] ${
                                 emailError === true ? 'border-red-500' : 'border-[#DFE4EA]'
                             } py-[0.75rem] pl-[1.25rem] pr-[1rem] font-sans placeholder:text-[#9CA3AF]`}
                             maxLength={255}
@@ -205,7 +204,7 @@ export default function SignupForm() {
                         <input
                             type="password"
                             id="password"
-                            className={`mt-[0.63rem] h-[2.5rem] w-[28.125rem]  rounded-[0.375rem] border-[1px] ${
+                            className={`mt-[0.63rem] h-[2.5rem] w-[28.125rem]  rounded-md border-[1px] ${
                                 passwordError === true ? 'border-red-500' : 'border-[#DFE4EA]'
                             } py-[0.75rem] pl-[1.25rem] pr-[1rem] font-sans placeholder:text-[#9CA3AF]`}
                             maxLength={50}
@@ -220,7 +219,7 @@ export default function SignupForm() {
                     <div className="mt-[1.66rem] flex w-full flex-col items-center justify-center">
                         <button
                             type="submit"
-                            className="h-[3rem] w-[9.75rem] rounded-[0.375rem] bg-[#3758F9] font-sans text-[1rem] font-medium text-white"
+                            className="h-[3rem] w-[9.75rem] rounded-md bg-[#3758F9] font-sans text-[1rem] font-medium text-white"
                         >
                             Đăng nhập
                         </button>

@@ -1,16 +1,13 @@
 import React from 'react';
 import Header from '../../components/Admin/Header/Header';
-import NavBar from '../../components/Admin/NavBar/NavBar';
 
-interface AdminLayoutProps {
+interface ErrorLayoutProps {
     children: React.ReactNode;
 }
-
-export default function AdminLayout({ children }: AdminLayoutProps) {
+export default function ErrorLayout({ children }: ErrorLayoutProps) {
     return (
-        <div className="relative flex min-h-screen w-full flex-col items-center justify-start overflow-scroll bg-[#F2F3F3]">
+        <div className="relative flex h-screen w-full flex-col items-center justify-start overflow-scroll bg-[#F2F3F3]">
             <Header />
-            <NavBar />
             <div className="flex h-full w-full flex-col items-center justify-start pl-[4.13rem] pr-[4.19rem] pt-[1.87rem]">
                 {children}
             </div>
