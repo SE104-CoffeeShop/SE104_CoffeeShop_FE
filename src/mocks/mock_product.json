@@ -1,0 +1,695 @@
+[
+    {
+        "product_code": "SP740",
+        "product_name": "Trà xanh",
+        "product_type": "Đồ uống",
+        "product_price": 10394,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP873",
+        "product_name": "Trà sữa trân châu",
+        "product_type": "Đồ ăn",
+        "product_price": 14576,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP334",
+        "product_name": "Cà phê sữa",
+        "product_type": "Khác",
+        "product_price": 29363,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP414",
+        "product_name": "Trà ô long",
+        "product_type": "Khác",
+        "product_price": 12819,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP116",
+        "product_name": "Trà sữa trân châu",
+        "product_type": "Đồ uống",
+        "product_price": 29011,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP026",
+        "product_name": "Trà chanh",
+        "product_type": "Khác",
+        "product_price": 44583,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP317",
+        "product_name": "Cà phê đen",
+        "product_type": "Đồ ăn",
+        "product_price": 30378,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP727",
+        "product_name": "Trà chanh",
+        "product_type": "Đồ uống",
+        "product_price": 43520,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP136",
+        "product_name": "Cà phê",
+        "product_type": "Đồ ăn",
+        "product_price": 20862,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP298",
+        "product_name": "Bánh mì sữa",
+        "product_type": "Khác",
+        "product_price": 28648,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP962",
+        "product_name": "Bánh mì sữa",
+        "product_type": "Đồ uống",
+        "product_price": 23635,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP598",
+        "product_name": "Cà phê đen",
+        "product_type": "Đồ uống",
+        "product_price": 36200,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP836",
+        "product_name": "Bánh mì sữa",
+        "product_type": "Khác",
+        "product_price": 35410,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP002",
+        "product_name": "Trà ô long",
+        "product_type": "Khác",
+        "product_price": 17393,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP679",
+        "product_name": "Cà phê",
+        "product_type": "Đồ uống",
+        "product_price": 41272,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP889",
+        "product_name": "Bạc xỉu",
+        "product_type": "Đồ ăn",
+        "product_price": 47135,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP957",
+        "product_name": "Trà chanh",
+        "product_type": "Khác",
+        "product_price": 43055,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP912",
+        "product_name": "Trà xanh",
+        "product_type": "Đồ ăn",
+        "product_price": 38355,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP610",
+        "product_name": "Trà sữa trân châu",
+        "product_type": "Khác",
+        "product_price": 29589,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP926",
+        "product_name": "Cà phê sữa",
+        "product_type": "Đồ uống",
+        "product_price": 44190,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP566",
+        "product_name": "Trà sữa",
+        "product_type": "Đồ uống",
+        "product_price": 33999,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP759",
+        "product_name": "Cà phê đen",
+        "product_type": "Khác",
+        "product_price": 30410,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP479",
+        "product_name": "Trà sữa trân châu đường đen",
+        "product_type": "Đồ ăn",
+        "product_price": 10936,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP151",
+        "product_name": "Cà phê sữa",
+        "product_type": "Khác",
+        "product_price": 30426,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP674",
+        "product_name": "Bánh mì sữa",
+        "product_type": "Đồ ăn",
+        "product_price": 15888,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP491",
+        "product_name": "Trà sữa trân châu",
+        "product_type": "Đồ uống",
+        "product_price": 18978,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP622",
+        "product_name": "Trà đào",
+        "product_type": "Khác",
+        "product_price": 33575,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP788",
+        "product_name": "Trà sữa",
+        "product_type": "Khác",
+        "product_price": 36776,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP110",
+        "product_name": "Cà phê đen",
+        "product_type": "Đồ uống",
+        "product_price": 35786,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP729",
+        "product_name": "Cà phê",
+        "product_type": "Đồ ăn",
+        "product_price": 21719,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP200",
+        "product_name": "Bánh mì sữa",
+        "product_type": "Đồ ăn",
+        "product_price": 46336,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP849",
+        "product_name": "Trà sữa",
+        "product_type": "Khác",
+        "product_price": 45905,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP817",
+        "product_name": "Trà xanh",
+        "product_type": "Khác",
+        "product_price": 41559,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP822",
+        "product_name": "Trà chanh",
+        "product_type": "Đồ uống",
+        "product_price": 22795,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP151",
+        "product_name": "Cà phê",
+        "product_type": "Khác",
+        "product_price": 32565,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP772",
+        "product_name": "Cà phê đen",
+        "product_type": "Khác",
+        "product_price": 46543,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP893",
+        "product_name": "Trà chanh",
+        "product_type": "Đồ uống",
+        "product_price": 23285,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP994",
+        "product_name": "Cà phê",
+        "product_type": "Đồ uống",
+        "product_price": 48074,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP816",
+        "product_name": "Cà phê sữa",
+        "product_type": "Đồ ăn",
+        "product_price": 11628,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP811",
+        "product_name": "Cà phê đen",
+        "product_type": "Đồ uống",
+        "product_price": 40250,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP198",
+        "product_name": "Cà phê đen",
+        "product_type": "Đồ uống",
+        "product_price": 29171,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP600",
+        "product_name": "Trà sữa trân châu đường đen",
+        "product_type": "Khác",
+        "product_price": 49314,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP302",
+        "product_name": "Trà chanh",
+        "product_type": "Đồ ăn",
+        "product_price": 49295,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP405",
+        "product_name": "Bạc xỉu",
+        "product_type": "Đồ uống",
+        "product_price": 37097,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP711",
+        "product_name": "Cà phê đen",
+        "product_type": "Đồ uống",
+        "product_price": 21033,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP834",
+        "product_name": "Trà sữa",
+        "product_type": "Đồ ăn",
+        "product_price": 44639,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP210",
+        "product_name": "Cà phê",
+        "product_type": "Đồ ăn",
+        "product_price": 30759,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP646",
+        "product_name": "Cà phê",
+        "product_type": "Đồ uống",
+        "product_price": 36666,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP108",
+        "product_name": "Trà sữa",
+        "product_type": "Đồ ăn",
+        "product_price": 42347,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP693",
+        "product_name": "Trà đào",
+        "product_type": "Khác",
+        "product_price": 46307,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP854",
+        "product_name": "Trà xanh",
+        "product_type": "Đồ ăn",
+        "product_price": 10145,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP859",
+        "product_name": "Trà sữa trân châu",
+        "product_type": "Đồ uống",
+        "product_price": 32016,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP231",
+        "product_name": "Trà sữa trân châu",
+        "product_type": "Khác",
+        "product_price": 46425,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP612",
+        "product_name": "Trà sữa trân châu đường đen",
+        "product_type": "Đồ ăn",
+        "product_price": 21591,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP691",
+        "product_name": "Cà phê",
+        "product_type": "Đồ ăn",
+        "product_price": 16739,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP542",
+        "product_name": "Cà phê sữa",
+        "product_type": "Khác",
+        "product_price": 29941,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP570",
+        "product_name": "Trà sữa",
+        "product_type": "Đồ uống",
+        "product_price": 27868,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP626",
+        "product_name": "Trà sữa trân châu",
+        "product_type": "Đồ uống",
+        "product_price": 35193,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP451",
+        "product_name": "Cà phê đen",
+        "product_type": "Đồ ăn",
+        "product_price": 42603,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP038",
+        "product_name": "Bạc xỉu",
+        "product_type": "Khác",
+        "product_price": 22170,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP874",
+        "product_name": "Trà đào",
+        "product_type": "Đồ uống",
+        "product_price": 48251,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP858",
+        "product_name": "Bánh mì sữa",
+        "product_type": "Đồ uống",
+        "product_price": 38645,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP328",
+        "product_name": "Trà sữa trân châu đường đen",
+        "product_type": "Đồ uống",
+        "product_price": 18444,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP708",
+        "product_name": "Trà ô long",
+        "product_type": "Đồ ăn",
+        "product_price": 15406,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP306",
+        "product_name": "Trà xanh",
+        "product_type": "Khác",
+        "product_price": 33665,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP161",
+        "product_name": "Bánh mì sữa",
+        "product_type": "Đồ ăn",
+        "product_price": 38094,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP906",
+        "product_name": "Trà xanh",
+        "product_type": "Đồ ăn",
+        "product_price": 31678,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP962",
+        "product_name": "Trà xanh",
+        "product_type": "Đồ ăn",
+        "product_price": 21729,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP474",
+        "product_name": "Cà phê",
+        "product_type": "Đồ uống",
+        "product_price": 33771,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP671",
+        "product_name": "Trà chanh",
+        "product_type": "Khác",
+        "product_price": 11493,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP185",
+        "product_name": "Trà sữa",
+        "product_type": "Đồ ăn",
+        "product_price": 20747,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP841",
+        "product_name": "Bánh mì sữa",
+        "product_type": "Đồ uống",
+        "product_price": 36153,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP970",
+        "product_name": "Trà ô long",
+        "product_type": "Đồ ăn",
+        "product_price": 45847,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP718",
+        "product_name": "Trà sữa",
+        "product_type": "Đồ uống",
+        "product_price": 44271,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP338",
+        "product_name": "Trà đào",
+        "product_type": "Đồ ăn",
+        "product_price": 16797,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP825",
+        "product_name": "Trà chanh",
+        "product_type": "Khác",
+        "product_price": 32512,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP024",
+        "product_name": "Bánh mì sữa",
+        "product_type": "Đồ ăn",
+        "product_price": 37292,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP349",
+        "product_name": "Trà đào",
+        "product_type": "Khác",
+        "product_price": 27487,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP019",
+        "product_name": "Trà chanh",
+        "product_type": "Đồ uống",
+        "product_price": 33738,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP532",
+        "product_name": "Trà sữa trân châu",
+        "product_type": "Đồ ăn",
+        "product_price": 31189,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP464",
+        "product_name": "Cà phê đen",
+        "product_type": "Đồ ăn",
+        "product_price": 20993,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP578",
+        "product_name": "Trà chanh",
+        "product_type": "Đồ ăn",
+        "product_price": 25555,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP904",
+        "product_name": "Trà đào",
+        "product_type": "Đồ ăn",
+        "product_price": 47002,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP819",
+        "product_name": "Trà đào",
+        "product_type": "Đồ uống",
+        "product_price": 44912,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP843",
+        "product_name": "Trà ô long",
+        "product_type": "Đồ ăn",
+        "product_price": 43643,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP725",
+        "product_name": "Trà đào",
+        "product_type": "Khác",
+        "product_price": 17233,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP978",
+        "product_name": "Trà sữa trân châu đường đen",
+        "product_type": "Đồ ăn",
+        "product_price": 43843,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP662",
+        "product_name": "Trà xanh",
+        "product_type": "Đồ uống",
+        "product_price": 36296,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP541",
+        "product_name": "Cà phê sữa",
+        "product_type": "Khác",
+        "product_price": 47692,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP614",
+        "product_name": "Trà sữa trân châu",
+        "product_type": "Đồ ăn",
+        "product_price": 48416,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP275",
+        "product_name": "Cà phê sữa",
+        "product_type": "Khác",
+        "product_price": 12609,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP286",
+        "product_name": "Cà phê sữa",
+        "product_type": "Đồ uống",
+        "product_price": 22661,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP514",
+        "product_name": "Cà phê",
+        "product_type": "Đồ ăn",
+        "product_price": 43237,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP741",
+        "product_name": "Trà xanh",
+        "product_type": "Khác",
+        "product_price": 47837,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP340",
+        "product_name": "Trà đào",
+        "product_type": "Khác",
+        "product_price": 40979,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP487",
+        "product_name": "Trà sữa trân châu",
+        "product_type": "Khác",
+        "product_price": 19278,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP129",
+        "product_name": "Trà xanh",
+        "product_type": "Đồ uống",
+        "product_price": 28258,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP341",
+        "product_name": "Trà chanh",
+        "product_type": "Đồ ăn",
+        "product_price": 36879,
+        "product_img": "https://picsum.photos/200/200"
+    },
+    {
+        "product_code": "SP749",
+        "product_name": "Trà sữa",
+        "product_type": "Đồ uống",
+        "product_price": 32502,
+        "product_img": "https://picsum.photos/200/200"
+    }
+]
