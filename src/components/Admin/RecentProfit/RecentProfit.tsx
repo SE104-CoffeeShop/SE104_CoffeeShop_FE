@@ -27,7 +27,15 @@ export const options = {
         },
         y: {
             beginAtZero: true,
-            max: 1000, // Adjust this based on your data range
+            max: 1000,
+            ticks: {
+                beginAtZero: true,
+                stepSize: 100,
+                callback: (value: any) => {
+                    if (value < 1000) return `${value} k`;
+                    return `${value / 100} M`;
+                },
+            },
         },
     },
 };
@@ -37,7 +45,15 @@ const generateLastSevenDays = () => {
     const lastSevenDays = Array.from({ length: 7 }, (_, index) => {
         const pastDate = new Date(today);
         pastDate.setDate(today.getDate() - index);
-        return pastDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        // get date in format dd/mm/yyyy
+        const formattedDate = pastDate.toLocaleDateString('en-US', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        });
+        // convert date from mm/dd/yyyy to format dd/mm/yyyy
+        const [month, day, year] = formattedDate.split('/');
+        return `${day}/${month}/${year}`;
     });
 
     return lastSevenDays.reverse();
