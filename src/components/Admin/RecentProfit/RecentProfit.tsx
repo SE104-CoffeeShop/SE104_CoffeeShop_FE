@@ -16,7 +16,7 @@ export const options = {
     responsive: true,
     plugins: {
         legend: {
-            position: 'right' as const,
+            position: 'bottom' as const,
         },
     },
     scales: {
@@ -39,6 +39,7 @@ const generateLastSevenDays = () => {
         pastDate.setDate(today.getDate() - index);
         return pastDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     });
+
     return lastSevenDays.reverse();
 };
 
@@ -53,18 +54,18 @@ export const data = {
     labels,
     datasets: [
         {
-            label: 'Chi nhánh trung tâm',
+            label: 'Doanh thu',
             data: generateDataForLastSevenDays(),
-            backgroundColor: 'blue',
+            backgroundColor: '#3758F9',
         },
     ],
 };
 
 export function RecentProfit() {
     return (
-        <div className="mt-[0.89rem] flex h-[37.25rem] w-full flex-col justify-start rounded-md bg-white pb-[2.38rem] pl-[3.63rem] pr-[3.85rem] pt-[1.63rem] drop-shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
+        <div className="mt-[0.89rem] flex h-fit w-full flex-col justify-start rounded-md bg-white pb-[1.56rem] pl-[4.56rem] pr-[5.06rem] pt-[1.63rem] drop-shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
             <h1 className="select-none font-sans text-[1.5rem] font-bold">Doanh thu 7 ngày qua</h1>
-            <Bar options={options} data={data} className="self-center" />
+            <Bar options={options} data={data} className="mt-[3.37rem] w-full self-center" />
         </div>
     );
 }
