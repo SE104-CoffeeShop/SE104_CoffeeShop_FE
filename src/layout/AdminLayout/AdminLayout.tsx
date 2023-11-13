@@ -9,7 +9,7 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children, className }: AdminLayoutProps) {
     return (
-        <div className="relative flex min-h-screen w-full flex-col items-center justify-start overflow-scroll bg-[#F2F3F3]">
+        <div className="min-w-screen relative flex min-h-screen flex-col items-center justify-start overflow-x-hidden bg-[#F2F3F3]">
             <Header />
             <NavBar />
             <div className={`flex h-full w-full  ${className}`}>{children}</div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import AdminLayout from '../../../layout/AdminLayout/AdminLayout';
 import TodayResult from '../../../components/Admin/TodayResult/TodayResult';
+import { RecentProfit } from '../../../components/Admin/RecentProfit/RecentProfit';
 
 export default function DashboardPage() {
     return (
@@ -14,6 +15,7 @@ export default function DashboardPage() {
                 customer={5}
                 yesterdayCustomer={3}
             />
+            <RecentProfit />
         </AdminLayout>
     );
 }

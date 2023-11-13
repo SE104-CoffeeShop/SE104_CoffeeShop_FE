@@ -50,7 +50,7 @@ export default function AdminLayout() {
         }
     }, []);
     return (
-        <div className="sticky flex h-[3.125rem] w-full flex-row items-center justify-center bg-[#3758F9] px-[16rem] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
+        <div className="sticky flex h-[3.125rem] w-screen flex-row items-center justify-center bg-[#3758F9] px-[16rem] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
             {NavBarItem.map((item) => (
                 <div
                     key={item.id}
