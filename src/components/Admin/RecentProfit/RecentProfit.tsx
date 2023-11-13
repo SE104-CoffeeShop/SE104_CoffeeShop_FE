@@ -73,6 +73,7 @@ export const data = {
             label: 'Doanh thu',
             data: generateDataForLastSevenDays(),
             backgroundColor: '#3758F9',
+            barThickness: 55,
         },
     ],
 };
@@ -81,7 +82,11 @@ export function RecentProfit() {
     return (
         <div className="mt-[0.89rem] flex h-fit w-full flex-col justify-start rounded-md bg-white pb-[1.56rem] pl-[4.56rem] pr-[5.06rem] pt-[1.63rem] drop-shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
             <h1 className="select-none font-sans text-[1.5rem] font-bold">Doanh thu 7 ngày qua</h1>
-            <Bar options={options} data={data} className="mt-[3.37rem] w-full self-center" />
+            <Bar
+                options={options}
+                data={data}
+                className="mt-[3.37rem] h-[26rem] w-[62.0625rem] self-center"
+            />
         </div>
     );
 }
