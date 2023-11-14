@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Product, getProducts } from '../../../api/productAPI';
+import SelectProduct from '../SelectProduct/SelectProduct';
+import SelectAllProduct from '../SelectProduct/SelectAllProduct';
 
-export default function ProductTable() {
+interface ProductTableProps {
+    products: Product[];
+}
+
+export default function ProductTable({ products }: ProductTableProps) {
     return (
         <div className="flex w-full flex-col">
             <div className="flex w-full flex-row items-center justify-between">
@@ -56,6 +63,73 @@ export default function ProductTable() {
                         </p>
                     </button>
                 </div>
+            </div>
+            {/* Product table */}
+            <div
+                className="relative mt-[0.94rem] w-full overflow-x-auto rounded-[0.625rem]
+shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
+            >
+                <table className="w-full text-left rtl:text-right">
+                    <thead className="h-[3.75rem] border-b border-[#EEE] bg-[#F9FAFB] font-sans text-[0.9375rem] font-normal text-[#111928]">
+                        <tr>
+                            <th
+                                scope="col"
+                                className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
+                            >
+                                <SelectAllProduct />
+                            </th>
+                            <th
+                                scope="col"
+                                className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
+                            >
+                                MÃ HÀNG HOÁ
+                            </th>
+                            <th
+                                scope="col"
+                                className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
+                            >
+                                TÊN HÀNG HOÁ
+                            </th>
+                            <th
+                                scope="col"
+                                className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
+                            >
+                                LOẠI THỰC ĐƠN
+                            </th>
+                            <th
+                                scope="col"
+                                className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
+                            >
+                                GIÁ BÁN
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {/* Product item */}
+                        {products.map((product) => (
+                            <tr
+                                key={product.product_code}
+                                className="h-[2.3125rem] cursor-pointer border-b border-[#EEE] bg-white hover:bg-gray-200"
+                            >
+                                <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
+                                    <SelectProduct productCode={product.product_code} />
+                                </td>
+                                <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
+                                    {product.product_code}
+                                </td>
+                                <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
+                                    {product.product_name}
+                                </td>
+                                <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
+                                    {product.product_type}
+                                </td>
+                                <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
+                                    {product.product_price}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
