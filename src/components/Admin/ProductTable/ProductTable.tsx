@@ -8,6 +8,10 @@ interface ProductTableProps {
 }
 
 export default function ProductTable({ products }: ProductTableProps) {
+    // Format product price to currency format: 1000000 => 1.000.000
+    const formatCurrency = (price: number) => {
+        return new Intl.NumberFormat('en-US').format(price);
+    };
     return (
         <div className="flex w-full flex-col">
             <div className="flex w-full flex-row items-center justify-between">
@@ -124,7 +128,7 @@ shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                                     {product.product_type}
                                 </td>
                                 <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
-                                    {product.product_price}
+                                    {formatCurrency(product.product_price)}
                                 </td>
                             </tr>
                         ))}

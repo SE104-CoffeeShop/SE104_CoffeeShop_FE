@@ -30,6 +30,23 @@ export default function ProductPage() {
     const fetchProducts = async () => {
         try {
             const productList: Product[] = await getProducts();
+            // Perform sort by product code
+            productList.sort((a, b) => {
+                // Remove all character before number in product code and convert to number
+                // Example: 'SP0001' => 001
+                // If have 0 in front of number, remove it
+                // Example: 001 => 1
+                const codeA = parseInt(a.product_code.slice(2).replace(/^0+/, ''), 10);
+                const codeB = parseInt(b.product_code.slice(2).replace(/^0+/, ''), 10);
+
+                if (codeA < codeB) {
+                    return -1;
+                }
+                if (codeA > codeB) {
+                    return 1;
+                }
+                return 0;
+            });
             dispatch(setProducts(productList));
             dispatch(setLoadingSuccess());
         } catch (error) {

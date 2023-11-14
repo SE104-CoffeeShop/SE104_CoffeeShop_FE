@@ -27,21 +27,18 @@ export default function SelectProduct({ productCode }: SelectProductProps) {
         } else {
             setChecked(false);
         }
-    }, [selectedProducts, productCode]);
+    }, [selectedProducts, checked]);
     return (
         <div className="inline-flex items-center">
             <label
                 className="relative flex cursor-pointer items-center rounded-full"
-                htmlFor="select-product"
+                htmlFor={`select-product-${productCode}`}
                 data-ripple-dark="true"
             >
                 <input
-                    id="select-product"
+                    id={`select-product-${productCode}`}
                     type="checkbox"
                     checked={checked}
-                    onChange={() => {
-                        setChecked(!checked);
-                    }}
                     onClick={() => {
                         setChecked(!checked);
                         if (checked) {
