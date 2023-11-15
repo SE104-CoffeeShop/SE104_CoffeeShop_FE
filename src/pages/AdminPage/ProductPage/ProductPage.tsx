@@ -1,11 +1,9 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { set } from 'react-hook-form';
+
 import {
     setProducts,
     setLoadingSuccess,
-    setFilterProductsCode,
-    setFilterProductsType,
     filterProducts,
 } from '../../../stores/slices/productSlice';
 import AdminLayout from '../../../layout/AdminLayout/AdminLayout';
@@ -17,8 +15,6 @@ import { Product, getProducts } from '../../../api/productAPI';
 import { RootState } from '../../../stores/store';
 
 export default function ProductPage() {
-    // State for product list
-    const products = useSelector((state: RootState) => state.product.products);
     // State for filter products
     const filterProductsList = useSelector((state: RootState) => filterProducts(state));
     // State for loading

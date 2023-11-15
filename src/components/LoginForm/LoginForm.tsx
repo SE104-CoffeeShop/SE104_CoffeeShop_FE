@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { set } from 'react-hook-form';
 import logo from '../../assets/images/logo_form.png';
 import { ErrorAlert } from '../ErrorAlert/ErrorAlert';
+import axiosClient from '../../utils/axiosClient';
+import { useAuth } from '../../provider/AuthProvider';
 
 export default function LoginForm() {
+    const { setUser, setToken } = useAuth();
+    const navigate = useNavigate();
     // State for each input
-    const [phone, setPhone] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [hasError, setHasError] = useState<boolean>(false);
     // State for show erorr popup when login fail
@@ -17,11 +23,7 @@ export default function LoginForm() {
             setHasError(false);
         }, 5000);
         return () => clearTimeout(timeout);
-    }, [phone, password, hasError]);
-    // Or disable show error when user is typing
-    useEffect(() => {
-        if (phone.length !== 0 && password.length !== 0 && hasError) setHasError(false);
-    }, [phone, password, hasError]);
+    }, [email, password, hasError]);
     // Timeout for error popup
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -35,27 +37,39 @@ export default function LoginForm() {
         if (close === true && errorMessage !== '') setErrorMessage('');
     }, [close, errorMessage]);
     // Update value for each input
-    const handleChangePhone = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const input = event.target.value;
-        const sanitizedInput = input.replace(/\D/g, ''); // Remove non-digit characters
-        const truncatedInput = sanitizedInput.slice(0, 10);
-        setPhone(truncatedInput);
+    const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
     };
     const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
     };
-    // TODO: Handle login
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // If not input enough field, show error
-        if (phone.length === 0 || password.length === 0) {
+        if (email.length === 0 || password.length === 0) {
             setHasError(true);
             setClose(false);
-            setErrorMessage('Vui lòng nhập đầy đủ thông tin');
+            setErrorMessage('Vui lòng nhập đầy đủ thông tin!');
             return;
         }
-        setClose(false);
-        setErrorMessage('Số điện thoại hoặc mật khẩu không đúng');
+        // If input enough field, call api
+        axiosClient
+            .post('/login', {
+                email,
+                password,
+            })
+            .then((res) => {
+                console.log(res.data);
+                setToken(res.data.token);
+                setUser(res.data.user);
+                navigate('/admin');
+            })
+            .catch((err) => {
+                console.log(err);
+                setHasError(true);
+                setClose(false);
+                setErrorMessage('Email hoặc mật khẩu không đúng!');
+            });
     };
     return (
         <>
@@ -79,11 +93,11 @@ export default function LoginForm() {
                         </label>
                         <div className="relative w-full">
                             <input
-                                type="tel"
-                                id="phone"
-                                maxLength={10}
-                                value={phone}
-                                onChange={handleChangePhone}
+                                type="text"
+                                id="email"
+                                onChange={handleChangeEmail}
+                                value={email}
+                                maxLength={255}
                                 className={`mt-[0.63rem] h-[2.875rem] w-[21.875rem] rounded-md border-[1px] ${
                                     hasError ? 'border-red-500' : 'border-[#DFE4EA]'
                                 } py-[0.75rem] pl-[1.25rem] pr-[1rem]`}
@@ -159,4 +173,10 @@ export default function LoginForm() {
             </div>
         </>
     );
+}
+function setUser(user: any) {
+    throw new Error('Function not implemented.');
+}
+function setToken(token: any) {
+    throw new Error('Function not implemented.');
 }
