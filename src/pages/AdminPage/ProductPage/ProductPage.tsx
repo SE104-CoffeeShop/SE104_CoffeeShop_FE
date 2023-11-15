@@ -1,7 +1,13 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { set } from 'react-hook-form';
-import { setProducts, setLoadingSuccess } from '../../../stores/slices/productSlice';
+import {
+    setProducts,
+    setLoadingSuccess,
+    setFilterProductsCode,
+    setFilterProductsType,
+    filterProducts,
+} from '../../../stores/slices/productSlice';
 import AdminLayout from '../../../layout/AdminLayout/AdminLayout';
 import Loading from '../../../components/Loading/Loading';
 import ProductTable from '../../../components/Admin/ProductTable/ProductTable';
@@ -13,19 +19,17 @@ import { RootState } from '../../../stores/store';
 export default function ProductPage() {
     // State for product list
     const products = useSelector((state: RootState) => state.product.products);
+    // State for filter products
+    const filterProductsList = useSelector((state: RootState) => filterProducts(state));
     // State for loading
     const loading = useSelector((state: RootState) => state.product.isLoading);
     // State for filter product list
-    const [filterProducts, setFilterProducts] = useState<Product[]>([]);
-    // State for search value
-    const [searchValue, setSearchValue] = useState<string>('');
     const dispatch = useDispatch();
     // useEffect for fetch data when component did mount
     useEffect(() => {
         fetchProducts();
         // set filter products
-        setFilterProducts(products);
-    }, [products]);
+    }, []);
     // Fetch data
     const fetchProducts = async () => {
         try {
@@ -64,7 +68,7 @@ export default function ProductPage() {
                         <SearchProduct />
                         <ProductType />
                     </div>
-                    <ProductTable products={filterProducts} />
+                    <ProductTable products={filterProductsList} />
                 </AdminLayout>
             )}
         </>

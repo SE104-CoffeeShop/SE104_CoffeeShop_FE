@@ -31,6 +31,7 @@
         "no-eval": "error",
         "no-useless-return": "off",
         "no-param-reassign": "off",
+        "no-shadow": "off",
         "react/no-unescaped-entities": "off",
         "jsx-a11y/label-has-associated-control": "off",
         "jsx-a11y/click-events-have-key-events": "off",
