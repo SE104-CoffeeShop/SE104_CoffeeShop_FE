@@ -23,7 +23,7 @@ export default function ProductPage() {
     // State for hold start index of product list
     const [itemOffset, setItemOffset] = useState<number>(0);
     // State for hold end index of product list
-    const itemPerPage = 10;
+    const itemPerPage = 11;
     const endItemOffset = itemOffset + itemPerPage;
     const finalProductsList = filterProductsList.slice(itemOffset, endItemOffset);
     const totalPage = Math.ceil(filterProductsList.length / itemPerPage);
@@ -74,13 +74,16 @@ export default function ProductPage() {
                     </div>
                     <div className="flex w-full flex-col items-center justify-start">
                         <ProductTable products={finalProductsList} />
-                        <Pagination
-                            totalPage={totalPage}
-                            itemsPerPage={itemPerPage}
-                            itemOffset={itemOffset}
-                            itemLength={filterProductsList.length}
-                            setItemOffset={setItemOffset}
-                        />
+                        {/** Only render Pagination when list product is larger than 11 */}
+                        {filterProductsList.length > 11 && (
+                            <Pagination
+                                totalPage={totalPage}
+                                itemsPerPage={itemPerPage}
+                                itemOffset={itemOffset}
+                                itemLength={filterProductsList.length}
+                                setItemOffset={setItemOffset}
+                            />
+                        )}
                     </div>
                 </AdminLayout>
             )}

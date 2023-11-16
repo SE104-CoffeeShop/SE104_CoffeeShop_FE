@@ -1,12 +1,11 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { useAuth } from '../provider/AuthProvider';
 import axiosClient from '../utils/axiosClient';
 
 export default function ProtectedRoute() {
-    const { user, token, setUser, setToken } = useAuth();
-
-    // get user data
+    const { token, setUser } = useAuth();
+    const navigate = useNavigate();
     useEffect(() => {
         getUser();
     }, []);
@@ -15,9 +14,10 @@ export default function ProtectedRoute() {
             const res = await axiosClient.get('/user');
             // If the user is logged in, set the user state in the context else redirect to login page
             // if not logged in (401 error)
-            setUser(res.data.user);
+            setUser(res.data);
         } catch (error) {
-            console.log(error);
+            // If cannot get user data, redirect to login page
+            navigate('/login');
         }
     };
     if (!token) {

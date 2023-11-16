@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { set } from 'react-hook-form';
 import logo from '../../assets/images/logo_form.png';
 import { ErrorAlert } from '../ErrorAlert/ErrorAlert';
 import axiosClient from '../../utils/axiosClient';
@@ -9,14 +8,17 @@ import { useAuth } from '../../provider/AuthProvider';
 export default function LoginForm() {
     const { setUser, setToken } = useAuth();
     const navigate = useNavigate();
+
     // State for each input
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [hasError, setHasError] = useState<boolean>(false);
+
     // State for show erorr popup when login fail
     const [close, setClose] = useState<boolean>(true);
     // State for errorMessage in popup
     const [errorMessage, setErrorMessage] = useState<string>('');
+
     // Timeout for error
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -24,6 +26,7 @@ export default function LoginForm() {
         }, 5000);
         return () => clearTimeout(timeout);
     }, [email, password, hasError]);
+
     // Timeout for error popup
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -32,10 +35,12 @@ export default function LoginForm() {
         }, 3000);
         return () => clearTimeout(timeout);
     }, [close]);
+
     // Clear error message when close popup
     useEffect(() => {
         if (close === true && errorMessage !== '') setErrorMessage('');
     }, [close, errorMessage]);
+
     // Update value for each input
     const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
@@ -43,6 +48,7 @@ export default function LoginForm() {
     const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
     };
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // If not input enough field, show error
@@ -59,13 +65,12 @@ export default function LoginForm() {
                 password,
             })
             .then((res) => {
-                console.log(res.data);
                 setToken(res.data.token);
                 setUser(res.data.user);
+                localStorage.setItem('userId', res.data.user.id);
                 navigate('/admin');
             })
             .catch((err) => {
-                console.log(err);
                 setHasError(true);
                 setClose(false);
                 setErrorMessage('Email hoặc mật khẩu không đúng!');
@@ -173,10 +178,4 @@ export default function LoginForm() {
             </div>
         </>
     );
-}
-function setUser(user: any) {
-    throw new Error('Function not implemented.');
-}
-function setToken(token: any) {
-    throw new Error('Function not implemented.');
 }
