@@ -37,7 +37,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     // State to hold user information
     const [user, setUser] = useState<User | null>(null);
     // State to hold the authentication token
-    const [token, setToken_] = useState(localStorage.getItem('token'));
+    const [token, setToken_] = useState(localStorage.getItem('ACCESS_TOKEN'));
     // Function to set the authentication token
     const setToken = (newToken: string | null) => {
         setToken_(newToken);

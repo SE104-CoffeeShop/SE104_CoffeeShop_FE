@@ -10,11 +10,11 @@ import store from './stores/store';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <React.StrictMode>
-        <AuthProvider>
-            <Provider store={store}>
+        <Provider store={store}>
+            <AuthProvider>
                 <Router />
-            </Provider>
-        </AuthProvider>
+            </AuthProvider>
+        </Provider>
     </React.StrictMode>,
 );
 

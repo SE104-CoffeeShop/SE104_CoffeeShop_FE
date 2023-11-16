@@ -8,21 +8,18 @@ export default function ProtectedRoute() {
 
     // get user data
     useEffect(() => {
-        const getUser = async () => {
-            try {
-                const res = await axiosClient.get('/user');
-                // If the user is logged in, set the user state in the context else redirect to login page
-                // if not logged in (401 error)
-                setUser(res.data.user);
-            } catch (error) {
-                console.log(error);
-                setToken(null);
-                setUser(null);
-            }
-        };
         getUser();
     }, []);
-
+    const getUser = async () => {
+        try {
+            const res = await axiosClient.get('/user');
+            // If the user is logged in, set the user state in the context else redirect to login page
+            // if not logged in (401 error)
+            setUser(res.data.user);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     if (!token) {
         return <Navigate to="/login" />;
     }

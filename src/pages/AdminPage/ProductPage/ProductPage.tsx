@@ -13,12 +13,20 @@ import SearchProduct from '../../../components/Admin/SearchProduct/SearchProduct
 import ProductType from '../../../components/Admin/ProductType/ProductType';
 import { Product, getProducts } from '../../../api/productAPI';
 import { RootState } from '../../../stores/store';
+import Pagination from '../../../components/Admin/Pagination/Pagination';
 
 export default function ProductPage() {
     // State for filter products
     const filterProductsList = useSelector((state: RootState) => filterProducts(state));
     // State for loading
     const loading = useSelector((state: RootState) => state.product.isLoading);
+    // State for hold start index of product list
+    const [itemOffset, setItemOffset] = useState<number>(0);
+    // State for hold end index of product list
+    const itemPerPage = 10;
+    const endItemOffset = itemOffset + itemPerPage;
+    const finalProductsList = filterProductsList.slice(itemOffset, endItemOffset);
+    const totalPage = Math.ceil(filterProductsList.length / itemPerPage);
     // State for filter product list
     const dispatch = useDispatch();
     // useEffect for fetch data when component did mount
@@ -64,7 +72,16 @@ export default function ProductPage() {
                         <SearchProduct />
                         <ProductType />
                     </div>
-                    <ProductTable products={filterProductsList} />
+                    <div className="flex w-full flex-col items-center justify-start">
+                        <ProductTable products={finalProductsList} />
+                        <Pagination
+                            totalPage={totalPage}
+                            itemsPerPage={itemPerPage}
+                            itemOffset={itemOffset}
+                            itemLength={filterProductsList.length}
+                            setItemOffset={setItemOffset}
+                        />
+                    </div>
                 </AdminLayout>
             )}
         </>
