@@ -206,6 +206,22 @@ const productSlice = createSlice({
                 (productType) => productType !== action.payload,
             );
         },
+        removeProductItem: (state, action: PayloadAction<string>) => {
+            // Find index of product in products array and remove it using product_code
+            const index = state.products.findIndex(
+                (product) => product.product_code === action.payload,
+            );
+            // If found then remove it else do nothing
+            if (index !== -1) state.products.splice(index, 1);
+        },
+        removeAllProducts: (state, action: PayloadAction<string[]>) => {
+            // Remove all products that match product_code in action.payload
+            action.payload.forEach((item) => {
+                const index = state.products.findIndex((product) => product.product_code === item);
+                // If found then remove it else do nothing
+                if (index !== -1) state.products.splice(index, 1);
+            });
+        },
     },
 });
 
@@ -216,6 +232,8 @@ export const {
     setFilterProductsCode,
     setFilterProductsType,
     removeFilterProductsType,
+    removeAllProducts,
+    removeProductItem,
 } = productSlice.actions;
 export default productSlice.reducer;
 export const products = (state: { product: ProductState }) => state.product.products;

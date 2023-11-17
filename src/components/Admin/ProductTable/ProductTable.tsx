@@ -1,16 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { set } from 'react-hook-form';
 import { Product, getProducts } from '../../../api/productAPI';
 import SelectProduct from '../SelectProduct/SelectProduct';
 import SelectAllProduct from '../SelectProduct/SelectAllProduct';
+import { RootState } from '../../../stores/store';
+import ProductDetail from '../ProductDetail/ProductDetail';
+import DeleteProductList from '../DeleteProduct/DeleteProductList';
 
 interface ProductTableProps {
     products: Product[];
 }
 
 export default function ProductTable({ products }: ProductTableProps) {
+    // State for hold selected product list in table
+    const selectedProductsList = useSelector(
+        (state: RootState) => state.selectedProduct.selectedProduct,
+    );
+    // State for track which product is selected to show detail
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    // State for show product detail modal
+    const [showProductDetail, setShowProductDetail] = useState<boolean>(false);
+    // State for show delete selected product modal
+    const [showDeleteProductModal, setShowDeleteProductModal] = useState<boolean>(false);
+    // Disable scroll when modal is open to prevent user from scrolling background
+    useEffect(() => {
+        if (showProductDetail) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+    }, [showProductDetail]);
     // Format product price to currency format: 1000000 => 1.000.000
     const formatCurrency = (price: number) => {
         return new Intl.NumberFormat('en-US').format(price);
+    };
+    const handleProductClick = (product: Product) => {
+        setShowProductDetail(true);
+        setSelectedProduct(product);
     };
     return (
         <div className="flex w-full flex-col">
@@ -18,29 +45,35 @@ export default function ProductTable({ products }: ProductTableProps) {
                 <h1 className="font-sans text-[1.5rem] font-bold">Hàng hoá</h1>
                 <div className="flex flex-row items-center">
                     {/* Xoá hàng hoá */}
-                    <button
-                        type="button"
-                        className="inline-flex items-center rounded-md bg-[#E10E0E] px-[1.5rem]
+                    {/** Only render delete product button if selectedProduct is not empty */}
+                    {selectedProductsList.length > 0 && (
+                        <button
+                            type="button"
+                            className="inline-flex items-center rounded-md bg-[#E10E0E] px-[1.5rem]
                     py-[0.75rem]"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="#DFE4EA"
-                            className="h-6 w-6"
+                            onClick={() => {
+                                setShowDeleteProductModal(true);
+                            }}
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                        </svg>
-                        <p className="ml-[0.5rem] font-sans text-[1rem] font-medium text-white">
-                            Xoá hàng hoá
-                        </p>
-                    </button>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="#DFE4EA"
+                                className="h-6 w-6"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                            <p className="ml-[0.5rem] font-sans text-[1rem] font-medium text-white">
+                                Xoá hàng hoá
+                            </p>
+                        </button>
+                    )}
                     {/* Thêm hàng hoá */}
                     <button
                         type="button"
@@ -118,22 +151,45 @@ shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                                 <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
                                     <SelectProduct productCode={product.product_code} />
                                 </td>
-                                <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
+                                <td
+                                    className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
+                                    onClick={() => handleProductClick(product)}
+                                >
                                     {product.product_code}
                                 </td>
-                                <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
+                                <td
+                                    className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
+                                    onClick={() => handleProductClick(product)}
+                                >
                                     {product.product_name}
                                 </td>
-                                <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
+                                <td
+                                    className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
+                                    onClick={() => handleProductClick(product)}
+                                >
                                     {product.product_type}
                                 </td>
-                                <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
+                                <td
+                                    className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
+                                    onClick={() => handleProductClick(product)}
+                                >
                                     {formatCurrency(product.product_price)}
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                {/* Product detail */}
+                {showProductDetail === true && (
+                    <ProductDetail
+                        product={selectedProduct}
+                        setShowProductDetail={setShowProductDetail}
+                    />
+                )}
+                {/* Delete selected product modal */}
+                {showDeleteProductModal === true && (
+                    <DeleteProductList setShowDeleteProductModal={setShowDeleteProductModal} />
+                )}
             </div>
         </div>
     );
