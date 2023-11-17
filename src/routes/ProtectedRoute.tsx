@@ -5,6 +5,7 @@ import axiosClient from '../utils/axiosClient';
 
 export default function ProtectedRoute() {
     const { token, setUser } = useAuth();
+    // Get current route
     const navigate = useNavigate();
     useEffect(() => {
         getUser();
@@ -22,6 +23,9 @@ export default function ProtectedRoute() {
     };
     if (!token) {
         return <Navigate to="/login" />;
+    }
+    if (window.location.pathname === '/') {
+        return <Navigate to="/admin" />;
     }
     return <Outlet />;
 }

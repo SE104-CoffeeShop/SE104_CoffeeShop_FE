@@ -23,8 +23,8 @@ export default function Router() {
         <BrowserRouter>
             <Routes>
                 <Route path="/login" Component={LoginPage} />
-                <Route path="*" Component={ErrorPage} />
                 <Route element={<ProtectedRoute />}>
+                    <Route path="*" Component={ErrorPage} />
                     <Route path="/admin/billing" Component={BillingPage} />
                     <Route path="/admin/customer" Component={CustomerPage} />
                     <Route path="/admin/product" Component={ProductPage} />
