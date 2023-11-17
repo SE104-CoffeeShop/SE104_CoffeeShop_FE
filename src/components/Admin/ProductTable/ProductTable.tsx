@@ -6,6 +6,7 @@ import SelectAllProduct from '../SelectProduct/SelectAllProduct';
 import { RootState } from '../../../stores/store';
 import ProductDetail from '../ProductDetail/ProductDetail';
 import DeleteProductList from '../DeleteProduct/DeleteProductList';
+import AddProductItem from '../AddProductItem/AddProductItem';
 
 interface ProductTableProps {
     products: Product[];
@@ -22,6 +23,8 @@ export default function ProductTable({ products }: ProductTableProps) {
     const [showProductDetail, setShowProductDetail] = useState<boolean>(false);
     // State for show delete selected product modal
     const [showDeleteProductModal, setShowDeleteProductModal] = useState<boolean>(false);
+    // State for show add product modal
+    const [showAddProductModal, setShowAddProductModal] = useState<boolean>(true);
     // Disable scroll when modal is open to prevent user from scrolling background
     useEffect(() => {
         if (showProductDetail) {
@@ -191,6 +194,10 @@ shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                         showDeleteProductModal={showDeleteProductModal}
                         setShowDeleteProductModal={setShowDeleteProductModal}
                     />
+                )}
+                {/* Add product modal */}
+                {showAddProductModal === true && (
+                    <AddProductItem setShowAddProductModal={setShowAddProductModal} />
                 )}
             </div>
         </div>

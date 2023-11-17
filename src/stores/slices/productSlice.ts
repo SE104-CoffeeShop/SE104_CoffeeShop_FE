@@ -228,6 +228,12 @@ const productSlice = createSlice({
                 state.products = [...state.products];
             });
         },
+        addProduct: (state, action: PayloadAction<Product>) => {
+            // Add new product to products array
+            state.products.push(action.payload);
+            // Update product list
+            state.products = [...state.products];
+        },
     },
 });
 
@@ -240,6 +246,7 @@ export const {
     removeFilterProductsType,
     removeAllProducts,
     removeProductItem,
+    addProduct,
 } = productSlice.actions;
 export default productSlice.reducer;
 export const products = (state: { product: ProductState }) => state.product.products;
