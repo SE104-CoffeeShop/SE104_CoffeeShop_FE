@@ -193,6 +193,8 @@ const productSlice = createSlice({
             );
             // If product is found, replace it else do nothing
             if (index !== -1) state.products[index] = action.payload;
+            // Update product list
+            state.products = [...state.products];
         },
         setFilterProductsCode: (state, action: PayloadAction<string>) => {
             state.filterProductsCode = action.payload;
@@ -213,6 +215,8 @@ const productSlice = createSlice({
             );
             // If found then remove it else do nothing
             if (index !== -1) state.products.splice(index, 1);
+            // Update product list
+            state.products = [...state.products];
         },
         removeAllProducts: (state, action: PayloadAction<string[]>) => {
             // Remove all products that match product_code in action.payload
@@ -220,6 +224,8 @@ const productSlice = createSlice({
                 const index = state.products.findIndex((product) => product.product_code === item);
                 // If found then remove it else do nothing
                 if (index !== -1) state.products.splice(index, 1);
+                // Update product list
+                state.products = [...state.products];
             });
         },
     },

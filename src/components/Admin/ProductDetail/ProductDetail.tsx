@@ -140,7 +140,7 @@ items-center justify-between rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.75rem]"
             {/* Delete product modal */}
             {showDeleteProductModal === true && (
                 <DeleteProductItem
-                    productCode={product?.product_code}
+                    productCode={product?.product_code as string}
                     setShowDeleteProductModal={setShowDeleteProductModal}
                 />
             )}

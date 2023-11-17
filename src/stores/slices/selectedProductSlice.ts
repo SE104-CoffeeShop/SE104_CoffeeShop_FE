@@ -31,9 +31,12 @@ const selectedProductSlice = createSlice({
         removeProducts: (state) => {
             state.selectedProduct = [];
         },
+        clearProduct: (state) => {
+            state.selectedProduct = [];
+        },
     },
 });
 
-export const { setSelectedProduct, addProduct, removeProduct, removeProducts } =
+export const { setSelectedProduct, addProduct, removeProduct, removeProducts, clearProduct } =
     selectedProductSlice.actions;
 export default selectedProductSlice.reducer;

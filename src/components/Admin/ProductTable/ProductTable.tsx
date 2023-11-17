@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { set } from 'react-hook-form';
 import { Product, getProducts } from '../../../api/productAPI';
 import SelectProduct from '../SelectProduct/SelectProduct';
 import SelectAllProduct from '../SelectProduct/SelectAllProduct';
@@ -188,7 +187,10 @@ shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                 )}
                 {/* Delete selected product modal */}
                 {showDeleteProductModal === true && (
-                    <DeleteProductList setShowDeleteProductModal={setShowDeleteProductModal} />
+                    <DeleteProductList
+                        showDeleteProductModal={showDeleteProductModal}
+                        setShowDeleteProductModal={setShowDeleteProductModal}
+                    />
                 )}
             </div>
         </div>
