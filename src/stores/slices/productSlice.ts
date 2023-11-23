@@ -164,15 +164,11 @@ const fuzzyMatch = (pattern: string, str: string) => {
 interface ProductState {
     products: Product[];
     isLoading: boolean;
-    filterProductsCode: string;
-    filterProductsType: string[];
 }
 
 const initialState: ProductState = {
     products: [],
     isLoading: true,
-    filterProductsCode: '',
-    filterProductsType: [],
 };
 
 const productSlice = createSlice({
@@ -196,18 +192,6 @@ const productSlice = createSlice({
             // Update product list
             state.products = [...state.products];
         },
-        setFilterProductsCode: (state, action: PayloadAction<string>) => {
-            state.filterProductsCode = action.payload;
-        },
-        setFilterProductsType: (state, action: PayloadAction<string>) => {
-            state.filterProductsType.push(action.payload);
-        },
-        removeFilterProductsType: (state, action: PayloadAction<string>) => {
-            // remove all element in array that match action.payload
-            state.filterProductsType = state.filterProductsType.filter(
-                (productType) => productType !== action.payload,
-            );
-        },
         removeProductItem: (state, action: PayloadAction<string>) => {
             // Find index of product in products array and remove it using product_code
             const index = state.products.findIndex(
@@ -229,10 +213,17 @@ const productSlice = createSlice({
             });
         },
         addProduct: (state, action: PayloadAction<Product>) => {
-            // Add new product to products array
-            state.products.push(action.payload);
-            // Update product list
-            state.products = [...state.products];
+            // CHeck if product is already in products array
+            const index = state.products.findIndex(
+                (product) => product.product_code === action.payload.product_code,
+            );
+            // If found then do nothing else add new product
+            if (index === -1) {
+                // Add new product to products array
+                state.products.push(action.payload);
+                // Update product list
+                state.products = [...state.products];
+            }
         },
     },
 });
@@ -241,37 +232,10 @@ export const {
     setProducts,
     setLoadingSuccess,
     updateProduct,
-    setFilterProductsCode,
-    setFilterProductsType,
-    removeFilterProductsType,
+
     removeAllProducts,
     removeProductItem,
     addProduct,
 } = productSlice.actions;
 export default productSlice.reducer;
 export const products = (state: { product: ProductState }) => state.product.products;
-export const filterProductsCode = (state: { product: ProductState }) =>
-    state.product.filterProductsCode;
-export const filterProductsType = (state: { product: ProductState }) =>
-    state.product.filterProductsType;
-
-// Filter list by product code or product name and product type
-export const filterProducts = createSelector(
-    [products, filterProductsCode, filterProductsType],
-    (products, filterProductsCode, filterProductsType) => {
-        let newProducts = products;
-        if (filterProductsCode !== '') {
-            newProducts = newProducts.filter(
-                (product) =>
-                    fuzzyMatch(filterProductsCode, product.product_code) ||
-                    fuzzyMatch(filterProductsCode, product.product_name),
-            );
-        }
-        if (filterProductsType.length > 0) {
-            newProducts = newProducts.filter((product) =>
-                filterProductsType.includes(product.product_type),
-            );
-        }
-        return newProducts;
-    },
-);

@@ -1,23 +1,18 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { set } from 'react-hook-form';
-import {
-    setFilterProductsType,
-    filterProductsType,
-    removeFilterProductsType,
-} from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
 
-export default function ProductType() {
-    const dispatch = useDispatch();
-    const [checkFood, setCheckFood] = React.useState(false);
-    const [checkDrink, setCheckDrink] = React.useState(false);
-    const [checkOther, setCheckOther] = React.useState(false);
-    const filterProductsType = useSelector((state: RootState) => state.product.filterProductsType);
+interface ProductTypeProps {
+    selectedProductType: string;
+    setSelectedProductType: (selectedProductType: string) => void;
+}
+
+export default function ProductType({
+    selectedProductType,
+    setSelectedProductType,
+}: ProductTypeProps) {
     // Handle search product by type in checkbox
-    function handleClick(type: string) {
-        dispatch(setFilterProductsType(type));
-    }
+
     return (
         <div className="mt-[1.25rem] flex h-[9.4375rem] w-[12.875rem] flex-col rounded-[0.625rem] bg-white pb-[1.44rem] pl-[0.87rem] pt-[0.5rem] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
             <label className="mb-[0.87rem] font-sans text-[1rem] font-bold" htmlFor="search">
@@ -33,18 +28,19 @@ export default function ProductType() {
                     <input
                         id="food-type"
                         type="checkbox"
-                        checked={checkFood}
+                        checked={selectedProductType === 'Đồ ăn'}
                         onChange={() => {
-                            setCheckFood(!checkFood);
+                            if (selectedProductType === 'Đồ ăn') {
+                                setSelectedProductType('');
+                            } else {
+                                setSelectedProductType('Đồ ăn');
+                            }
                         }}
                         onClick={() => {
-                            setCheckFood(!checkFood);
-                            if (checkFood) {
-                                // Remove food type in filterProductsType
-                                dispatch(removeFilterProductsType('Đồ ăn'));
+                            if (selectedProductType === 'Đồ ăn') {
+                                setSelectedProductType('');
                             } else {
-                                // Add food type in filterProductsType
-                                handleClick('Đồ ăn');
+                                setSelectedProductType('Đồ ăn');
                             }
                         }}
                         className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#3758F9] checked:bg-[#3758F9] checked:before:bg-[#3758F9] hover:before:opacity-10"
@@ -83,18 +79,19 @@ export default function ProductType() {
                     <input
                         id="drink-type"
                         type="checkbox"
-                        checked={checkDrink}
+                        checked={selectedProductType === 'Đồ uống'}
                         onChange={() => {
-                            setCheckDrink(!checkDrink);
+                            if (selectedProductType === 'Đồ uống') {
+                                setSelectedProductType('');
+                            } else {
+                                setSelectedProductType('Đồ uống');
+                            }
                         }}
                         onClick={() => {
-                            setCheckDrink(!checkDrink);
-                            if (checkDrink) {
-                                // Remove drink type in filterProductsType
-                                dispatch(removeFilterProductsType('Đồ uống'));
+                            if (selectedProductType === 'Đồ uống') {
+                                setSelectedProductType('');
                             } else {
-                                // Add drink type in filterProductsType
-                                handleClick('Đồ uống');
+                                setSelectedProductType('Đồ uống');
                             }
                         }}
                         className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#3758F9] checked:bg-[#3758F9] checked:before:bg-[#3758F9] hover:before:opacity-10"
@@ -133,18 +130,20 @@ export default function ProductType() {
                     <input
                         id="other-type"
                         type="checkbox"
-                        checked={checkOther}
+                        checked={selectedProductType === 'Khác'}
                         onChange={() => {
-                            setCheckOther(!checkOther);
+                            if (selectedProductType === 'Khác') {
+                                setSelectedProductType('');
+                            } else {
+                                setSelectedProductType('Khác');
+                            }
                         }}
                         onClick={() => {
-                            setCheckOther(!checkOther);
-                            if (checkOther) {
-                                // Remove other type in filterProductsType
-                                dispatch(removeFilterProductsType('Khác'));
+                            // If already checked, uncheck it
+                            if (selectedProductType === 'Khác') {
+                                setSelectedProductType('');
                             } else {
-                                // Add other type in filterProductsType
-                                handleClick('Khác');
+                                setSelectedProductType('Khác');
                             }
                         }}
                         className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#3758F9] checked:bg-[#3758F9] checked:before:bg-[#3758F9] hover:before:opacity-10"

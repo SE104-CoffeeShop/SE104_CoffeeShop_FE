@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { set } from 'react-hook-form';
 import uploadImage from '../../../assets/images/upload_image.jpg';
-import { products } from '../../../stores/slices/productSlice';
+import { products, addProduct } from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
+import { ErrorAlert } from '../../ErrorAlert/ErrorAlert';
+import SuccessAlert from '../../SuccessAlert/SuccessAlert';
 
 interface AddProductItemProps {
     setShowAddProductModal: (show: boolean) => void;
@@ -11,6 +14,7 @@ interface AddProductItemProps {
 const productTypes = ['Đồ ăn', 'Đồ uống', 'Khác'];
 
 export default function AddProductItem({ setShowAddProductModal }: AddProductItemProps) {
+    const dispatch = useDispatch();
     // State for upload image file
     const [imageFile, setImageFile] = useState<File | null>(null);
     const products = useSelector((state: RootState) => state.product.products);
@@ -22,6 +26,65 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     // State for show product type dropdown
     const [showProductTypeDropdown, setShowProductTypeDropdown] = useState<boolean>(false);
+    // State for show error
+    const [showError, setShowError] = useState<boolean>(false);
+    // State for success add product
+    const [successAddProduct, setSuccessAddProduct] = useState<boolean>(false);
+    // State for error input
+    const [errorProductName, setErrorProductName] = useState<boolean>(false);
+    const [errorProductPrice, setErrorProductPrice] = useState<boolean>(false);
+    // useRef for type dropdown
+    const typeDropdownRef = useRef<HTMLDivElement>(null);
+    const inputNameRef = useRef<HTMLInputElement>(null);
+    const inputPriceRef = useRef<HTMLInputElement>(null);
+    // Handle click outside type dropdown
+    const handleClickOutside = (e: MouseEvent) => {
+        // If click outside type dropdown then close it
+        if (typeDropdownRef.current && !typeDropdownRef.current.contains(e.target as Node)) {
+            setShowProductTypeDropdown(false);
+        }
+    };
+    // Add event listener for click outside type dropdown
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+    // Handle remove error input when user type using ref
+    useEffect(() => {
+        if (errorProductPrice && inputPriceRef.current) {
+            inputPriceRef.current.addEventListener('input', () => {
+                setErrorProductPrice(false);
+            });
+        }
+    }, [errorProductPrice]);
+    // Handle remove error input when user type using ref
+    useEffect(() => {
+        if (errorProductName && inputNameRef.current) {
+            inputNameRef.current.addEventListener('input', () => {
+                setErrorProductName(false);
+            });
+        }
+    }, [errorProductName]);
+
+    // Set timeout for error
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setShowError(false);
+            if (errorProductName) setErrorProductName(false);
+            if (errorProductPrice) setErrorProductPrice(false);
+        }, 3000);
+        return () => clearTimeout(timeout);
+    }, [showError, errorProductName, errorProductPrice]);
+    // Set timeout for success add product
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setSuccessAddProduct(false);
+        }, 3000);
+        return () => clearTimeout(timeout);
+    }, [successAddProduct]);
+
     // TODO: Handle image upload
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -31,15 +94,18 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
             setPreviewImage(URL.createObjectURL(file));
         }
     };
+
     // Handle product name
     const handleProductName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setProductName(e.target.value);
     };
+
     // Handle product type
     // Format product price
     const formatCurrency = (price: number) => {
         return new Intl.NumberFormat('en-US').format(price);
     };
+
     // Handle product price
     const handleProductPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         // Only allow number input
@@ -49,8 +115,31 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
         const formattedPrice = inputPrice === '' ? '' : formatCurrency(parseInt(inputPrice, 10));
         setProductPrice(formattedPrice);
     };
+
+    // Handle save product
+    const handleSaveProduct = () => {
+        // Check if exist empty field then show error and do nothing
+        if (!imageFile || productName === '' || productPrice === '') {
+            setShowError(true);
+            if (productName === '') setErrorProductName(true);
+            if (productPrice === '') setErrorProductPrice(true);
+            return;
+        }
+        // If all field is not empty then add product
+        const newProduct = {
+            product_code: latestProductCode,
+            product_name: productName,
+            product_type: productType,
+            product_price: parseInt(productPrice.replace(/\D/g, ''), 10),
+            product_img: previewImage as string,
+        };
+        // Dispatch add product
+        dispatch(addProduct(newProduct));
+        setSuccessAddProduct(true);
+    };
     // Get latest product_code from store
     const latestProductCode = products[products.length - 1].product_code;
+
     return (
         <div
             className="relative z-10 flex items-center justify-start overflow-hidden"
@@ -60,6 +149,28 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
         >
             <div className="fixed inset-0 backdrop-blur-lg" />
             <div className="fixed inset-0 z-10 w-screen">
+                {/* error message */}
+                {showError && (
+                    <ErrorAlert
+                        close={!showError}
+                        onClose={() => {
+                            setShowError(false);
+                        }}
+                        message="Vui lòng điền đầy đủ thông tin!"
+                        className="absolute right-0 top-0 mr-[1.25rem] mt-[1.25rem] flex h-[3.75rem] w-[26.5625rem] flex-row items-center justify-start"
+                    />
+                )}
+                {/* success add product message */}
+                {successAddProduct && (
+                    <SuccessAlert
+                        close={!successAddProduct}
+                        onClose={() => {
+                            setSuccessAddProduct(false);
+                        }}
+                        message="Thêm hàng hoá thành công!"
+                        className="absolute right-0 top-0 mr-[1.25rem] mt-[1.25rem] flex h-[3.75rem] w-[26.5625rem] flex-row items-center justify-start"
+                    />
+                )}
                 <div className="flex h-full items-center justify-center">
                     <div
                         className="relative flex
@@ -158,20 +269,28 @@ rounded-md bg-white"
                                     </h1>
                                     <input
                                         type="text"
+                                        ref={inputNameRef}
                                         value={productName}
                                         onChange={handleProductName}
                                         maxLength={255}
                                         placeholder="Nhập tên hàng hoá"
-                                        className="col-start-2 rounded-md border border-[#DFE4EA] bg-white py-[0.75rem] pl-[1.25rem] pr-[1rem] placeholder:text-[rgba(0,0,0,0.55)]"
+                                        className={`col-start-2 rounded-md border ${
+                                            errorProductName ? 'border-red-500' : 'border-[#DFE4EA]'
+                                        } bg-white py-[0.75rem] pl-[1.25rem] pr-[1rem] placeholder:text-[rgba(0,0,0,0.55)]`}
                                     />
                                     <h1 className="font-sans text-[1rem] font-medium">Giá bán: </h1>
                                     <input
                                         type="text"
+                                        ref={inputPriceRef}
                                         value={productPrice}
                                         onChange={handleProductPrice}
                                         maxLength={255}
                                         placeholder="Nhập giá bán hàng hoá"
-                                        className="col-start-2 rounded-md border border-[#DFE4EA] bg-white py-[0.75rem] pl-[1.25rem] pr-[1rem] placeholder:text-[rgba(0,0,0,0.55)]"
+                                        className={`col-start-2 rounded-md border ${
+                                            errorProductPrice
+                                                ? 'border-red-500'
+                                                : 'border-[#DFE4EA]'
+                                        } bg-white py-[0.75rem] pl-[1.25rem] pr-[1rem] placeholder:text-[rgba(0,0,0,0.55)]`}
                                     />
 
                                     <h1 className="font-sans text-[1rem] font-medium">
@@ -200,7 +319,10 @@ rounded-md bg-white"
                                     </button>
                                     {/* Product type dropdown */}
                                     {showProductTypeDropdown && (
-                                        <div className="absolute right-[9.5rem] top-[23rem] z-10 flex w-[11.625rem] flex-col rounded-md bg-white shadow-[0px_2px_8px_0px_rgba(0,0,0,0.16)]">
+                                        <div
+                                            ref={typeDropdownRef}
+                                            className="absolute right-[9.5rem] top-[23rem] z-10 flex w-[11.625rem] flex-col rounded-md bg-white shadow-[0px_2px_8px_0px_rgba(0,0,0,0.16)]"
+                                        >
                                             {productTypes.map((type) => (
                                                 <button
                                                     type="button"
@@ -217,6 +339,14 @@ rounded-md bg-white"
                                         </div>
                                     )}
                                 </div>
+                                {/* Product save button */}
+                                <button
+                                    type="button"
+                                    onClick={handleSaveProduct}
+                                    className="mt-[3.37em] inline-flex h-[3.125rem] w-[11.875rem] items-center justify-center rounded-md border border-[#DFE4EA] bg-[#12582E] px-[1.75rem] py-[0.81rem] font-sans text-white"
+                                >
+                                    Lưu
+                                </button>
                             </div>
                         </div>
                     </div>

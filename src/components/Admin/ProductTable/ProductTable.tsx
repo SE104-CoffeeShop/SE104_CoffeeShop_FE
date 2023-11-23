@@ -24,15 +24,16 @@ export default function ProductTable({ products }: ProductTableProps) {
     // State for show delete selected product modal
     const [showDeleteProductModal, setShowDeleteProductModal] = useState<boolean>(false);
     // State for show add product modal
-    const [showAddProductModal, setShowAddProductModal] = useState<boolean>(true);
+    const [showAddProductModal, setShowAddProductModal] = useState<boolean>(false);
     // Disable scroll when modal is open to prevent user from scrolling background
     useEffect(() => {
-        if (showProductDetail) {
+        if (showProductDetail || showDeleteProductModal || showAddProductModal) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'unset';
         }
-    }, [showProductDetail]);
+    }, [showProductDetail, showDeleteProductModal, showAddProductModal]);
+    // Render product list when filter product list change
     // Format product price to currency format: 1000000 => 1.000.000
     const formatCurrency = (price: number) => {
         return new Intl.NumberFormat('en-US').format(price);
@@ -41,6 +42,7 @@ export default function ProductTable({ products }: ProductTableProps) {
         setShowProductDetail(true);
         setSelectedProduct(product);
     };
+
     return (
         <div className="flex w-full flex-col">
             <div className="flex w-full flex-row items-center justify-between">
@@ -81,6 +83,9 @@ export default function ProductTable({ products }: ProductTableProps) {
                         type="button"
                         className="ml-[1.25rem] inline-flex items-center rounded-md bg-[#1C3FB7]
                     px-[1.5rem] py-[0.75rem]"
+                        onClick={() => {
+                            setShowAddProductModal(true);
+                        }}
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
