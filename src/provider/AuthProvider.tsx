@@ -26,9 +26,7 @@ interface User {
     name: string;
     email: string;
     email_verified_at: string;
-    remaining_day: number;
     role: number;
-    manager_id: string;
     created_at: string;
     updated_at: string;
 }

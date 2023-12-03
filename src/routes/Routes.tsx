@@ -9,7 +9,6 @@ import {
 import { useAuth } from '../provider/AuthProvider';
 import ProtectedRoute from './ProtectedRoute';
 import LoginPage from '../pages/LoginPage/LoginPage';
-import SignupPage from '../pages/SignupPage/SignupPage';
 import DashboardPage from '../pages/AdminPage/DashboardPage/DashboardPage';
 import BillingPage from '../pages/AdminPage/BillingPage/BillingPage';
 import CustomerPage from '../pages/AdminPage/CustomerPage/CustomerPage';

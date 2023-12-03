@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
 import productReducer from './slices/productSlice';
 import selectedProductSlice from './slices/selectedProductSlice';
+import errorSlice from './slices/errorSlice';
 
 const logger = createLogger();
 
 const store = configureStore({
     reducer: {
+        error: errorSlice,
         product: productReducer,
         selectedProduct: selectedProductSlice,
     },

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../assets/images/logo_form.png';
 import { ErrorAlert } from '../ErrorAlert/ErrorAlert';
 import axiosClient from '../../utils/axiosClient';
 import { useAuth } from '../../provider/AuthProvider';
@@ -18,7 +17,13 @@ export default function LoginForm() {
     const [close, setClose] = useState<boolean>(true);
     // State for errorMessage in popup
     const [errorMessage, setErrorMessage] = useState<string>('');
-
+    // Check if already login then redirect to admin page
+    useEffect(() => {
+        const token = localStorage.getItem('ACCESS_TOKEN');
+        if (token) {
+            navigate('/admin');
+        }
+    }, []);
     // Timeout for error
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -65,6 +70,7 @@ export default function LoginForm() {
                 password,
             })
             .then((res) => {
+                console.log('Login success');
                 setToken(res.data.token);
                 setUser(res.data.user);
                 localStorage.setItem('userId', res.data.user.id);
@@ -87,7 +93,9 @@ export default function LoginForm() {
                 />
             )}
             <div className="flex h-[24.125rem] w-[26.5625rem] flex-col items-center justify-start rounded-[0.625rem] bg-white pb-[1.37rem] pl-[2.37rem] pr-[2.31rem] pt-[2rem]">
-                <img src={logo} alt="logo" className="h-[2.375rem] w-[11.375rem]" />
+                <h1 className="select-none text-center font-sans text-[1.5rem] font-bold">
+                    THE COFFEESHOP
+                </h1>
                 <form onSubmit={handleSubmit}>
                     <div className="mt-[0.81rem] flex flex-col items-start justify-start">
                         <label
