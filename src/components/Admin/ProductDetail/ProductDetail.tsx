@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Product } from '../../../api/productAPI';
+import { Product } from '../../../hooks/useGetProducts';
 import DeleteProductItem from '../DeleteProduct/DeleteProductItem';
 
 interface ProductDetailProps {
@@ -52,14 +52,14 @@ w-[54.0625rem] transform flex-col items-start justify-start overflow-hidden roun
                         </button>
                         {/* Modal title */}
                         <h1 className="text-left font-sans text-[1.5rem] font-bold text-[#1C3FB7]">
-                            {product?.product_name.toUpperCase()}
+                            {product?.name.toUpperCase()}
                         </h1>
                         {/* Product info */}
                         <div className="mt-[1.56rem] flex w-full flex-row items-start justify-start">
                             {/* Product image */}
                             <img
-                                src={product?.product_img}
-                                alt={product?.product_name}
+                                src={product?.image}
+                                alt={product?.name}
                                 className="h-[13.98369rem]
 w-[10.38731rem]"
                             />
@@ -69,11 +69,11 @@ w-[10.38731rem]"
                                 <div className="grid grid-flow-col grid-cols-2 items-center justify-start gap-[1rem]">
                                     <h1 className="font-sans text-[1rem]">Mã hàng hoá:</h1>
                                     <p className="col-start-2 font-sans text-[1rem] font-bold">
-                                        {product?.product_code}
+                                        {product?.id}
                                     </p>
                                     <h1 className="font-sans text-[1rem]">Giá bán: </h1>
                                     <p className="col-start-2 font-sans text-[1rem] font-bold">
-                                        {formatCurrency(product?.product_price || 0)}đ
+                                        {formatCurrency(product?.unit_price || 0)}đ
                                     </p>
                                 </div>
                                 {/* Product delete and Product update button */}
@@ -140,7 +140,7 @@ items-center justify-between rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.75rem]"
             {/* Delete product modal */}
             {showDeleteProductModal === true && (
                 <DeleteProductItem
-                    productCode={product?.product_code as string}
+                    productCode={product?.id as string}
                     setShowDeleteProductModal={setShowDeleteProductModal}
                 />
             )}

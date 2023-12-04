@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Product, getProducts } from '../../../api/productAPI';
+import { Product } from '../../../hooks/useGetProducts';
 import SelectProduct from '../SelectProduct/SelectProduct';
 import SelectAllProduct from '../SelectProduct/SelectAllProduct';
 import { RootState } from '../../../stores/store';
@@ -152,35 +152,35 @@ shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                         {/* Product item */}
                         {products.map((product) => (
                             <tr
-                                key={product.product_code}
+                                key={product.id}
                                 className="h-[2.3125rem] cursor-pointer border-b border-[#EEE] bg-white hover:bg-gray-200"
                             >
                                 <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
-                                    <SelectProduct productCode={product.product_code} />
+                                    <SelectProduct productCode={product.id} />
                                 </td>
                                 <td
                                     className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
                                     onClick={() => handleProductClick(product)}
                                 >
-                                    {product.product_code}
+                                    {product.id}
                                 </td>
                                 <td
                                     className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
                                     onClick={() => handleProductClick(product)}
                                 >
-                                    {product.product_name}
+                                    {product.name}
                                 </td>
                                 <td
                                     className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
                                     onClick={() => handleProductClick(product)}
                                 >
-                                    {product.product_type}
+                                    {product.type}
                                 </td>
                                 <td
                                     className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
                                     onClick={() => handleProductClick(product)}
                                 >
-                                    {formatCurrency(product.product_price)}
+                                    {formatCurrency(product.unit_price)}
                                 </td>
                             </tr>
                         ))}

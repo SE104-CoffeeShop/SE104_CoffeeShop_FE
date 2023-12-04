@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { set } from 'react-hook-form';
 import uploadImage from '../../../assets/images/upload_image.jpg';
 import { addProduct } from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
@@ -116,18 +115,20 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
         dispatch(clearMessage());
         // If all field is not empty then add product
         const newProduct = {
-            product_code: latestProductCode,
-            product_name: productName,
-            product_type: productType,
-            product_price: parseInt(productPrice.replace(/\D/g, ''), 10),
-            product_img: previewImage as string,
+            id: latestProductCode,
+            name: productName,
+            type: productType,
+            unit_price: parseInt(productPrice.replace(/\D/g, ''), 10),
+            image: previewImage as string,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
         };
         // Dispatch add product
         dispatch(addProduct(newProduct));
         dispatch(setSuccess('Thêm hàng hoá thành công!'));
     };
     // Get latest product_code from store
-    const latestProductCode = products[products.length - 1].product_code;
+    const latestProductCode = products[products.length - 1].id;
 
     return (
         <div

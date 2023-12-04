@@ -37,7 +37,7 @@ export default function SelectAllProduct() {
                             dispatch(removeProducts());
                         } else {
                             // Add all to selected product list
-                            const newProductList = products.map((product) => product.product_code);
+                            const newProductList = products.map((product) => product.id);
                             dispatch(setSelectedProduct(newProductList));
                         }
                     }}

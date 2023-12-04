@@ -1,6 +1,6 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { Product } from '../../api/productAPI';
+import { Product } from '../../hooks/useGetProducts';
 
 function boDau(str: string) {
     // Chuẩn hóa chuỗi Unicode về dạng NFD
@@ -184,9 +184,7 @@ const productSlice = createSlice({
         },
         updateProduct: (state, action: PayloadAction<Product>) => {
             // Find index of product in products array and replace it with new product
-            const index = state.products.findIndex(
-                (product) => product.product_code === action.payload.product_code,
-            );
+            const index = state.products.findIndex((product) => product.id === action.payload.id);
             // If product is found, replace it else do nothing
             if (index !== -1) state.products[index] = action.payload;
             // Update product list
@@ -194,9 +192,7 @@ const productSlice = createSlice({
         },
         removeProductItem: (state, action: PayloadAction<string>) => {
             // Find index of product in products array and remove it using product_code
-            const index = state.products.findIndex(
-                (product) => product.product_code === action.payload,
-            );
+            const index = state.products.findIndex((product) => product.id === action.payload);
             // If found then remove it else do nothing
             if (index !== -1) state.products.splice(index, 1);
             // Update product list
@@ -205,7 +201,7 @@ const productSlice = createSlice({
         removeAllProducts: (state, action: PayloadAction<string[]>) => {
             // Remove all products that match product_code in action.payload
             action.payload.forEach((item) => {
-                const index = state.products.findIndex((product) => product.product_code === item);
+                const index = state.products.findIndex((product) => product.id === item);
                 // If found then remove it else do nothing
                 if (index !== -1) state.products.splice(index, 1);
                 // Update product list
@@ -214,9 +210,7 @@ const productSlice = createSlice({
         },
         addProduct: (state, action: PayloadAction<Product>) => {
             // CHeck if product is already in products array
-            const index = state.products.findIndex(
-                (product) => product.product_code === action.payload.product_code,
-            );
+            const index = state.products.findIndex((product) => product.id === action.payload.id);
             // If found then do nothing else add new product
             if (index === -1) {
                 // Add new product to products array
