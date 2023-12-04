@@ -30,6 +30,7 @@ export default function ProductPage() {
     const itemPerPage = 11;
     const endItemOffset = itemOffset + itemPerPage;
     const finalProductsList = filterProductsList.slice(itemOffset, endItemOffset);
+
     useEffect(() => {
         // If filter product list is not empty and final product list is empty means that at that offset
         // there is not enough product to display
@@ -49,6 +50,20 @@ export default function ProductPage() {
         // set filter products
     }, []);
 
+    // Filter product list by search value
+    const filterProductsBySearchValue = (products: Product[], searchValue: string) => {
+        return products.filter((product) => {
+            return (
+                fuzzyMatch(searchValue, product.product_code) ||
+                fuzzyMatch(searchValue, product.product_name)
+            );
+        });
+    };
+    const filterProductsByType = (products: Product[], productType: string) => {
+        return products.filter((product) => {
+            return product.product_type === productType;
+        });
+    };
     // useEffect for filter product list when search value change
     useEffect(() => {
         // Filter product list by search value
@@ -225,20 +240,6 @@ export default function ProductPage() {
         return re.test(newStr);
     };
 
-    // Filter product list by search value
-    const filterProductsBySearchValue = (products: Product[], searchValue: string) => {
-        return products.filter((product) => {
-            return (
-                fuzzyMatch(searchValue, product.product_code) ||
-                fuzzyMatch(searchValue, product.product_name)
-            );
-        });
-    };
-    const filterProductsByType = (products: Product[], productType: string) => {
-        return products.filter((product) => {
-            return product.product_type === productType;
-        });
-    };
     // Uơdate filter products when product list change
     // Fetch data
     const fetchProducts = async () => {

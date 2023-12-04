@@ -4,6 +4,7 @@ import { set } from 'react-hook-form';
 import uploadImage from '../../../assets/images/upload_image.jpg';
 import { addProduct } from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
+import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
 
 interface AddProductItemProps {
     setShowAddProductModal: (show: boolean) => void;
@@ -24,10 +25,6 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     // State for show product type dropdown
     const [showProductTypeDropdown, setShowProductTypeDropdown] = useState<boolean>(false);
-    // State for show error
-    const [showError, setShowError] = useState<boolean>(false);
-    // State for success add product
-    const [successAddProduct, setSuccessAddProduct] = useState<boolean>(false);
     // State for error input
     const [errorProductName, setErrorProductName] = useState<boolean>(false);
     const [errorProductPrice, setErrorProductPrice] = useState<boolean>(false);
@@ -69,19 +66,11 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
     // Set timeout for error
     useEffect(() => {
         const timeout = setTimeout(() => {
-            setShowError(false);
             if (errorProductName) setErrorProductName(false);
             if (errorProductPrice) setErrorProductPrice(false);
         }, 3000);
         return () => clearTimeout(timeout);
-    }, [showError, errorProductName, errorProductPrice]);
-    // Set timeout for success add product
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setSuccessAddProduct(false);
-        }, 3000);
-        return () => clearTimeout(timeout);
-    }, [successAddProduct]);
+    }, [errorProductName, errorProductPrice]);
 
     // TODO: Handle image upload
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,11 +107,13 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
     const handleSaveProduct = () => {
         // Check if exist empty field then show error and do nothing
         if (!imageFile || productName === '' || productPrice === '') {
-            setShowError(true);
+            dispatch(clearMessage());
+            dispatch(setError('Vui lòng điền đầy đủ thông tin!'));
             if (productName === '') setErrorProductName(true);
             if (productPrice === '') setErrorProductPrice(true);
             return;
         }
+        dispatch(clearMessage());
         // If all field is not empty then add product
         const newProduct = {
             product_code: latestProductCode,
@@ -133,7 +124,7 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
         };
         // Dispatch add product
         dispatch(addProduct(newProduct));
-        setSuccessAddProduct(true);
+        dispatch(setSuccess('Thêm hàng hoá thành công!'));
     };
     // Get latest product_code from store
     const latestProductCode = products[products.length - 1].product_code;
@@ -147,28 +138,6 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
         >
             <div className="fixed inset-0 backdrop-blur-lg" />
             <div className="fixed inset-0 z-10 w-screen">
-                {/* error message */}
-                {/* {showError && (
-                    <ErrorAlert
-                        close={!showError}
-                        onClose={() => {
-                            setShowError(false);
-                        }}
-                        message="Vui lòng điền đầy đủ thông tin!"
-                        className="absolute right-0 top-0 mr-[1.25rem] mt-[1.25rem] flex h-[3.75rem] w-[26.5625rem] flex-row items-center justify-start"
-                    />
-                )} */}
-                {/* success add product message */}
-                {/* {successAddProduct && (
-                    <SuccessAlert
-                        close={!successAddProduct}
-                        onClose={() => {
-                            setSuccessAddProduct(false);
-                        }}
-                        message="Thêm hàng hoá thành công!"
-                        className="absolute right-0 top-0 mr-[1.25rem] mt-[1.25rem] flex h-[3.75rem] w-[26.5625rem] flex-row items-center justify-start"
-                    />
-                )} */}
                 <div className="flex h-full items-center justify-center">
                     <div
                         className="relative flex
