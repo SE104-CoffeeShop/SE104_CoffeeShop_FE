@@ -232,10 +232,8 @@ export const {
     setProducts,
     setLoadingSuccess,
     updateProduct,
-
     removeAllProducts,
     removeProductItem,
     addProduct,
 } = productSlice.actions;
 export default productSlice.reducer;
-export const products = (state: { product: ProductState }) => state.product.products;

@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeProductItem } from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
-import SuccessAlert from '../../SuccessAlert/SuccessAlert';
 
 interface DeleteProductItemProps {
     productCode: string;
@@ -44,14 +43,14 @@ export default function DeleteProductItem({
             <div className="fixed inset-0 backdrop-blur-lg" />
             <div className="fixed inset-0 z-10 w-screen">
                 {/* Success alert */}
-                {!close && (
+                {/* {!close && (
                     <SuccessAlert
                         message="Xoá hàng hoá  thành công"
                         className="absolute right-5  top-5 z-10 mr-[1.25rem] mt-[1.25rem] h-[3.75rem] w-[26.5625rem] items-center"
                         close={close}
                         onClose={setClose}
                     />
-                )}
+                )} */}
                 {/* Modal */}
                 <div className="flex h-full items-center justify-center">
                     <div className="relative flex h-[24rem] w-[33.125rem] transform flex-col items-center justify-start overflow-hidden rounded-md bg-white p-[3.12rem] shadow-[0px_5px_12px_0px_rgba(0,0,0,0.10)] transition-all">

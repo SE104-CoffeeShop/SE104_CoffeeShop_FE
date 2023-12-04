@@ -2,10 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { set } from 'react-hook-form';
 import uploadImage from '../../../assets/images/upload_image.jpg';
-import { products, addProduct } from '../../../stores/slices/productSlice';
+import { addProduct } from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
-import { ErrorAlert } from '../../ErrorAlert/ErrorAlert';
-import SuccessAlert from '../../SuccessAlert/SuccessAlert';
 
 interface AddProductItemProps {
     setShowAddProductModal: (show: boolean) => void;
@@ -150,7 +148,7 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
             <div className="fixed inset-0 backdrop-blur-lg" />
             <div className="fixed inset-0 z-10 w-screen">
                 {/* error message */}
-                {showError && (
+                {/* {showError && (
                     <ErrorAlert
                         close={!showError}
                         onClose={() => {
@@ -159,9 +157,9 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
                         message="Vui lòng điền đầy đủ thông tin!"
                         className="absolute right-0 top-0 mr-[1.25rem] mt-[1.25rem] flex h-[3.75rem] w-[26.5625rem] flex-row items-center justify-start"
                     />
-                )}
+                )} */}
                 {/* success add product message */}
-                {successAddProduct && (
+                {/* {successAddProduct && (
                     <SuccessAlert
                         close={!successAddProduct}
                         onClose={() => {
@@ -170,7 +168,7 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
                         message="Thêm hàng hoá thành công!"
                         className="absolute right-0 top-0 mr-[1.25rem] mt-[1.25rem] flex h-[3.75rem] w-[26.5625rem] flex-row items-center justify-start"
                     />
-                )}
+                )} */}
                 <div className="flex h-full items-center justify-center">
                     <div
                         className="relative flex

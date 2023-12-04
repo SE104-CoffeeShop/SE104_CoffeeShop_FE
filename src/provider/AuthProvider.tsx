@@ -21,7 +21,7 @@ const AuthContext = createContext<{
     setToken: () => {},
 });
 
-interface User {
+export interface User {
     id: number;
     name: string;
     email: string;
