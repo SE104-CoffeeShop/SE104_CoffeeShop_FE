@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Product } from '../../../hooks/useGetProducts';
 import DeleteProductItem from '../DeleteProduct/DeleteProductItem';
+import ImageLoader from '../ImageLoader/ImageLoader';
 
 interface ProductDetailProps {
     product: Product | null;
@@ -12,6 +12,9 @@ export default function ProductDetail({ product, setShowProductDetail }: Product
     // State for show/hide delete product modal
     const [showDeleteProductModal, setShowDeleteProductModal] = useState<boolean>(false);
     // Format product price to currency format: 1000000 => 1.000.000
+    const formatImageURL = (imageURL: string) => {
+        return process.env.REACT_APP_IMAGE_URL + imageURL;
+    };
     const formatCurrency = (price: number) => {
         return new Intl.NumberFormat('en-US').format(price);
     };
@@ -57,12 +60,7 @@ w-[54.0625rem] transform flex-col items-start justify-start overflow-hidden roun
                         {/* Product info */}
                         <div className="mt-[1.56rem] flex w-full flex-row items-start justify-start">
                             {/* Product image */}
-                            <img
-                                src={product?.image}
-                                alt={product?.name}
-                                className="h-[13.98369rem]
-w-[10.38731rem]"
-                            />
+                            <ImageLoader imageURL={formatImageURL(product?.image as string)} />
                             {/* Product info */}
                             <div className="ml-[2rem] flex flex-col items-start justify-start">
                                 {/* Product name and price */}
@@ -142,6 +140,7 @@ items-center justify-between rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.75rem]"
                 <DeleteProductItem
                     productCode={product?.id as string}
                     setShowDeleteProductModal={setShowDeleteProductModal}
+                    setShowProductDetail={setShowProductDetail}
                 />
             )}
         </div>

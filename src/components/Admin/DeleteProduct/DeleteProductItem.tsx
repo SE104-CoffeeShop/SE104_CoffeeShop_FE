@@ -5,15 +5,19 @@ import { removeProductItem } from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
 import { clearMessage, setSuccess } from '../../../stores/slices/alertSlice';
 import { AlertMessage } from '../../AlertMessage/AlertMessage';
+import axiosClient from '../../../utils/axiosClient';
+import deleteProductAPI from '../../../api/deleteProductAPI';
 
 interface DeleteProductItemProps {
     productCode: string;
     setShowDeleteProductModal: (showDeleteProductModal: boolean) => void;
+    setShowProductDetail: (showProductDetail: boolean) => void;
 }
 
 export default function DeleteProductItem({
     productCode,
     setShowDeleteProductModal,
+    setShowProductDetail,
 }: DeleteProductItemProps) {
     const dispatch = useDispatch();
 
@@ -21,9 +25,8 @@ export default function DeleteProductItem({
     const handleDeleteProductItem = () => {
         dispatch(clearMessage());
         dispatch(removeProductItem(productCode));
-        // Update close state to show success alert
-        dispatch(setSuccess('Xoá hàng hoá thành công'));
-        setShowDeleteProductModal(false);
+        // Call API
+        deleteProductAPI(productCode, setShowDeleteProductModal, setShowProductDetail, dispatch);
     };
     return (
         <div

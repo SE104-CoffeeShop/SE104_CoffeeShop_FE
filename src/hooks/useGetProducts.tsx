@@ -40,5 +40,5 @@ export default function useGetProducts(page: number) {
     useEffect(() => {
         getProducts();
     }, [page]);
-    return { productsList, loading };
+    return { productsList, loading, getProducts };
 }

@@ -4,6 +4,8 @@ import uploadImage from '../../../assets/images/upload_image.jpg';
 import { addProduct } from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
 import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
+import axiosClient from '../../../utils/axiosClient';
+import addProductAPI from '../../../api/addProductAPI';
 
 interface AddProductItemProps {
     setShowAddProductModal: (show: boolean) => void;
@@ -15,6 +17,7 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
     const dispatch = useDispatch();
     // State for upload image file
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [filePath, setFilePath] = useState<string>('');
     const products = useSelector((state: RootState) => state.product.products);
     // State for each product field
     const [productName, setProductName] = useState<string>('');
@@ -27,6 +30,7 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
     // State for error input
     const [errorProductName, setErrorProductName] = useState<boolean>(false);
     const [errorProductPrice, setErrorProductPrice] = useState<boolean>(false);
+
     // useRef for type dropdown
     const typeDropdownRef = useRef<HTMLDivElement>(null);
     const inputNameRef = useRef<HTMLInputElement>(null);
@@ -73,10 +77,18 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
 
     // TODO: Handle image upload
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // Check if already have image file then remove it
+        if (imageFile) {
+            setImageFile(null);
+            setFilePath('');
+            setPreviewImage(null);
+        }
         const file = e.target.files?.[0];
+        // Get image full path
         if (file) {
             setImageFile(file);
-            // Convert image file to URL for preview
+            setFilePath(e.target.value);
+            // Convert image file to URL Mime type
             setPreviewImage(URL.createObjectURL(file));
         }
     };
@@ -105,7 +117,7 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
     // Handle save product
     const handleSaveProduct = () => {
         // Check if exist empty field then show error and do nothing
-        if (!imageFile || productName === '' || productPrice === '') {
+        if (productName === '' || productPrice === '') {
             dispatch(clearMessage());
             dispatch(setError('Vui lòng điền đầy đủ thông tin!'));
             if (productName === '') setErrorProductName(true);
@@ -113,22 +125,11 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
             return;
         }
         dispatch(clearMessage());
-        // If all field is not empty then add product
-        const newProduct = {
-            id: latestProductCode,
-            name: productName,
-            type: productType,
-            unit_price: parseInt(productPrice.replace(/\D/g, ''), 10),
-            image: previewImage as string,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-        };
-        // Dispatch add product
-        dispatch(addProduct(newProduct));
-        dispatch(setSuccess('Thêm hàng hoá thành công!'));
+        const price = parseInt(productPrice.replace(/\D/g, ''), 10);
+        addProductAPI(imageFile, productName, productType, price, dispatch, setShowAddProductModal);
     };
-    // Get latest product_code from store
-    const latestProductCode = products[products.length - 1].id;
+    // Get latest product_code from store then increase it by 1
+    const latestProductCode = parseInt(products[products.length - 1].id, 10) + 1;
 
     return (
         <div
@@ -223,15 +224,7 @@ rounded-md bg-white"
                                 {/* Product INPUT */}
                                 <div className="grid grid-flow-col grid-cols-2 items-center justify-start gap-[1rem]">
                                     {/* Product delete and Product update button */}
-                                    <h1 className="font-sans text-[1rem] font-medium">
-                                        Mã hàng hoá:{' '}
-                                    </h1>
-                                    <input
-                                        type="text"
-                                        value={latestProductCode}
-                                        className="col-start-2 rounded-md border border-[#DFE4EA] bg-white py-[0.75rem] pl-[1.25rem] pr-[1rem]"
-                                        disabled
-                                    />
+
                                     <h1 className="font-sans text-[1rem] font-medium">
                                         Tên hàng hoá:
                                     </h1>

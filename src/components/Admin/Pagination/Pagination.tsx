@@ -3,24 +3,14 @@ import ReactPaginate from 'react-paginate';
 import { set } from 'react-hook-form';
 
 export interface PaginationProps {
-    itemsPerPage: number;
     totalPage: number;
-    itemOffset: number;
-    itemLength: number;
-    setItemOffset: (itemOffset: number) => void;
+    activePage: number;
+    setActivePage: (activePage: number) => void;
 }
 
-export default function Pagination({
-    itemsPerPage,
-    totalPage,
-    itemOffset,
-    itemLength,
-    setItemOffset,
-}: PaginationProps) {
+export default function Pagination({ totalPage, activePage, setActivePage }: PaginationProps) {
     const handlePageClick = (data: { selected: number }) => {
-        const selectedPage = data.selected;
-        const offset = (selectedPage * itemsPerPage) % itemLength;
-        setItemOffset(offset);
+        setActivePage(data.selected + 1);
     };
     return (
         <div className="mt-[0.75rem] h-[3.625rem] w-fit">
@@ -56,6 +46,7 @@ export default function Pagination({
                 breakLabel="..."
                 pageCount={totalPage}
                 initialPage={0}
+                forcePage={activePage - 1}
                 onPageChange={handlePageClick}
                 marginPagesDisplayed={1}
                 pageRangeDisplayed={3}

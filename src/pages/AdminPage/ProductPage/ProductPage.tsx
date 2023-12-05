@@ -10,37 +10,23 @@ import ProductType from '../../../components/Admin/ProductType/ProductType';
 import useGetProducts, { Product } from '../../../hooks/useGetProducts';
 import { RootState } from '../../../stores/store';
 import Pagination from '../../../components/Admin/Pagination/Pagination';
+import useGetTotalPage from '../../../hooks/useGetTotalPage';
 
 export default function ProductPage() {
     // State for filter products
 
     const products = useSelector((state: RootState) => state.product.products);
     // State for hold start index of product list
-    const [itemOffset, setItemOffset] = useState<number>(0);
+    const [activePage, setActivePage] = useState<number>(1);
     // State for hold filter product list
     const [filterProductsList, setFilterProductsList] = useState<Product[]>(products);
     // State for hold search value
     const [searchValue, setSearchValue] = useState<string>('');
     // State for hold product type
-    const [productType, setProductType] = useState<string>('');
-    // State for hold product type
     const [selectedProductType, setSelectedProductType] = useState<string>('');
     // State for hold end index of product list
-    const itemPerPage = 11;
-    const endItemOffset = itemOffset + itemPerPage;
-    const finalProductsList = filterProductsList.slice(itemOffset, endItemOffset);
-    const { productsList, loading } = useGetProducts(itemOffset);
-    useEffect(() => {
-        // If filter product list is not empty and final product list is empty means that at that offset
-        // there is not enough product to display
-        // So we need to decrease offset to display previous product list
-        if (finalProductsList.length === 0 && filterProductsList.length > 0) {
-            setItemOffset(itemOffset - 1);
-        }
-    }, [itemOffset, endItemOffset, filterProductsList, finalProductsList]);
-
-    const totalPage = Math.ceil(filterProductsList.length / itemPerPage);
-    // State for filter product list
+    const { totalPage } = useGetTotalPage('/products');
+    const { productsList, loading } = useGetProducts(activePage); // State for filter product list
     const dispatch = useDispatch();
     // useEffect for fetch data when component did mount
     useEffect(() => {
@@ -49,6 +35,13 @@ export default function ProductPage() {
         // set filter products
         setFilterProductsList(products);
     }, []);
+    // Perform fetch data when active page change
+    useEffect(() => {
+        // Fetch data
+        dispatch(setProducts(productsList));
+        // set filter products
+        setFilterProductsList(products);
+    }, [activePage]);
 
     // Filter product list by search value
     const filterProductsBySearchValue = (products: Product[], searchValue: string) => {
@@ -242,7 +235,7 @@ export default function ProductPage() {
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
-            {loading === true && filterProductsList.length === 0 ? (
+            {loading === true ? (
                 <Loading />
             ) : (
                 <AdminLayout className="flex-row items-start justify-between pb-[4.63rem] pl-[4.81rem] pr-[4.63rem] pt-[1.5rem]">
@@ -254,15 +247,13 @@ export default function ProductPage() {
                         />
                     </div>
                     <div className="flex w-full flex-col items-center justify-start">
-                        <ProductTable products={finalProductsList} />
+                        <ProductTable products={filterProductsList} />
                         {/** Only render Pagination when list product is larger than 11 */}
-                        {filterProductsList.length > 11 && (
+                        {totalPage > 1 && (
                             <Pagination
                                 totalPage={totalPage}
-                                itemsPerPage={itemPerPage}
-                                itemOffset={itemOffset}
-                                itemLength={filterProductsList.length}
-                                setItemOffset={setItemOffset}
+                                activePage={activePage}
+                                setActivePage={setActivePage}
                             />
                         )}
                     </div>
