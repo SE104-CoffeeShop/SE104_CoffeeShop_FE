@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import notfound from '../../assets/images/not_found.png';
+import { useAuth } from '../../provider/AuthProvider';
 
 export default function NotFound() {
+    const { user } = useAuth();
     const navigate = useNavigate();
     return (
         <div className="flex flex-col items-center justify-center">
@@ -17,7 +19,12 @@ export default function NotFound() {
                 className="mt-[1rem] rounded bg-[#3758F9] px-[1.5rem] py-[0.5rem] font-sans text-[1rem] font-bold text-white hover:bg-[#1C3FB7]"
                 type="button"
                 onClick={() => {
-                    navigate('/admin');
+                    // Check route to reddirect back
+                    if (user?.role === 1) {
+                        navigate('/admin');
+                    } else {
+                        navigate('/admin/billing');
+                    }
                 }}
             >
                 Quay lại trang chủ

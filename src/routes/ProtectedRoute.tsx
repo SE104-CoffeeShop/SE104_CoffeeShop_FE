@@ -37,8 +37,15 @@ export default function ProtectedRoute() {
         return <Navigate to="/admin/billing" />;
     }
     if (window.location.pathname === '/login' && token && user?.role === 1) {
-        return <Navigate to="/admin/billing" />;
+        return <Navigate to="/admin" />;
     }
+    // // If user is logged in and not on dashboard, redirect to admin page
+    // if (window.location.pathname === '/' && token && user?.role === 1) {
+    //     return <Navigate to="/admin" />;
+    // }
+    // if (window.location.pathname === '/' && token && user?.role !== 1) {
+    //     return <Navigate to="/admin/billing" />;
+    // }
     // If user is logged in and not on dashboard, redirect to admin page
     if (window.location.pathname === '/' && token && user?.role === 1) {
         return <Navigate to="/admin" />;
