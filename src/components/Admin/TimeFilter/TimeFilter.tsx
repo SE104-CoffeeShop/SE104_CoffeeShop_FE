@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // TODO: Date range multiple languages
-const dateRange: { [key: string]: string } = {
+export const dateRange: { [key: string]: string } = {
     allTime: 'Mọi thời điểm',
     yesterday: 'Hôm qua',
     threeDays: '3 ngày qua',

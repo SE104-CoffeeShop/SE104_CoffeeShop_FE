@@ -33,7 +33,9 @@ export interface User {
 
 function AuthProvider({ children }: { children: ReactNode }) {
     // State to hold user information
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>(
+        localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null,
+    );
     // State to hold the authentication token
     const [token, setToken_] = useState(localStorage.getItem('ACCESS_TOKEN'));
     // Function to set the authentication token
@@ -51,9 +53,10 @@ function AuthProvider({ children }: { children: ReactNode }) {
     }, [token]);
     // Get user information from local storage when the app is first loaded and check whenever user changes
     useEffect(() => {
-        const userString = localStorage.getItem('user');
-        if (userString) {
-            setUser(JSON.parse(userString));
+        if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+        } else {
+            localStorage.removeItem('user');
         }
     }, [user]);
 

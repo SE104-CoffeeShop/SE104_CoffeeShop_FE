@@ -7,33 +7,26 @@ export default function useGetTotalIncome() {
     // Get total income
     const [totalIncome, setTotalIncome] = useState<number>(0);
     // Get all invoices
-    let invoices = [] as Invoice[];
+    let total = 0;
     const { totalPage } = useGetTotalPage('/invoices?page=1');
     // Get all invoices
     const getInvoices = (page: string) => {
-        axiosClient.get(`/invoices/${page}`).then((res) => {
+        total = 0;
+        axiosClient.get(`/invoices?page=${page}`).then((res) => {
             if (res.status === 200) {
-                const { data } = res;
-                invoices = [...invoices, ...data];
+                const invoices: Invoice[] = res.data.data;
+                invoices.forEach((invoice) => {
+                    setTotalIncome((total) => total + invoice.final_price);
+                });
             }
         });
     };
-    // Get all invoices
+
     useEffect(() => {
         for (let i = 1; i <= totalPage; i += 1) {
             getInvoices(i.toString());
         }
     }, [totalPage]);
-    // Get total income
-    useEffect(() => {
-        if (invoices.length > 0) {
-            let total = 0;
-            invoices.forEach((invoice) => {
-                if (invoice.status === 'pending') total += invoice.total_price;
-            });
-            setTotalIncome(total);
-        }
-    }, [invoices]);
 
     return totalIncome;
 }
