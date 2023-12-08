@@ -49,6 +49,14 @@ function AuthProvider({ children }: { children: ReactNode }) {
             localStorage.removeItem('ACCESS_TOKEN');
         }
     }, [token]);
+    // Get user information from local storage when the app is first loaded and check whenever user changes
+    useEffect(() => {
+        const userString = localStorage.getItem('user');
+        if (userString) {
+            setUser(JSON.parse(userString));
+        }
+    }, [user]);
+
     const contextValue = useMemo(
         () => ({
             user,

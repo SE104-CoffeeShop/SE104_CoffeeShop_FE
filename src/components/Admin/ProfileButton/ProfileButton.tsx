@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 
 interface ProfileButtonProps {
@@ -6,6 +6,8 @@ interface ProfileButtonProps {
 }
 
 export default function ProfileButton({ username }: ProfileButtonProps) {
+    // Add ref to handle click outside
+    const clickOutsideRef = React.useRef<HTMLDivElement>(null);
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
     const handleClicked = () => {
         setShowDropdown(!showDropdown);
@@ -33,7 +35,7 @@ export default function ProfileButton({ username }: ProfileButtonProps) {
                     />
                 </svg>
             </div>
-            {showDropdown && <ProfileDropdown />}
+            {showDropdown && <ProfileDropdown setShowDropdown={setShowDropdown} />}
         </div>
     );
 }

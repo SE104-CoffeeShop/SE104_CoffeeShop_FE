@@ -8,50 +8,29 @@ export default function ProtectedRoute() {
     const { token, setUser, user } = useAuth();
     // Get current route
     const navigate = useNavigate();
-    // Check if exist user in local storage
-    useEffect(() => {
-        const user = localStorage.getItem('user');
-        if (user) {
-            setUser(JSON.parse(user));
-        }
-    }, []);
-    // RUn on first render
-    // useEffect(() => {
-    //     // Get staff info
-    //     getStaff();
-    // }, []);
-    // const getStaff = async () => {
-    //     axiosClient
-    //         .get('/staffs')
-    //         .then((res) => {
-    //             console.log(res.data);
-    //         })
-    //         .then((err) => {
-    //             navigate('/login');
-    //         });
-    // };
+
     if (!token) {
         return <Navigate to="/login" />;
     }
-    if (window.location.pathname === '/login' && token && user?.role !== 1) {
+
+    if (window.location.pathname === '/') {
+        if (user?.role === 1) {
+            return <Navigate to="/admin" />;
+        }
         return <Navigate to="/admin/billing" />;
     }
-    if (window.location.pathname === '/login' && token && user?.role === 1) {
-        return <Navigate to="/admin" />;
+
+    if (window.location.pathname.startsWith('/admin')) {
+        if (user?.role !== 1) {
+            if (
+                window.location.pathname === '/admin/billing' ||
+                window.location.pathname === '/admin/checkout'
+            ) {
+                return <Outlet />;
+            }
+            return <Navigate to="/admin/billing" />;
+        }
     }
-    // // If user is logged in and not on dashboard, redirect to admin page
-    // if (window.location.pathname === '/' && token && user?.role === 1) {
-    //     return <Navigate to="/admin" />;
-    // }
-    // if (window.location.pathname === '/' && token && user?.role !== 1) {
-    //     return <Navigate to="/admin/billing" />;
-    // }
-    // If user is logged in and not on dashboard, redirect to admin page
-    if (window.location.pathname === '/' && token && user?.role === 1) {
-        return <Navigate to="/admin" />;
-    }
-    if (window.location.pathname === '/' && token && user?.role !== 1) {
-        return <Navigate to="/admin/billing" />;
-    }
+
     return <Outlet />;
 }

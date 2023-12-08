@@ -57,11 +57,11 @@ export default function AdminLayout() {
             setActive('0');
         }
     }, []);
-    // Check route user and show nav bar item accordingly
+    // Update nav bar item when user change role
     useEffect(() => {
-        if (user?.role !== 1) {
-            // If not admin, show only bill and checkout
-            setActive('2');
+        if (user?.role === 1) {
+            newNavBarItem.current = NavBarItem;
+        } else {
             newNavBarItem.current = NavBarItem.filter((item) => item.id === '2' || item.id === '6');
         }
     }, [user]);
