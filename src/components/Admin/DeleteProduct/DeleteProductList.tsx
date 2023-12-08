@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { set } from 'react-hook-form';
-import { select } from '@material-tailwind/react';
-import { removeAllProducts } from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
-import SelectProduct from '../SelectProduct/SelectProduct';
 import { clearProduct } from '../../../stores/slices/selectedProductSlice';
-import { clearMessage, setSuccess } from '../../../stores/slices/alertSlice';
+import deleteListProductAPI from '../../../api/deleteListProductAPI';
 
 interface DeleteProductListProps {
     setShowDeleteProductModal: (showDeleteProductModal: boolean) => void;
@@ -22,14 +18,11 @@ export default function DeleteProductList({
     const selectProductList = useSelector(
         (state: RootState) => state.selectedProduct.selectedProduct,
     );
-    // TODO: Handle delete product list
     const handleDeleteProductList = () => {
-        dispatch(removeAllProducts(selectProductList));
-        dispatch(clearMessage());
+        // dispatch(removeAllProducts(selectProductList));
+        // dispatch(clearMessage());
         // Update close state to show success alert and close modal
-        // TODO: Add api delete product list
-        dispatch(setSuccess('Xoá hàng hoá thành công'));
-        setShowDeleteProductModal(false);
+        deleteListProductAPI(selectProductList, dispatch, setShowDeleteProductModal);
         // Clear selected product list
         dispatch(clearProduct());
     };

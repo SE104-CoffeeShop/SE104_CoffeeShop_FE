@@ -3,6 +3,7 @@ import { createLogger } from 'redux-logger';
 import productSlice from './slices/productSlice';
 import alertSlice from './slices/alertSlice';
 import selectedProductSlice from './slices/selectedProductSlice';
+import invoiceSlice from './slices/invoiceSlice';
 
 const logger = createLogger();
 
@@ -11,6 +12,7 @@ const store = configureStore({
         alert: alertSlice,
         product: productSlice,
         selectedProduct: selectedProductSlice,
+        invoice: invoiceSlice,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

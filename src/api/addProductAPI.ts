@@ -30,8 +30,10 @@ export default function addProductAPI(
             if (res.status === 201 || res.status === 200 || res.status === 204) {
                 dispatch(setSuccess('Thêm sản phẩm thành công'));
                 setShowAddProductModal(false);
-                // Update product list after add new product
-                window.location.reload();
+                // Update product list after add new product after 2s
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             } else {
                 throw new Error('Đã có lỗi khi thêm sản phẩm');
             }

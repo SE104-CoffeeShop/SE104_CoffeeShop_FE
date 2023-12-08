@@ -13,6 +13,8 @@ export default function ProfileDropdown() {
             setUser(null);
             setToken(null);
             localStorage.removeItem('userId');
+            localStorage.removeItem('user');
+            localStorage.removeItem('ACCESS_TOKEN');
             navigate('/login');
         } catch (error) {
             console.log(error);

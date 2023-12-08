@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../stores/store';
 import { clearMessage, setError } from '../stores/slices/alertSlice';
 import axiosClient from '../utils/axiosClient';
-import { setLoadingSuccess, setProducts } from '../stores/slices/productSlice';
+import { setProducts } from '../stores/slices/productSlice';
 
 export interface Product {
     id: string;
@@ -38,7 +38,11 @@ export default function useGetProducts(page: number) {
         }
     };
     useEffect(() => {
-        getProducts();
+        // Delay 0.5s to show loading
+        const timeout = setTimeout(() => {
+            getProducts();
+        }, 500);
+        return () => clearTimeout(timeout);
     }, [page]);
     return { productsList, loading, getProducts };
 }

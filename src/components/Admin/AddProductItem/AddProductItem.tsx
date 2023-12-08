@@ -128,9 +128,6 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
         const price = parseInt(productPrice.replace(/\D/g, ''), 10);
         addProductAPI(imageFile, productName, productType, price, dispatch, setShowAddProductModal);
     };
-    // Get latest product_code from store then increase it by 1
-    const latestProductCode = parseInt(products[products.length - 1].id, 10) + 1;
-
     return (
         <div
             className="relative z-10 flex items-center justify-start overflow-hidden"

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../stores/store';
 import { clearMessage, setError } from '../stores/slices/alertSlice';
 import axiosClient from '../utils/axiosClient';
-import { setLoadingSuccess, setProducts } from '../stores/slices/productSlice';
+import { setProducts } from '../stores/slices/productSlice';
 
 export default function useGetTotalPage(path: string) {
     // State for hold items per page

@@ -22,6 +22,7 @@ export default function LoginAPI(
             if (res.status === 200) {
                 setToken(res.data.token);
                 setUser(res.data.user);
+                localStorage.setItem('user', JSON.stringify(res.data.user));
                 localStorage.setItem('userId', res.data.user.id);
                 navigate('/admin');
             } else {
