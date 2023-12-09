@@ -33,8 +33,9 @@ export default function Header() {
             currentPath === '/admin' ||
             currentPath === '/admin/billing' ||
             currentPath === '/admin/product' ||
-            currentPath === '/admin/profit' ||
+            currentPath === '/admin/voucher' ||
             currentPath === '/admin/staff' ||
+            currentPath === '/admin/checkout' ||
             currentPath === '/admin/customer'
         ) {
             setShowProfileButton(true);

@@ -4,12 +4,14 @@ import productSlice from './slices/productSlice';
 import alertSlice from './slices/alertSlice';
 import selectedProductSlice from './slices/selectedProductSlice';
 import invoiceSlice from './slices/invoiceSlice';
+import checkoutSlice from './slices/checkoutSlice';
 
 const logger = createLogger();
 
 const store = configureStore({
     reducer: {
         alert: alertSlice,
+        checkout: checkoutSlice,
         product: productSlice,
         selectedProduct: selectedProductSlice,
         invoice: invoiceSlice,

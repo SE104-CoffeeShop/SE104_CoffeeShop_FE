@@ -1,16 +1,30 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
 import { set } from 'react-hook-form';
+import useGetProducts from '../../../hooks/useGetProducts';
+import useGetInvoices from '../../../hooks/useGetInvoices';
 
 export interface PaginationProps {
+    path: string;
     totalPage: number;
     activePage: number;
     setActivePage: (activePage: number) => void;
 }
 
-export default function Pagination({ totalPage, activePage, setActivePage }: PaginationProps) {
+export default function Pagination({
+    path,
+    totalPage,
+    activePage,
+    setActivePage,
+}: PaginationProps) {
+    // Get products from API
+    const { getProducts } = useGetProducts();
+    const { getInvoices } = useGetInvoices();
     const handlePageClick = (data: { selected: number }) => {
         setActivePage(data.selected + 1);
+        // Check path to get products or invoices from API and update state (prevent re-render lost active page)
+        if (path === '/products' || path === '/checkout') getProducts(data.selected + 1);
+        if (path === '/invoices') getInvoices(data.selected + 1);
     };
     return (
         <div className="mt-[0.75rem] h-[3.625rem] w-fit">

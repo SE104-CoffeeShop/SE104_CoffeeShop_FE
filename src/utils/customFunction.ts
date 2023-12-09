@@ -229,3 +229,8 @@ export const convertIsoStringToDate = (isoString: string): string => {
 export const formatCurrency = (price: number) => {
     return new Intl.NumberFormat('en-US').format(price);
 };
+
+// Format image url to get image from server
+export const formatImageURL = (imageURL: string) => {
+    return process.env.REACT_APP_IMAGE_URL + imageURL;
+};

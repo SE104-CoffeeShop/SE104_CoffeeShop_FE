@@ -103,7 +103,8 @@ shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                                         handleBillClick(invoice);
                                     }}
                                 >
-                                    {invoice.customer?.name === null
+                                    {invoice.customer?.name === null ||
+                                    invoice.customer?.name === undefined
                                         ? 'Khách vãng lai'
                                         : invoice.customer?.name}
                                 </td>

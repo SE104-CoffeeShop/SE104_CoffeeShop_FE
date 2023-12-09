@@ -15,12 +15,12 @@ export interface Product {
     updated_at: string;
 }
 
-export default function useGetProducts(page: number) {
+export default function useGetProducts() {
     const [productsList, setProductsList] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const dispatch = useDispatch();
-    // Get products from API
-    const getProducts = async () => {
+
+    const getProducts = async (page: number) => {
         setLoading(true);
         dispatch(clearMessage());
         try {
@@ -32,17 +32,14 @@ export default function useGetProducts(page: number) {
                 throw new Error('Có lỗi xảy ra khi lấy dữ liệu sản phẩm');
             }
         } catch (error) {
-            if (error instanceof Error) dispatch(setError(error.message));
+            dispatch(setError('Có lỗi xảy ra khi lấy dữ liệu sản phẩm'));
         } finally {
             setLoading(false);
         }
     };
     useEffect(() => {
-        // Delay 0.5s to show loading
-        const timeout = setTimeout(() => {
-            getProducts();
-        }, 500);
-        return () => clearTimeout(timeout);
-    }, [page]);
+        getProducts(1);
+    }, []);
+
     return { productsList, loading, getProducts };
 }

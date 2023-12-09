@@ -279,7 +279,7 @@ rounded-md bg-white"
                                     {showProductTypeDropdown && (
                                         <div
                                             ref={typeDropdownRef}
-                                            className="absolute right-[9.5rem] top-[23rem] z-10 flex w-[11.625rem] flex-col rounded-md bg-white shadow-[0px_2px_8px_0px_rgba(0,0,0,0.16)]"
+                                            className="absolute right-[9.5rem] top-[18rem] z-10 flex w-[11.625rem] flex-col rounded-md bg-white shadow-[0px_2px_8px_0px_rgba(0,0,0,0.16)]"
                                         >
                                             {productTypes.map((type) => (
                                                 <button

@@ -67,21 +67,22 @@ export interface Invoice {
     voucher: Voucher | null;
 }
 
-export default function useGetInvoices(page: number) {
+export default function useGetInvoices() {
     const dispatch = useDispatch();
     const [invoicesList, setInvoicesList] = useState<Invoice[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     // Get invoices from API
-    const getInvoices = () => {
+    const getInvoices = (page: number) => {
         setLoading(true);
         dispatch(clearMessage());
         axiosClient
             .get(`/invoices?page=${page}`)
             .then((res) => {
                 if (res.status === 200) {
-                    const data: Invoice[] = [...res.data.data];
-                    setInvoicesList(data);
-                    dispatch(setInvoices(data));
+                    const invoices = [...res.data.data];
+                    // Convert to array of invoices
+                    setInvoicesList(invoices);
+                    dispatch(setInvoices(invoices));
                 } else {
                     throw new Error('Có lỗi xảy ra khi lấy dữ liệu hóa đơn');
                 }
@@ -95,10 +96,7 @@ export default function useGetInvoices(page: number) {
     };
     // Get invoices from API, delay 0.5s to show loading
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            getInvoices();
-        }, 500);
-        return () => clearTimeout(timeout);
-    }, [page]);
+        getInvoices(1);
+    }, []);
     return { invoicesList, loading, getInvoices };
 }

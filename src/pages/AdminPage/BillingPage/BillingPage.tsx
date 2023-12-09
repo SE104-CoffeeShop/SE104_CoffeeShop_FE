@@ -22,19 +22,17 @@ export default function BillingPage() {
     const [selectedStatus, setSelectedStatus] = useState<string>('allStatus');
     const [activePage, setActivePage] = useState<number>(1);
     const [filterBillList, setFilterBillList] = useState<Invoice[]>([]);
-    const { invoicesList, loading } = useGetInvoices(activePage);
+    const { invoicesList, loading } = useGetInvoices();
     const { totalPage } = useGetTotalPage('/invoices');
     const invoices = useSelector((state: RootState) => state.invoice.invoices);
     const dispatch = useDispatch();
     const { user } = useAuth();
+
     useEffect(() => {
         dispatch(setInvoices(invoicesList));
-        setFilterBillList(invoicesList);
+        setFilterBillList(invoices);
     }, []);
-    useEffect(() => {
-        dispatch(setInvoices(invoicesList));
-        setFilterBillList(invoicesList);
-    }, [activePage]);
+
     useEffect(() => {
         let newFilterList = invoices;
         newFilterList = filterByBillID(newFilterList, searchBillID);
@@ -42,15 +40,10 @@ export default function BillingPage() {
         newFilterList = filterByDateRange(newFilterList, selectedDateRange);
         newFilterList = filterByStatus(newFilterList, selectedStatus);
         setFilterBillList(newFilterList);
-    }, [searchBillID, searchCustomerID, selectedDateRange, selectedStatus, activePage, invoices]);
+    }, [searchBillID, searchCustomerID, selectedDateRange, selectedStatus, invoices]);
     // Check user role to render table content
     // If admin then show all invoices
     // If staff then show only invoices that in status pending
-    useEffect(() => {
-        if (user?.role !== 1) {
-            setFilterBillList(filterByStatus(invoices, 'pending'));
-        }
-    }, [invoices]);
     // Filter invoices by bill id
     const filterByBillID = (invoices: Invoice[], searchBillID: string) => {
         return invoices.filter((invoice) => {
@@ -71,7 +64,7 @@ export default function BillingPage() {
                     fuzzyMatch(invoice.customer.name, searchCustomerID)
                 );
             }
-            return false;
+            return true;
         });
     };
     // Filter invoices by date range
@@ -115,6 +108,7 @@ export default function BillingPage() {
                         <BillingTable invoices={filterBillList} />
                         {totalPage > 1 && (
                             <Pagination
+                                path="/invoices"
                                 totalPage={totalPage}
                                 activePage={activePage}
                                 setActivePage={setActivePage}

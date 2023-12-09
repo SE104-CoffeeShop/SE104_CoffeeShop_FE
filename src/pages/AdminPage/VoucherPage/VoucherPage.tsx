@@ -1,8 +1,8 @@
 import React from 'react';
-import AdminLayout from '../../../layout/AdminLayout/AdminLayout';
 import Loading from '../../../components/Loading/Loading';
+import AdminLayout from '../../../layout/AdminLayout/AdminLayout';
 
-export default function ProfitPage() {
+export default function VoucherPage() {
     return (
         <AdminLayout>
             <Loading />

@@ -29,5 +29,6 @@ export default function useGetTotalPage(path: string) {
     useEffect(() => {
         getTotalPage();
     }, []);
-    return { totalPage };
+    // Run only once when component mount
+    return { totalPage, getTotalPage };
 }

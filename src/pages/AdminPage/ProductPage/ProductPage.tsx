@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { get } from 'http';
 import { setProducts } from '../../../stores/slices/productSlice';
 import AdminLayout from '../../../layout/AdminLayout/AdminLayout';
 import Loading from '../../../components/Loading/Loading';
@@ -27,22 +28,14 @@ export default function ProductPage() {
     const [selectedProductType, setSelectedProductType] = useState<string>('');
     // State for hold end index of product list
     const { totalPage } = useGetTotalPage('/products');
-    const { productsList, loading } = useGetProducts(activePage); // State for filter product list
+    const { productsList, loading, getProducts } = useGetProducts(); // State for filter product list
     const dispatch = useDispatch();
-    // useEffect for fetch data when component did mount
+
     useEffect(() => {
-        // Fetch data
         dispatch(setProducts(productsList));
         // set filter products
         setFilterProductsList(products);
     }, []);
-    // Perform fetch data when active page change
-    useEffect(() => {
-        // Fetch data
-        dispatch(setProducts(productsList));
-        // set filter products
-        setFilterProductsList(products);
-    }, [activePage]);
 
     // Filter product list by search value
     const filterProductsBySearchValue = (products: Product[], searchValue: string) => {
@@ -92,6 +85,7 @@ export default function ProductPage() {
                         {/** Only render Pagination when list product is larger than 11 */}
                         {totalPage > 1 && (
                             <Pagination
+                                path="/products"
                                 totalPage={totalPage}
                                 activePage={activePage}
                                 setActivePage={setActivePage}

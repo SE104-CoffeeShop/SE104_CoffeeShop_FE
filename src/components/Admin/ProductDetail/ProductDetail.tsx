@@ -81,6 +81,9 @@ w-[54.0625rem] transform flex-col items-start justify-start overflow-hidden roun
                                         type="button"
                                         className="inline-flex h-[3.051rem] w-[7.836rem] items-center
 justify-between rounded-md bg-[#12582E] px-[0.86rem] pb-[0.8rem] pt-[0.75rem]"
+                                        onClick={() => {
+                                            setShowProductDetail(false);
+                                        }}
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
