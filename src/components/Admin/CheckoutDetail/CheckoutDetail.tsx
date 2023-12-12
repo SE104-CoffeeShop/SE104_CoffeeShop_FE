@@ -5,6 +5,7 @@ import { set } from 'react-hook-form';
 import { RootState } from '../../../stores/store';
 import { formatCurrency, convertIsoStringToDate } from '../../../utils/customFunction';
 import {
+    clearCheckoutList,
     updateCustomerPhone,
     updateDiscountPrice,
     updateTableNumber,
@@ -112,7 +113,7 @@ export default function CheckoutDetail({
         // If money is empty, set money to 0
         const moneyInputNumber = moneyInput === '' ? 0 : parseInt(moneyInput, 10);
         // Calculate return money
-        const returnMoney = totalPrice - discountPrice - moneyInputNumber;
+        const returnMoney = moneyInputNumber - totalPrice + discountPrice;
         // If return money < 0, show error
         if (returnMoney < 0) {
             dispatch(setError('Số tiền khách đưa không đủ'));
@@ -155,6 +156,8 @@ export default function CheckoutDetail({
             if (res.status === 200) {
                 dispatch(setSuccess('Thanh toán thành công'));
                 // Reset checkout state
+                // Reset checkout items
+                dispatch(clearCheckoutList());
                 dispatch(updateVoucherCode(null));
                 dispatch(updateCustomerPhone(null));
                 dispatch(updateDiscountPrice(0));
@@ -340,7 +343,7 @@ rounded-[0.625rem] shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                     <div className="fixed inset-0 z-10 w-screen">
                         <div className="flex h-full items-center justify-center">
                             <div
-                                className="relative flex h-[39.125rem]
+                                className="relative flex h-fit
 w-[59.5rem] transform flex-col items-start justify-start overflow-hidden rounded-md bg-white pb-[2.92rem] pl-[1.62rem] pr-[1rem] pt-[0.56rem] drop-shadow-[0px_4px_4px_rgba(0,0,0,0.25)] transition-all"
                             >
                                 {/* close button */}
