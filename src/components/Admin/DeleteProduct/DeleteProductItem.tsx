@@ -7,6 +7,7 @@ import { clearMessage, setSuccess } from '../../../stores/slices/alertSlice';
 import { AlertMessage } from '../../AlertMessage/AlertMessage';
 import axiosClient from '../../../utils/axiosClient';
 import deleteProductAPI from '../../../api/deleteProductAPI';
+import { clearProduct } from '../../../stores/slices/selectedProductSlice';
 
 interface DeleteProductItemProps {
     productCode: string;
@@ -25,6 +26,7 @@ export default function DeleteProductItem({
     const handleDeleteProductItem = () => {
         dispatch(clearMessage());
         dispatch(removeProductItem(productCode));
+        dispatch(clearProduct());
         // Call API
         deleteProductAPI(productCode, setShowDeleteProductModal, setShowProductDetail, dispatch);
     };

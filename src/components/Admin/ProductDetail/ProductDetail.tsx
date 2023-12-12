@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Product } from '../../../hooks/useGetProducts';
 import DeleteProductItem from '../DeleteProduct/DeleteProductItem';
 import ImageLoader from '../ImageLoader/ImageLoader';
+import UpdateProduct from '../UpdateProduct/UpdateProduct';
 
 interface ProductDetailProps {
     product: Product | null;
@@ -11,6 +12,8 @@ interface ProductDetailProps {
 export default function ProductDetail({ product, setShowProductDetail }: ProductDetailProps) {
     // State for show/hide delete product modal
     const [showDeleteProductModal, setShowDeleteProductModal] = useState<boolean>(false);
+    // State for update product modal
+    const [showUpdateProductModal, setShowUpdateProductModal] = useState<boolean>(false);
     // Format product price to currency format: 1000000 => 1.000.000
     const formatImageURL = (imageURL: string) => {
         return process.env.REACT_APP_IMAGE_URL + imageURL;
@@ -82,7 +85,7 @@ w-[54.0625rem] transform flex-col items-start justify-start overflow-hidden roun
                                         className="inline-flex h-[3.051rem] w-[7.836rem] items-center
 justify-between rounded-md bg-[#12582E] px-[0.86rem] pb-[0.8rem] pt-[0.75rem]"
                                         onClick={() => {
-                                            setShowProductDetail(false);
+                                            setShowUpdateProductModal(true);
                                         }}
                                     >
                                         <svg
@@ -138,6 +141,13 @@ items-center justify-between rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.75rem]"
                     </div>
                 </div>
             </div>
+            {/* Update product modal */}
+            {showUpdateProductModal === true && (
+                <UpdateProduct
+                    product={product as Product}
+                    setShowUpdateProductModal={setShowUpdateProductModal}
+                />
+            )}
             {/* Delete product modal */}
             {showDeleteProductModal === true && (
                 <DeleteProductItem

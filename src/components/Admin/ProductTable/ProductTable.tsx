@@ -33,6 +33,12 @@ export default function ProductTable({ products }: ProductTableProps) {
             document.body.style.overflow = 'unset';
         }
     }, [showProductDetail, showDeleteProductModal, showAddProductModal]);
+    // Check for selected product list change to render product list and delete product list button
+    useEffect(() => {
+        if (selectedProductsList.length === 0) {
+            setShowDeleteProductModal(false);
+        }
+    }, [selectedProductsList]);
     // Render product list when filter product list change
     // Format product price to currency format: 1000000 => 1.000.000
     const formatCurrency = (price: number) => {

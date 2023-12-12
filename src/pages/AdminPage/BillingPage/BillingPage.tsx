@@ -67,6 +67,14 @@ export default function BillingPage() {
             return true;
         });
     };
+    // Check user role to render table content (staff only show pending invoices and admin show all invoices)
+    useEffect(() => {
+        if (user?.role !== 1) {
+            setFilterBillList(invoices.filter((invoice) => invoice.status === 'pending'));
+        } else {
+            setFilterBillList(invoices);
+        }
+    }, [user, invoices]);
     // Filter invoices by date range
     const filterByDateRange = (invoices: Invoice[], selectedDateRange: string) => {
         return filterByTimeRange(invoices, selectedDateRange);
