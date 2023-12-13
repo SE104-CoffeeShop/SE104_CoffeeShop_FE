@@ -11,10 +11,9 @@ export default function deleteListProductAPI(
 ) {
     dispatch(clearMessage());
     axiosClient
-        .delete('/products/bulk-delete', {
-            data: {
-                ids: selectProductList,
-            },
+        .post('/products/bulk-delete', {
+            _method: 'DELETE',
+            ids: selectProductList,
         })
         .then((res) => {
             if (res.status === 204) {

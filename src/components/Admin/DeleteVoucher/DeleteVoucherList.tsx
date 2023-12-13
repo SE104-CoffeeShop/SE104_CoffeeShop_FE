@@ -1,32 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Alert } from '@material-tailwind/react';
-import { removeProductItem } from '../../../stores/slices/productSlice';
+import { stat } from 'fs';
 import { RootState } from '../../../stores/store';
-import { clearMessage, setSuccess } from '../../../stores/slices/alertSlice';
-import { AlertMessage } from '../../AlertMessage/AlertMessage';
+import { clearProduct } from '../../../stores/slices/selectedProductSlice';
+import deleteListProductAPI from '../../../api/deleteListProductAPI';
+import { clearVoucher } from '../../../stores/slices/selectedVoucherSlice';
+import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
 import axiosClient from '../../../utils/axiosClient';
-import deleteProductAPI from '../../../api/deleteProductAPI';
+import { removeAllVouchers } from '../../../stores/slices/voucherSlice';
 
-interface DeleteProductItemProps {
-    productCode: string;
-    setShowDeleteProductModal: (showDeleteProductModal: boolean) => void;
-    setShowProductDetail: (showProductDetail: boolean) => void;
+interface DeleteVoucherListProps {
+    setShowDeleteVoucherModal: (showDeleteProductModal: boolean) => void;
+    showDeleteVoucherModal: boolean;
 }
 
-export default function DeleteProductItem({
-    productCode,
-    setShowDeleteProductModal,
-    setShowProductDetail,
-}: DeleteProductItemProps) {
+export default function DeleteVoucherList({
+    setShowDeleteVoucherModal,
+    showDeleteVoucherModal,
+}: DeleteVoucherListProps) {
     const dispatch = useDispatch();
-
-    // Handle delete product item
-    const handleDeleteProductItem = () => {
+    // State for hold selected voucher list in table
+    const selectVoucherList = useSelector(
+        (state: RootState) => state.selectedVoucher.selectedVoucher,
+    );
+    const handleDeleteVoucherList = () => {
+        // d
         dispatch(clearMessage());
-        dispatch(removeProductItem(productCode));
-        // Call API
-        deleteProductAPI(productCode, setShowDeleteProductModal, setShowProductDetail, dispatch);
+        axiosClient
+            .post('/vouchers/bulk-delete', {
+                _method: 'DELETE',
+                ids: selectVoucherList,
+            })
+            .then((res) => {
+                if (res.status === 204) {
+                    dispatch(removeAllVouchers(selectVoucherList));
+                    dispatch(setSuccess('Xoá voucher thành công !'));
+                    setShowDeleteVoucherModal(false);
+                } else {
+                    throw new Error('Có lỗi xảy ra khi xoá voucher');
+                }
+            })
+            .catch((error) => {
+                dispatch(setError('Có lỗi xảy ra khi xoá voucher'));
+            });
+        // Update close state to show success alert and close modal
+        // deleteListProductAPI(selectProductList, dispatch, setShowDeleteProductModal);
+        // Clear selected product list
+        dispatch(clearVoucher());
     };
     return (
         <div
@@ -37,7 +57,7 @@ export default function DeleteProductItem({
         >
             <div className="fixed inset-0 backdrop-blur-lg" />
             <div className="fixed inset-0 z-10 w-screen">
-                <div className="flex h-full items-center justify-center">
+                <div className="relative flex h-full items-center justify-center">
                     <div className="relative flex h-[24rem] w-[33.125rem] transform flex-col items-center justify-start overflow-hidden rounded-md bg-white p-[3.12rem] shadow-[0px_5px_12px_0px_rgba(0,0,0,0.10)] transition-all">
                         {/* Modal icon */}
                         <div className="inline-flex items-center justify-center rounded-full bg-[#FEEBEB] px-[1.13rem] py-[1.12rem]">
@@ -68,10 +88,10 @@ export default function DeleteProductItem({
                         </h1>
                         {/* Modal description */}
                         <p className="mt-[0.94rem] text-center font-sans text-[#637381]">
-                            Hệ thông sẽ xoá bỏ hoàn toàn hàng hoá có mã là
+                            Hệ thông sẽ xoá bỏ
                             <span className="font-sans font-bold text-[#637381]">
                                 {' '}
-                                {productCode}
+                                toàn bộ hàng hoá đã chọn
                             </span>
                             . Bạn có chắc chắn muốn xoá ?
                         </p>
@@ -80,7 +100,7 @@ export default function DeleteProductItem({
                                 type="button"
                                 className="h-[3.125rem] w-[11.875rem] rounded-md border border-[#DFE4EA] bg-white px-[1.75rem] py-[0.81rem] font-sans font-medium"
                                 onClick={() => {
-                                    setShowDeleteProductModal(false);
+                                    setShowDeleteVoucherModal(false);
                                 }}
                             >
                                 Bỏ qua
@@ -88,7 +108,7 @@ export default function DeleteProductItem({
                             <button
                                 type="button"
                                 className="h-[3.125rem] w-[11.875rem] rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.81rem] font-sans font-medium text-white"
-                                onClick={handleDeleteProductItem}
+                                onClick={handleDeleteVoucherList}
                             >
                                 Đồng ý
                             </button>

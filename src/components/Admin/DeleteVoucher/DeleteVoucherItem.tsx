@@ -1,32 +1,56 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert } from '@material-tailwind/react';
+import { stat } from 'fs';
 import { removeProductItem } from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
-import { clearMessage, setSuccess } from '../../../stores/slices/alertSlice';
+import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
 import { AlertMessage } from '../../AlertMessage/AlertMessage';
 import axiosClient from '../../../utils/axiosClient';
 import deleteProductAPI from '../../../api/deleteProductAPI';
+import { clearProduct } from '../../../stores/slices/selectedProductSlice';
+import { removeVoucherItem } from '../../../stores/slices/voucherSlice';
+import { clearVoucher } from '../../../stores/slices/selectedVoucherSlice';
 
-interface DeleteProductItemProps {
-    productCode: string;
-    setShowDeleteProductModal: (showDeleteProductModal: boolean) => void;
-    setShowProductDetail: (showProductDetail: boolean) => void;
+interface DeleteVoucherItemProps {
+    voucherCode: string;
+
+    setShowDeleteVoucherModal: (showDeleteVoucherModal: boolean) => void;
+    setShowVoucherDetail: (showVoucherDetail: boolean) => void;
 }
 
-export default function DeleteProductItem({
-    productCode,
-    setShowDeleteProductModal,
-    setShowProductDetail,
-}: DeleteProductItemProps) {
-    const dispatch = useDispatch();
+export default function DeleteVoucherItem({
+    voucherCode,
 
+    setShowDeleteVoucherModal,
+    setShowVoucherDetail,
+}: DeleteVoucherItemProps) {
+    const dispatch = useDispatch();
+    const vouchers = useSelector((state: RootState) => state.voucher.vouchers);
     // Handle delete product item
-    const handleDeleteProductItem = () => {
+    const handleDeleteVoucherItem = () => {
         dispatch(clearMessage());
-        dispatch(removeProductItem(productCode));
-        // Call API
-        deleteProductAPI(productCode, setShowDeleteProductModal, setShowProductDetail, dispatch);
+        dispatch(removeVoucherItem(voucherCode));
+        dispatch(clearVoucher());
+
+        dispatch(clearMessage());
+        axiosClient
+            .post(`/vouchers/${voucherCode}`, {
+                _method: 'DELETE',
+            })
+            .then((res) => {
+                if (res.status === 204) {
+                    dispatch(setSuccess('Xoá voucher thành công'));
+                    setShowDeleteVoucherModal(false);
+                    setShowVoucherDetail(false);
+                } else {
+                    throw new Error('Có lỗi xảy ra khi xoá voucher');
+                }
+            })
+            .catch((error) => {
+                dispatch(setError('Có lỗi xảy ra khi xoá voucher'));
+                setShowDeleteVoucherModal(false);
+            });
     };
     return (
         <div
@@ -64,14 +88,14 @@ export default function DeleteProductItem({
                         </div>
                         {/* Modal title */}
                         <h1 className="mt-[1.38rem] text-center font-sans text-[1.5rem] font-bold text-[#111928]">
-                            Xoá hàng hoá
+                            Xoá voucher
                         </h1>
                         {/* Modal description */}
                         <p className="mt-[0.94rem] text-center font-sans text-[#637381]">
-                            Hệ thông sẽ xoá bỏ hoàn toàn hàng hoá có mã là
+                            Hệ thông sẽ xoá bỏ hoàn toàn voucher có mã là
                             <span className="font-sans font-bold text-[#637381]">
                                 {' '}
-                                {productCode}
+                                {voucherCode}
                             </span>
                             . Bạn có chắc chắn muốn xoá ?
                         </p>
@@ -80,7 +104,7 @@ export default function DeleteProductItem({
                                 type="button"
                                 className="h-[3.125rem] w-[11.875rem] rounded-md border border-[#DFE4EA] bg-white px-[1.75rem] py-[0.81rem] font-sans font-medium"
                                 onClick={() => {
-                                    setShowDeleteProductModal(false);
+                                    setShowDeleteVoucherModal(false);
                                 }}
                             >
                                 Bỏ qua
@@ -88,7 +112,7 @@ export default function DeleteProductItem({
                             <button
                                 type="button"
                                 className="h-[3.125rem] w-[11.875rem] rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.81rem] font-sans font-medium text-white"
-                                onClick={handleDeleteProductItem}
+                                onClick={handleDeleteVoucherItem}
                             >
                                 Đồng ý
                             </button>

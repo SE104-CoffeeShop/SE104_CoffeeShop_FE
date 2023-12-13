@@ -11,7 +11,9 @@ export default function deleteProductAPI(
     dispatch: Dispatch<AnyAction>,
 ) {
     axiosClient
-        .delete(`/products/${productCode}`)
+        .post(`/products/${productCode}`, {
+            _method: 'DELETE',
+        })
         .then((res) => {
             if (res.status === 204) {
                 // Update close state to show success alert and close modal

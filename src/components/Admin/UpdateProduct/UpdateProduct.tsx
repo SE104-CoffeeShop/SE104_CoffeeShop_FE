@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { set } from 'react-hook-form';
 import { Product } from '../../../hooks/useGetProducts';
 import { RootState } from '../../../stores/store';
 import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
@@ -215,7 +214,7 @@ h-[36.3125rem] w-[54.0625rem] transform flex-col items-start justify-start overf
                             className="flex h-[3.125rem] w-[53.9375rem] flex-row
 items-center justify-start border-b border-[#000000] pb-[0.56rem] pl-[1rem] pt-[0.69rem]"
                         >
-                            <h1 className="font-sans text-[1rem] font-bold">Thêm hàng hoá</h1>
+                            <h1 className="font-sans text-[1rem] font-bold">Cập nhật hàng hoá</h1>
                         </div>
                         {/* Product info */}
                         <div className="flex w-full flex-row items-start justify-start pb-[8.81rem] pl-[4.75rem] pt-[2.88rem]">

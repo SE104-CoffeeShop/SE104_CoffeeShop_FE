@@ -1,19 +1,12 @@
+import exp from 'constants';
 import React from 'react';
-import { set } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 
-interface SearchProductProps {
+export interface SearchVoucherProps {
     searchValue: string;
     setSearchValue: (searchValue: string) => void;
 }
 
-export default function SearchProduct({ searchValue, setSearchValue }: SearchProductProps) {
-    const dispatch = useDispatch();
-    // Handle search product by code and name
-    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const searchValue = e.target.value;
-        setSearchValue(searchValue);
-    };
+export default function SearchVoucher({ searchValue, setSearchValue }: SearchVoucherProps) {
     return (
         <div className=" flex h-[5.5rem] w-[12.875rem] flex-col rounded-[0.625rem] bg-white pb-[1.31rem] pl-[0.7rem] pr-[1.6rem] pt-[0.38rem] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
             <label className="font-sans text-[1rem] font-bold" htmlFor="search">
@@ -23,8 +16,8 @@ export default function SearchProduct({ searchValue, setSearchValue }: SearchPro
                 type="text"
                 id="search"
                 value={searchValue}
-                onChange={handleSearch}
-                placeholder="Theo mã, tên hàng"
+                onChange={(e) => setSearchValue(e.target.value)}
+                placeholder="Theo mã voucher"
                 className="
                 w-full
                 border-b

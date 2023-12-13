@@ -5,8 +5,8 @@ import alertSlice from './slices/alertSlice';
 import selectedProductSlice from './slices/selectedProductSlice';
 import invoiceSlice from './slices/invoiceSlice';
 import checkoutSlice from './slices/checkoutSlice';
-
-const logger = createLogger();
+import voucherSlice from './slices/voucherSlice';
+import selectedVoucherSlice from './slices/selectedVoucherSlice';
 
 const store = configureStore({
     reducer: {
@@ -15,8 +15,9 @@ const store = configureStore({
         product: productSlice,
         selectedProduct: selectedProductSlice,
         invoice: invoiceSlice,
+        voucher: voucherSlice,
+        selectedVoucher: selectedVoucherSlice,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

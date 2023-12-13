@@ -234,3 +234,43 @@ export const formatCurrency = (price: number) => {
 export const formatImageURL = (imageURL: string) => {
     return process.env.REACT_APP_IMAGE_URL + imageURL;
 };
+
+// Convert date from "yyyy-mm-đ hh:mm:ss" to "dd/mm/yyyy"
+export const convertDate = (date: string) => {
+    const dateObj = new Date(date);
+    const day = dateObj.getDate().toString().padStart(2, '0');
+    const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+    const year = dateObj.getFullYear().toString();
+    return `${day}/${month}/${year}`;
+};
+
+export const convertDateToServerFormat = (dateString: string) => {
+    //* Input date format: DD/MM/YYYY, e.g. 28/02/2023
+    //* Output date format: YYYY-MM-DD, e.g. 2023-02-28
+
+    const parts = dateString.split('/');
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
+
+    // Create a new Date object using the components
+    const date = new Date(`${year}-${month}-${day}`);
+
+    // Extract the components of the new date
+    const convertedDay = String(date.getDate()).padStart(2, '0');
+    const convertedMonth = String(date.getMonth() + 1).padStart(2, '0');
+    const convertedYear = date.getFullYear();
+
+    // Return the converted date in the "yyyy-mm-dd" format
+    return `${convertedYear}-${convertedMonth}-${convertedDay}`;
+};
+
+// Convert date from 'dd/mm/yyyy' to 'mm/dd/yyyy'
+export const convertDateToUSFormat = (dateString: string) => {
+    const parts = dateString.split('/');
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
+
+    return `${month}/${day}/${year}`;
+};

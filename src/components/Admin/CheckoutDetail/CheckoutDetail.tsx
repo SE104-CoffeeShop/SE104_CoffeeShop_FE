@@ -68,9 +68,19 @@ export default function CheckoutDetail({
             .post('/vouchers-verify', { voucher_code: voucherCode })
             .then((res) => {
                 if (res.status === 200) {
+                    // check type of voucher
+                    if (res.data.voucher_type === 'percent') {
+                        // Get discount price
+                        dispatch(
+                            updateDiscountPrice(
+                                (res.data.voucher_amount * checkouts.totalPrice) / 100,
+                            ),
+                        );
+                    } else {
+                        // Get discount price
+                        dispatch(updateDiscountPrice(res.data.voucher_amount));
+                    }
                     dispatch(updateVoucherCode(voucherCode));
-                    // Get amount of discount
-                    dispatch(updateDiscountPrice(res.data.voucher_amount));
                     // Update table data
                     dispatch(updateTableNumber(tableData));
                     // Show pay bill modal
