@@ -5,6 +5,7 @@ import { setInvoices } from '../stores/slices/invoiceSlice';
 import { clearMessage, setError } from '../stores/slices/alertSlice';
 import axiosClient from '../utils/axiosClient';
 import { data } from '../components/Admin/RecentProfit/RecentProfit';
+import { useAuth } from '../provider/AuthProvider';
 
 // Interface for invoices detail
 export interface InvoiceDetail {
@@ -71,12 +72,43 @@ export default function useGetInvoices() {
     const dispatch = useDispatch();
     const [invoicesList, setInvoicesList] = useState<Invoice[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const { user } = useAuth();
+    // const [endPoint, setEndPoint] = useState<string>('/invoices-pending');
+    let endPoint = '/invoices-pending';
+    if (user?.role === 1) {
+        endPoint = '/invoices';
+    } else {
+        endPoint = '/invoices-pending';
+    }
     // Get invoices from API
     const getInvoices = (page: number) => {
         setLoading(true);
         dispatch(clearMessage());
         axiosClient
-            .get(`/invoices?page=${page}`)
+            .get(`${endPoint}?page=${page}`)
+            .then((res) => {
+                if (res.status === 200) {
+                    const invoices = [...res.data.data];
+                    // Convert to array of invoices
+                    setInvoicesList(invoices);
+                    dispatch(setInvoices(invoices));
+                } else {
+                    throw new Error('Có lỗi xảy ra khi lấy dữ liệu hóa đơn');
+                }
+            })
+            .catch((error) => {
+                dispatch(setError('Có lỗi xảy ra khi lấy dữ liệu hóa đơn'));
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
+    // Get pending invoices from API
+    const getPendingInvoices = (page: number) => {
+        setLoading(true);
+        dispatch(clearMessage());
+        axiosClient
+            .get(`/invoices-pending?page=${page}`)
             .then((res) => {
                 if (res.status === 200) {
                     const invoices = [...res.data.data];
@@ -96,7 +128,7 @@ export default function useGetInvoices() {
     };
     // Get invoices from API, delay 0.5s to show loading
     useEffect(() => {
-        getInvoices(1);
-    }, []);
+        if (user) getInvoices(1);
+    }, [user]);
     return { invoicesList, loading, getInvoices };
 }

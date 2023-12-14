@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { select } from '@material-tailwind/react';
 import { useDispatch, useSelector } from 'react-redux';
+import { get } from 'http';
 import AdminLayout from '../../../layout/AdminLayout/AdminLayout';
 import Loading from '../../../components/Loading/Loading';
 import SearchBilling from '../../../components/Admin/SearchBilling/SearchBilling';
@@ -22,12 +23,18 @@ export default function BillingPage() {
     const [selectedStatus, setSelectedStatus] = useState<string>('allStatus');
     const [activePage, setActivePage] = useState<number>(1);
     const [filterBillList, setFilterBillList] = useState<Invoice[]>([]);
+    let endPoint = '/invoices-pending';
     const { invoicesList, loading } = useGetInvoices();
-    const { totalPage } = useGetTotalPage('/invoices');
+
     const invoices = useSelector((state: RootState) => state.invoice.invoices);
     const dispatch = useDispatch();
     const { user } = useAuth();
-
+    if (user?.role === 1) {
+        endPoint = '/invoices';
+    } else {
+        endPoint = '/invoices-pending';
+    }
+    const { totalPage } = useGetTotalPage(endPoint);
     useEffect(() => {
         dispatch(setInvoices(invoicesList));
         setFilterBillList(invoices);
