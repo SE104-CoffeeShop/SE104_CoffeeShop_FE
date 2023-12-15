@@ -1,31 +1,48 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Alert } from '@material-tailwind/react';
-import { removeProductItem } from '../../../stores/slices/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import DeleteStaff from './DeleteStaff';
 import { RootState } from '../../../stores/store';
-import { clearMessage, setSuccess } from '../../../stores/slices/alertSlice';
-import { AlertMessage } from '../../AlertMessage/AlertMessage';
+import { removeAllStaffs } from '../../../stores/slices/staffSlice';
+import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
+import { clearStaff } from '../../../stores/slices/selectedStaffSlice';
 import axiosClient from '../../../utils/axiosClient';
-import deleteProductAPI from '../../../api/deleteProductAPI';
 
-interface DeleteProductItemProps {
-    productCode: string;
-    setShowDeleteProductModal: (showDeleteProductModal: boolean) => void;
-    setShowProductDetail: (showProductDetail: boolean) => void;
+export interface DeleteStaffListProps {
+    showDeleteStaffModal: boolean;
+    setShowDeleteStaffModal: (showDeleteStaffModal: boolean) => void;
 }
 
-export default function DeleteProductItem({
-    productCode,
-    setShowDeleteProductModal,
-    setShowProductDetail,
-}: DeleteProductItemProps) {
+export default function DeleteStaffList({
+    showDeleteStaffModal,
+    setShowDeleteStaffModal,
+}: DeleteStaffListProps) {
+    const selectedStaffList = useSelector((state: RootState) => state.selectedStaff.selectedStaff);
     const dispatch = useDispatch();
-
-    // Handle delete product item
-    const handleDeleteProductItem = () => {
+    const handleDeleteStaffList = () => {
+        dispatch(removeAllStaffs(selectedStaffList));
         dispatch(clearMessage());
-        // Call API
-        deleteProductAPI(productCode, setShowDeleteProductModal, setShowProductDetail, dispatch);
+        // TODO: Call API to delete staff list
+        axiosClient
+            .post('/staffs/bulk-delete', {
+                _method: 'DELETE',
+                ids: selectedStaffList,
+            })
+            .then((res) => {
+                if (res.status === 204) {
+                    dispatch(setSuccess('Xoá nhân viên thành công'));
+                    dispatch(clearStaff());
+                    setShowDeleteStaffModal(false);
+                } else {
+                    throw new Error('Xoá nhân viên thất bại');
+                }
+            })
+            .catch((err) => {
+                dispatch(setError('Xoá nhân viên thất bại'));
+            });
+        // Update close state to show success alert and close modal
+        // deleteListStaffAPI(selectedStaffList, dispatch, setShowDeleteStaffModal);
+        // Clear selected staff list
+        dispatch(clearStaff());
     };
     return (
         <div
@@ -36,7 +53,7 @@ export default function DeleteProductItem({
         >
             <div className="fixed inset-0 backdrop-blur-lg" />
             <div className="fixed inset-0 z-10 w-screen">
-                <div className="flex h-full items-center justify-center">
+                <div className="relative flex h-full items-center justify-center">
                     <div className="relative flex h-[24rem] w-[33.125rem] transform flex-col items-center justify-start overflow-hidden rounded-md bg-white p-[3.12rem] shadow-[0px_5px_12px_0px_rgba(0,0,0,0.10)] transition-all">
                         {/* Modal icon */}
                         <div className="inline-flex items-center justify-center rounded-full bg-[#FEEBEB] px-[1.13rem] py-[1.12rem]">
@@ -67,10 +84,10 @@ export default function DeleteProductItem({
                         </h1>
                         {/* Modal description */}
                         <p className="mt-[0.94rem] text-center font-sans text-[#637381]">
-                            Hệ thông sẽ xoá bỏ hoàn toàn hàng hoá có mã là
+                            Hệ thông sẽ xoá bỏ
                             <span className="font-sans font-bold text-[#637381]">
                                 {' '}
-                                {productCode}
+                                toàn bộ nhân viên đã chọn
                             </span>
                             . Bạn có chắc chắn muốn xoá ?
                         </p>
@@ -79,7 +96,7 @@ export default function DeleteProductItem({
                                 type="button"
                                 className="h-[3.125rem] w-[11.875rem] rounded-md border border-[#DFE4EA] bg-white px-[1.75rem] py-[0.81rem] font-sans font-medium"
                                 onClick={() => {
-                                    setShowDeleteProductModal(false);
+                                    setShowDeleteStaffModal(false);
                                 }}
                             >
                                 Bỏ qua
@@ -87,7 +104,7 @@ export default function DeleteProductItem({
                             <button
                                 type="button"
                                 className="h-[3.125rem] w-[11.875rem] rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.81rem] font-sans font-medium text-white"
-                                onClick={handleDeleteProductItem}
+                                onClick={handleDeleteStaffList}
                             >
                                 Đồng ý
                             </button>

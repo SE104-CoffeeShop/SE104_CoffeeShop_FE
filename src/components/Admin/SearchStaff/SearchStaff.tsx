@@ -7,7 +7,7 @@ export interface SearchStaffProps {
 
 export default function SearchStaff({ searchValue, setSearchValue }: SearchStaffProps) {
     return (
-        <div className="flex h-[2.6875rem] w-[20.625rem] flex-row items-center justify-between rounded-md bg-white px-[0.88rem] py-[0.25rem] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
+        <div className="ml-[1rem] flex h-[2.6875rem] w-[20.625rem] flex-row items-center justify-between rounded-md bg-white px-[0.88rem] py-[0.25rem] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]">
             <input
                 type="text"
                 maxLength={255}

@@ -3,6 +3,8 @@ import { Dispatch } from 'react';
 import { AnyAction } from '@reduxjs/toolkit';
 import { setSuccess } from '../stores/slices/alertSlice';
 import axiosClient from '../utils/axiosClient';
+import { removeProductItem } from '../stores/slices/productSlice';
+import { clearProduct } from '../stores/slices/selectedProductSlice';
 
 export default function deleteProductAPI(
     productCode: string,
@@ -18,6 +20,8 @@ export default function deleteProductAPI(
             if (res.status === 204) {
                 // Update close state to show success alert and close modal
                 dispatch(setSuccess('Xoá hàng hoá thành công'));
+                dispatch(removeProductItem(productCode));
+                dispatch(clearProduct());
                 setShowDeleteProductModal(false);
                 setShowProductDetail(false);
             } else {

@@ -30,10 +30,6 @@ export default function DeleteVoucherItem({
     // Handle delete product item
     const handleDeleteVoucherItem = () => {
         dispatch(clearMessage());
-        dispatch(removeVoucherItem(voucherCode));
-        dispatch(clearVoucher());
-
-        dispatch(clearMessage());
         axiosClient
             .post(`/vouchers/${voucherCode}`, {
                 _method: 'DELETE',
@@ -41,6 +37,8 @@ export default function DeleteVoucherItem({
             .then((res) => {
                 if (res.status === 204) {
                     dispatch(setSuccess('Xoá voucher thành công'));
+                    dispatch(removeVoucherItem(voucherCode));
+                    dispatch(clearVoucher());
                     setShowDeleteVoucherModal(false);
                     setShowVoucherDetail(false);
                 } else {
