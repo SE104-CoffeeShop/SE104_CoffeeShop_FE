@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { set } from 'react-hook-form';
 import ProfileButton from '../ProfileButton/ProfileButton';
 import { useAuth } from '../../../provider/AuthProvider';
 
-export default function Header() {
+export interface HeaderProps {
+    setShowAccountModal?: (showAccountModal: boolean) => void;
+}
+
+export default function Header({ setShowAccountModal }: HeaderProps) {
     // State for showing ProfileButton or not
     const [showProfileButton, setShowProfileButton] = useState<boolean>(true);
     // State for holding sticky header
@@ -55,7 +60,9 @@ export default function Header() {
                 </h1>
             </Link>
             {/** Make sure got user data from AuthProvider */}
-            {showProfileButton === true && user !== null && <ProfileButton username={user?.name} />}
+            {showProfileButton === true && user !== null && (
+                <ProfileButton setShowAccountModal={setShowAccountModal} username={user?.name} />
+            )}
         </div>
     );
 }

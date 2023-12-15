@@ -3,9 +3,10 @@ import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
 
 interface ProfileButtonProps {
     username: string;
+    setShowAccountModal?: (showAccountModal: boolean) => void;
 }
 
-export default function ProfileButton({ username }: ProfileButtonProps) {
+export default function ProfileButton({ username, setShowAccountModal }: ProfileButtonProps) {
     // Add ref to handle click outside
     const clickOutsideRef = React.useRef<HTMLDivElement>(null);
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
@@ -35,7 +36,12 @@ export default function ProfileButton({ username }: ProfileButtonProps) {
                     />
                 </svg>
             </div>
-            {showDropdown && <ProfileDropdown setShowDropdown={setShowDropdown} />}
+            {showDropdown && (
+                <ProfileDropdown
+                    setShowDropdown={setShowDropdown}
+                    setShowAccountModal={setShowAccountModal}
+                />
+            )}
         </div>
     );
 }

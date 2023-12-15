@@ -9,11 +9,15 @@ import voucherSlice from './slices/voucherSlice';
 import selectedVoucherSlice from './slices/selectedVoucherSlice';
 import staffSlice from './slices/staffSlice';
 import selectedStaffSlice from './slices/selectedStaffSlice';
+import customerSlice from './slices/customerSlice';
+import selectedCustomerSlice from './slices/selectedCustomerSlice';
 
 const store = configureStore({
     reducer: {
         alert: alertSlice,
         checkout: checkoutSlice,
+        customer: customerSlice,
+        selectedCustomer: selectedCustomerSlice,
         product: productSlice,
         selectedProduct: selectedProductSlice,
         invoice: invoiceSlice,

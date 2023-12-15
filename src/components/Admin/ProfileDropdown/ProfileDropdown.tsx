@@ -4,11 +4,15 @@ import { set } from 'react-hook-form';
 import axiosClient from '../../../utils/axiosClient';
 import { useAuth } from '../../../provider/AuthProvider';
 
+export interface ProfileDropdownProps {
+    setShowDropdown: (showDropdown: boolean) => void;
+    setShowAccountModal?: (showAccountModal: boolean) => void;
+}
+
 export default function ProfileDropdown({
     setShowDropdown,
-}: {
-    setShowDropdown: (showDropdown: boolean) => void;
-}) {
+    setShowAccountModal,
+}: ProfileDropdownProps) {
     const clickOutsideRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
     const { setUser, setToken } = useAuth();
@@ -49,6 +53,10 @@ export default function ProfileDropdown({
             <button
                 type="button"
                 className="flex w-full flex-row items-center justify-center px-[1rem] py-[0.44rem] hover:bg-gray-300"
+                onClick={() => {
+                    setShowAccountModal && setShowAccountModal(true);
+                    setShowDropdown(false);
+                }}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
