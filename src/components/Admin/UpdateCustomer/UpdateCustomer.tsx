@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Customer } from '../../../hooks/useGetCustomers';
-import { setError } from '../../../stores/slices/alertSlice';
+import { setError, setSuccess } from '../../../stores/slices/alertSlice';
+import axiosClient from '../../../utils/axiosClient';
+import { updateCustomer } from '../../../stores/slices/customerSlice';
 
 export interface UpdateCustomerProps {
     customer: Customer;
@@ -72,7 +74,32 @@ export default function UpdateCustomer({
             }
             return;
         }
-        setShowUpdateCustomerModal(false);
+        axiosClient
+            .post(`/customers/${customer.id}`, {
+                _method: 'PUT',
+                name,
+                phone_number: phone,
+            })
+            .then((res) => {
+                if (res.status === 200 || res.status === 201) {
+                    dispatch(setSuccess('Cập nhật khách hàng thành công!'));
+                    dispatch(
+                        updateCustomer({
+                            ...customer,
+                            name,
+                            phone_number: phone,
+                        }),
+                    );
+                    setShowUpdateCustomerModal(false);
+                    // After update staff, wait 2s then reload staff list
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                }
+            })
+            .catch((error) => {
+                dispatch(setError('Có lỗi xảy ra khi cập nhật khách hàng'));
+            });
     };
     return (
         <div

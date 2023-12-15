@@ -24,7 +24,6 @@ export default function DeleteVoucherList({
         (state: RootState) => state.selectedVoucher.selectedVoucher,
     );
     const handleDeleteVoucherList = () => {
-        // d
         dispatch(clearMessage());
         axiosClient
             .post('/vouchers/bulk-delete', {

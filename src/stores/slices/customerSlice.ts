@@ -25,17 +25,16 @@ const customerSlice = createSlice({
             }
             state.customers = [...state.customers];
         },
-        removeCustomer(state, action: PayloadAction<Customer>) {
-            const customer = action.payload;
-            const index = state.customers.findIndex((c) => c.id === customer.id);
+        removeCustomer(state, action: PayloadAction<string>) {
+            const index = state.customers.findIndex((c) => String(c.id) === action.payload);
             if (index !== -1) {
                 state.customers.splice(index, 1);
             }
             state.customers = [...state.customers];
         },
-        removeAllCustomer: (state, action: PayloadAction<Customer[]>) => {
+        removeAllCustomer: (state, action: PayloadAction<string[]>) => {
             action.payload.forEach((item) => {
-                const index = state.customers.findIndex((c) => c.id === item.id);
+                const index = state.customers.findIndex((c) => String(c.id) === item);
                 if (index !== -1) {
                     state.customers.splice(index, 1);
                 }

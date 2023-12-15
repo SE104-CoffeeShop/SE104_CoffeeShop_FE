@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setError } from '../../../stores/slices/alertSlice';
+import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
+import axiosClient from '../../../utils/axiosClient';
 
 export interface AddCustomerProps {
     setShowAddCustomerModal: (showAddCustomerModal: boolean) => void;
@@ -64,7 +65,24 @@ export default function AddCustomer({
             }
             return;
         }
-        setShowAddCustomerModal(false);
+        dispatch(clearMessage());
+        axiosClient
+            .post('/customers', { name, phone_number: phone })
+            .then((res) => {
+                if (res.status === 200 || res.status === 201 || res.status === 204) {
+                    dispatch(setSuccess('Thêm khách hàng thành công'));
+                    setShowAddCustomerModal(false);
+                    // Update staff list in store after 2s
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    throw new Error('Thêm khách hàng thất bại');
+                }
+            })
+            .catch((error) => {
+                dispatch(setError('Thêm khách hàng thất bại'));
+            });
     };
     return (
         <div

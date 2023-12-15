@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Customer } from '../../../hooks/useGetCustomers';
 import { convertIsoStringToDate } from '../../../utils/customFunction';
 import DeleteCustomer from '../DeleteCustomer/DeleteCustomer';
+import UpdateCustomer from '../UpdateCustomer/UpdateCustomer';
 
 export interface CustomerDetailProps {
     customer: Customer;
@@ -151,6 +152,12 @@ items-center justify-between rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.75rem]"
                     setShowDeleteVoucherModal={setShowDeleteVoucherModal}
                 />
             )} */}
+            {showUpdateCustomerModal === true && (
+                <UpdateCustomer
+                    customer={customer}
+                    setShowUpdateCustomerModal={setShowUpdateCustomerModal}
+                />
+            )}
             {showDeleteCustomerModal === true && (
                 <DeleteCustomer
                     customerID={customer.id}

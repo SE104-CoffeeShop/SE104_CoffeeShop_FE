@@ -2,6 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../stores/store';
 import { clearSelectedCustomer } from '../../../stores/slices/selectedCustomerSlice';
+import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
+import axiosClient from '../../../utils/axiosClient';
+import { removeAllCustomer, removeCustomer } from '../../../stores/slices/customerSlice';
 
 interface DeleteCustomerListProps {
     setShowDeleteCustomerModal: (showDeleteCustomerModal: boolean) => void;
@@ -17,6 +20,24 @@ export default function DeleteCustomerList({
         (state: RootState) => state.selectedCustomer.selectedCustomer,
     );
     const handleDeleteCustomerList = () => {
+        dispatch(clearMessage());
+        axiosClient
+            .post('/customers/bulk-delete', {
+                _method: 'DELETE',
+                ids: selectedCustomerList,
+            })
+            .then((res) => {
+                if (res.status === 204) {
+                    dispatch(removeAllCustomer(selectedCustomerList));
+                    dispatch(setSuccess('Xoá voucher thành công !'));
+                    setShowDeleteCustomerModal(false);
+                } else {
+                    throw new Error('Có lỗi xảy ra khi xoá khách hàng');
+                }
+            })
+            .catch((error) => {
+                dispatch(setError('Có lỗi xảy ra khi xoá khách hàng'));
+            });
         dispatch(clearSelectedCustomer());
     };
     return (

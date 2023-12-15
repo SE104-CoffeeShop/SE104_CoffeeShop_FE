@@ -1,5 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
+import axiosClient from '../../../utils/axiosClient';
+import { removeCustomer } from '../../../stores/slices/customerSlice';
+import { clearSelectedCustomer } from '../../../stores/slices/selectedCustomerSlice';
 
 export interface DeleteCustomerProps {
     customerID: number;
@@ -14,7 +18,26 @@ export default function DeleteCustomer({
 }: DeleteCustomerProps) {
     const dispatch = useDispatch();
     const handleDeleteCustomer = () => {
-        // TODO: call API
+        dispatch(clearMessage());
+        axiosClient
+            .post(`/customers/${customerID}`, {
+                _method: 'DELETE',
+            })
+            .then((res) => {
+                if (res.status === 204) {
+                    dispatch(setSuccess('Xoá khách hàng thành công'));
+                    dispatch(removeCustomer(String(customerID)));
+                    dispatch(clearSelectedCustomer());
+                    setShowDeleteCustomerModal(false);
+                    setShowCustomerDetail(false);
+                } else {
+                    throw new Error('Có lỗi xảy ra khi xoá khách hàng');
+                }
+            })
+            .catch((error) => {
+                dispatch(setError('Có lỗi xảy ra khi xoá khách hàng'));
+                setShowDeleteCustomerModal(false);
+            });
     };
     return (
         <div
