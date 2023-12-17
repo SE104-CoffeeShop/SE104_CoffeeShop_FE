@@ -10,6 +10,7 @@ export interface InvoiceDetail {
     id: number;
     invoice_id: number;
     product_id: number;
+    product_name: string;
     quantity: number;
     created_at: string;
     updated_at: string;
