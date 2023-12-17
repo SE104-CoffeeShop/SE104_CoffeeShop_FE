@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    setSelectedProduct,
-    removeProduct,
-    removeProducts,
-    addProduct,
-} from '../../../stores/slices/selectedProductSlice';
+import { removeProduct, addProduct } from '../../../stores/slices/selectedProductSlice';
 import { RootState } from '../../../stores/store';
 
 interface SelectProductProps {

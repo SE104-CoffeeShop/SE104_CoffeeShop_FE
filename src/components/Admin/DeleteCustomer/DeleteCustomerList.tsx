@@ -4,7 +4,7 @@ import { RootState } from '../../../stores/store';
 import { clearSelectedCustomer } from '../../../stores/slices/selectedCustomerSlice';
 import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
 import axiosClient from '../../../utils/axiosClient';
-import { removeAllCustomer, removeCustomer } from '../../../stores/slices/customerSlice';
+import { removeAllCustomer } from '../../../stores/slices/customerSlice';
 
 interface DeleteCustomerListProps {
     setShowDeleteCustomerModal: (showDeleteCustomerModal: boolean) => void;

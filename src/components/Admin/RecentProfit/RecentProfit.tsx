@@ -31,6 +31,7 @@ export const options = {
             ticks: {
                 beginAtZero: true,
                 stepSize: 100,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 callback: (value: any) => {
                     if (value < 1000) return `${value} k`;
                     return `${value / 100} M`;

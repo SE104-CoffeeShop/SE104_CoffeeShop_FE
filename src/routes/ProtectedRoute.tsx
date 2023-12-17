@@ -1,8 +1,6 @@
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
-import React, { useEffect, useLayoutEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { useAuth } from '../provider/AuthProvider';
-import axiosClient from '../utils/axiosClient';
 
 export default function ProtectedRoute() {
     const { token, setUser, user } = useAuth();

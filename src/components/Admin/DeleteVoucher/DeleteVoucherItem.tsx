@@ -1,14 +1,7 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Alert } from '@material-tailwind/react';
-import { stat } from 'fs';
-import { removeProductItem } from '../../../stores/slices/productSlice';
-import { RootState } from '../../../stores/store';
+import { useDispatch } from 'react-redux';
 import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
-import { AlertMessage } from '../../AlertMessage/AlertMessage';
 import axiosClient from '../../../utils/axiosClient';
-import deleteProductAPI from '../../../api/deleteProductAPI';
-import { clearProduct } from '../../../stores/slices/selectedProductSlice';
 import { removeVoucherItem } from '../../../stores/slices/voucherSlice';
 import { clearVoucher } from '../../../stores/slices/selectedVoucherSlice';
 
@@ -26,7 +19,6 @@ export default function DeleteVoucherItem({
     setShowVoucherDetail,
 }: DeleteVoucherItemProps) {
     const dispatch = useDispatch();
-    const vouchers = useSelector((state: RootState) => state.voucher.vouchers);
     // Handle delete product item
     const handleDeleteVoucherItem = () => {
         dispatch(clearMessage());
@@ -45,7 +37,7 @@ export default function DeleteVoucherItem({
                     throw new Error('Có lỗi xảy ra khi xoá voucher');
                 }
             })
-            .catch((error) => {
+            .catch(() => {
                 dispatch(setError('Có lỗi xảy ra khi xoá voucher'));
                 setShowDeleteVoucherModal(false);
             });

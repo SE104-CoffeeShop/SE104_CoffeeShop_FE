@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Invoice } from '../../../hooks/useGetInvoices';
 import { convertIsoStringToDate, formatCurrency } from '../../../utils/customFunction';
 import { useAuth } from '../../../provider/AuthProvider';
@@ -9,7 +9,6 @@ export interface BillingDetailProps {
 }
 
 export default function BillingDetail({ invoice, setShowInvoiceDetail }: BillingDetailProps) {
-    // TODO: Add invoice detail product name
     const { user } = useAuth();
     if (user?.role === 1) {
         return (

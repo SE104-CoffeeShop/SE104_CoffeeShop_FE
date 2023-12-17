@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
 import axiosClient from '../../../utils/axiosClient';
 

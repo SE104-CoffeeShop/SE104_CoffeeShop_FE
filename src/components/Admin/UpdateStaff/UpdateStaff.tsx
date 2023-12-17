@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { set } from 'react-hook-form';
+
 import { useDispatch } from 'react-redux';
 import { Staff } from '../../../hooks/useGetStaffs';
 import { setError, setSuccess } from '../../../stores/slices/alertSlice';
@@ -115,7 +115,7 @@ export default function UpdateStaff({ staff, setShowUpdateStaffModal }: UpdateSt
             setErrorRePassword(true);
             return;
         }
-        // TODO: Call API to update staff
+
         axiosClient
             .post(`/staffs/${staff.id}`, {
                 _method: 'PUT',

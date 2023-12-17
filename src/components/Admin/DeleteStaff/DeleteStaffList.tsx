@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import DeleteStaff from './DeleteStaff';
 import { RootState } from '../../../stores/store';
 import { removeAllStaffs } from '../../../stores/slices/staffSlice';
 import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
@@ -21,7 +20,7 @@ export default function DeleteStaffList({
     const handleDeleteStaffList = () => {
         dispatch(removeAllStaffs(selectedStaffList));
         dispatch(clearMessage());
-        // TODO: Call API to delete staff list
+
         axiosClient
             .post('/staffs/bulk-delete', {
                 _method: 'DELETE',

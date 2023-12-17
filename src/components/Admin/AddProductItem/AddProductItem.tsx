@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import uploadImage from '../../../assets/images/upload_image.jpg';
-import { addProduct } from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
-import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
-import axiosClient from '../../../utils/axiosClient';
+import { clearMessage, setError } from '../../../stores/slices/alertSlice';
 import addProductAPI from '../../../api/addProductAPI';
 
 interface AddProductItemProps {

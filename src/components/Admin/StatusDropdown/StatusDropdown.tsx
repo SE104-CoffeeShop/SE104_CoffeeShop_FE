@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { clear } from '@testing-library/user-event/dist/clear';
 import { Invoice } from '../../../hooks/useGetInvoices';
 import { updateInvoice } from '../../../stores/slices/invoiceSlice';
 import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
@@ -11,7 +10,7 @@ export interface StatusDropdownProps {
     status: string;
     invoice: Invoice;
 }
-const statusList = ['pending', 'finish'];
+
 export default function StatusDropdown({ status, invoice }: StatusDropdownProps) {
     const { user } = useAuth();
     const dispatch = useDispatch();

@@ -1,6 +1,4 @@
 import React from 'react';
-import { set } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 
 interface SearchProductProps {
     searchValue: string;
@@ -8,7 +6,6 @@ interface SearchProductProps {
 }
 
 export default function SearchProduct({ searchValue, setSearchValue }: SearchProductProps) {
-    const dispatch = useDispatch();
     // Handle search product by code and name
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchValue = e.target.value;

@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../stores/store';
-import selectedProductSlice, {
-    setSelectedProduct,
-    removeProduct,
-    removeProducts,
-    addProduct,
-} from '../../../stores/slices/selectedProductSlice';
+
 import {
     removeAllSelectedCustomer,
     setSelectedCustomer,
@@ -16,9 +11,6 @@ export default function SelectAllCustomer() {
     const dispatch = useDispatch();
     // State for check if all product is selected
     const [checked, setChecked] = useState<boolean>(false);
-    const selectedCustomerList = useSelector(
-        (state: RootState) => state.selectedCustomer.selectedCustomer,
-    );
     const customers = useSelector((state: RootState) => state.customer.customers);
     return (
         <div className="inline-flex items-center">

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { set } from 'react-hook-form';
+
 import axiosClient from '../../../utils/axiosClient';
 import { useAuth } from '../../../provider/AuthProvider';
 
@@ -42,7 +42,7 @@ export default function ProfileDropdown({
             localStorage.removeItem('ACCESS_TOKEN');
             navigate('/login');
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
     return (

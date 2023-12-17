@@ -1,6 +1,5 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
-import { select } from '@material-tailwind/react';
 
 export interface StatusFilterProps {
     selectedStatus: string;

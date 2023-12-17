@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { clear } from 'console';
-import { addStaff } from './staffSlice';
 
 export interface SelectedStaffState {
     selectedStaff: string[];

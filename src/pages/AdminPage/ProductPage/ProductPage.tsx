@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { get } from 'http';
 import { setProducts } from '../../../stores/slices/productSlice';
 import AdminLayout from '../../../layout/AdminLayout/AdminLayout';
 import Loading from '../../../components/Loading/Loading';

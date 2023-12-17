@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 export interface ConfirmPaymentProps {
     showConfirmationPaymentModal: boolean;
@@ -14,7 +13,6 @@ export default function ConfirmPayment({
     showDetailCheckoutModal,
     setShowDetailCheckoutModal,
 }: ConfirmPaymentProps) {
-    const dispatch = useDispatch();
     return (
         <div
             className="relative z-10 flex items-center justify-center overflow-hidden"

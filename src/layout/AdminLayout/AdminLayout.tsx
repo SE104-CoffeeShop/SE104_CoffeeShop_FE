@@ -17,7 +17,7 @@ export default function AdminLayout({ children, className }: AdminLayoutProps) {
             <NavBar />
             <AlertMessage className="absolute right-0 top-0 mr-[1.25rem] mt-[1.25rem] h-[3.75rem] w-[28.5625rem]" />
             {showAccountModal && <AccountDetail setShowAccountModal={setShowAccountModal} />}
-            <div className={`flex h-full w-full  ${className}`}>{children}</div>
+            <div className={`flex h-full w-full ${className}`}>{children}</div>
         </div>
     );
 }

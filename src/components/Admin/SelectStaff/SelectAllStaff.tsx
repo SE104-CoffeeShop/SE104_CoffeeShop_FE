@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../stores/store';
-
-import { clearVoucher, setSelectedVoucher } from '../../../stores/slices/selectedVoucherSlice';
 import { clearStaff, setSelectedStaff } from '../../../stores/slices/selectedStaffSlice';
 
 export default function SelectAllVoucher() {
     const dispatch = useDispatch();
     // State for check if all voucher is selected
     const [checked, setChecked] = useState<boolean>(false);
-    // State for selected voucher list
-    const selectedStaff = useSelector((state: RootState) => state.selectedStaff.selectedStaff);
     // State for voucher list
     const staffs = useSelector((state: RootState) => state.staff.staff);
     return (

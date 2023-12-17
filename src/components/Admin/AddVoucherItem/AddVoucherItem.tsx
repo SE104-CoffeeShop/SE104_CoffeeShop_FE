@@ -5,7 +5,6 @@ import {
     convertDateToUSFormat,
     formatCurrency,
 } from '../../../utils/customFunction';
-import { data } from '../RecentProfit/RecentProfit';
 import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
 import axiosClient from '../../../utils/axiosClient';
 

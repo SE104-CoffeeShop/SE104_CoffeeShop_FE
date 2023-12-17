@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../stores/store';
 
@@ -8,10 +8,6 @@ export default function SelectAllVoucher() {
     const dispatch = useDispatch();
     // State for check if all voucher is selected
     const [checked, setChecked] = useState<boolean>(false);
-    // State for selected voucher list
-    const selectedVouchers = useSelector(
-        (state: RootState) => state.selectedVoucher.selectedVoucher,
-    );
     // State for voucher list
     const vouchers = useSelector((state: RootState) => state.voucher.vouchers);
     return (

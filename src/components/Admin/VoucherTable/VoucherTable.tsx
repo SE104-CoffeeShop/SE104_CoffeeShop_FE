@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Voucher } from '../../../hooks/useGetVouchers';
 import { RootState } from '../../../stores/store';
 import SelectAllVoucher from '../SelectVoucher/SelectAllVoucher';
 import SelectVoucher from '../SelectVoucher/SelectVoucher';
-import { convertDate } from '../../../utils/customFunction';
 import VoucherDetail from '../VoucherDetail/VoucherDetail';
 import DeleteVoucherList from '../DeleteVoucher/DeleteVoucherList';
 import AddVoucherItem from '../AddVoucherItem/AddVoucherItem';
@@ -117,116 +116,122 @@ export default function VoucherTable({ vouchers }: VoucherTableProps) {
                 </div>
             </div>
             {/* Product table */}
-            <div
-                className="relative mt-[0.94rem] w-full overflow-x-auto rounded-[0.625rem]
+            {vouchers.length === 0 ? (
+                <h1 className="text-center">
+                    Không có voucher nào được tìm thấy, vui lòng thử lại với các bộ lọc khác{' '}
+                </h1>
+            ) : (
+                <div
+                    className="relative mt-[0.94rem] w-full overflow-x-auto rounded-[0.625rem]
 shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
-            >
-                <table className="w-full text-left rtl:text-right">
-                    <thead className="h-[3.75rem] border-b border-[#EEE] bg-[#F9FAFB] font-sans text-[0.9375rem] font-normal text-[#111928]">
-                        <tr>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
-                            >
-                                <SelectAllVoucher />
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
-                            >
-                                MÃ VOUCHER
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
-                            >
-                                TÊN VOUCHER
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
-                            >
-                                LOẠI VOUCHER
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
-                            >
-                                MỨC GIẢM GIÁ
-                            </th>
-                            <th
-                                scope="col"
-                                className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
-                            >
-                                SỐ LƯỢNG
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* Product item */}
-                        {vouchers.map((voucher) => (
-                            <tr
-                                key={voucher.id}
-                                className="h-[2.3125rem] cursor-pointer border-b border-[#EEE] bg-white hover:bg-gray-200"
-                            >
-                                <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
-                                    <SelectVoucher voucherCode={String(voucher.id)} />
-                                </td>
-                                <td
-                                    className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
-                                    onClick={() => handleVoucherClick(voucher)}
+                >
+                    <table className="w-full text-left rtl:text-right">
+                        <thead className="h-[3.75rem] border-b border-[#EEE] bg-[#F9FAFB] font-sans text-[0.9375rem] font-normal text-[#111928]">
+                            <tr>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
                                 >
-                                    {voucher.id}
-                                </td>
-                                <td
-                                    className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
-                                    onClick={() => handleVoucherClick(voucher)}
+                                    <SelectAllVoucher />
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
                                 >
-                                    {voucher.voucher_code.toUpperCase()}
-                                </td>
-                                <td
-                                    className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
-                                    onClick={() => handleVoucherClick(voucher)}
+                                    MÃ VOUCHER
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
                                 >
-                                    {voucher.type === 'direct' ? 'Giảm tiền' : 'Giảm phần trăm'}
-                                </td>
-                                <td
-                                    className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
-                                    onClick={() => handleVoucherClick(voucher)}
+                                    TÊN VOUCHER
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
                                 >
-                                    {voucher.type === 'direct'
-                                        ? `${formatCurrency(voucher.amount)}đ`
-                                        : `${voucher.amount}%`}
-                                </td>
-                                <td
-                                    className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
-                                    onClick={() => handleVoucherClick(voucher)}
+                                    LOẠI VOUCHER
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
                                 >
-                                    {voucher.quantity}
-                                </td>
+                                    MỨC GIẢM GIÁ
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 font-sans text-[0.9375rem] font-medium text-[#111928]"
+                                >
+                                    SỐ LƯỢNG
+                                </th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-                {/* Product detail */}
-                {showVoucherDetail === true && (
-                    <VoucherDetail
-                        setShowVoucherDetail={setShowVoucherDetail}
-                        voucher={selectedVoucher as Voucher}
-                    />
-                )}
-                {/* Delete selected product modal */}
-                {showDeleteVoucherModal === true && (
-                    <DeleteVoucherList
-                        setShowDeleteVoucherModal={setShowDeleteVoucherModal}
-                        showDeleteVoucherModal={showDeleteVoucherModal}
-                    />
-                )}
-                {/* Add product modal */}
-                {showAddVoucherModal === true && (
-                    <AddVoucherItem setShowAddVoucherModal={setShowAddVoucherModal} />
-                )}
-            </div>
+                        </thead>
+                        <tbody>
+                            {/* Product item */}
+                            {vouchers.map((voucher) => (
+                                <tr
+                                    key={voucher.id}
+                                    className="h-[2.3125rem] cursor-pointer border-b border-[#EEE] bg-white hover:bg-gray-200"
+                                >
+                                    <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
+                                        <SelectVoucher voucherCode={String(voucher.id)} />
+                                    </td>
+                                    <td
+                                        className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
+                                        onClick={() => handleVoucherClick(voucher)}
+                                    >
+                                        {voucher.id}
+                                    </td>
+                                    <td
+                                        className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
+                                        onClick={() => handleVoucherClick(voucher)}
+                                    >
+                                        {voucher.voucher_code.toUpperCase()}
+                                    </td>
+                                    <td
+                                        className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
+                                        onClick={() => handleVoucherClick(voucher)}
+                                    >
+                                        {voucher.type === 'direct' ? 'Giảm tiền' : 'Giảm phần trăm'}
+                                    </td>
+                                    <td
+                                        className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
+                                        onClick={() => handleVoucherClick(voucher)}
+                                    >
+                                        {voucher.type === 'direct'
+                                            ? `${formatCurrency(voucher.amount)}đ`
+                                            : `${voucher.amount}%`}
+                                    </td>
+                                    <td
+                                        className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium"
+                                        onClick={() => handleVoucherClick(voucher)}
+                                    >
+                                        {voucher.quantity}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                    {showVoucherDetail === true && (
+                        <VoucherDetail
+                            setShowVoucherDetail={setShowVoucherDetail}
+                            voucher={selectedVoucher as Voucher}
+                        />
+                    )}
+
+                    {showDeleteVoucherModal === true && (
+                        <DeleteVoucherList
+                            setShowDeleteVoucherModal={setShowDeleteVoucherModal}
+                            showDeleteVoucherModal={showDeleteVoucherModal}
+                        />
+                    )}
+
+                    {showAddVoucherModal === true && (
+                        <AddVoucherItem setShowAddVoucherModal={setShowAddVoucherModal} />
+                    )}
+                </div>
+            )}
         </div>
     );
 }

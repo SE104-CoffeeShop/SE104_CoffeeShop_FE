@@ -1,11 +1,6 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Alert } from '@material-tailwind/react';
-import { removeProductItem } from '../../../stores/slices/productSlice';
-import { RootState } from '../../../stores/store';
-import { clearMessage, setSuccess } from '../../../stores/slices/alertSlice';
-import { AlertMessage } from '../../AlertMessage/AlertMessage';
-import axiosClient from '../../../utils/axiosClient';
+import { useDispatch } from 'react-redux';
+import { clearMessage } from '../../../stores/slices/alertSlice';
 import deleteProductAPI from '../../../api/deleteProductAPI';
 
 interface DeleteProductItemProps {

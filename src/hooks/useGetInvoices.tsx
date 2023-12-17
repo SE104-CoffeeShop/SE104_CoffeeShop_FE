@@ -1,10 +1,8 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setInvoices } from '../stores/slices/invoiceSlice';
 import { clearMessage, setError } from '../stores/slices/alertSlice';
 import axiosClient from '../utils/axiosClient';
-import { data } from '../components/Admin/RecentProfit/RecentProfit';
 import { useAuth } from '../provider/AuthProvider';
 
 // Interface for invoices detail

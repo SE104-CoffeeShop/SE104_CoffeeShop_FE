@@ -1,7 +1,6 @@
 import { AnyAction, Dispatch } from '@reduxjs/toolkit';
 import axiosClient from '../utils/axiosClient';
 import { setError, setSuccess } from '../stores/slices/alertSlice';
-import useGetProducts from '../hooks/useGetProducts';
 
 export default function addProductAPI(
     image: File | null,

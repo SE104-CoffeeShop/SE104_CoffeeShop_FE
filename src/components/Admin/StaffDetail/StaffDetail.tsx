@@ -135,13 +135,7 @@ items-center justify-between rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.75rem]"
                     </div>
                 </div>
             </div>
-            {/* Update product modal */}
-            {/* {showUpdateProductModal === true && (
-                <UpdateProduct
-                    product={product as Product}
-                    setShowUpdateProductModal={setShowUpdateProductModal}
-                />
-            )} */}
+
             {showUpdateStaffModal === true && (
                 <UpdateStaff staff={staff} setShowUpdateStaffModal={setShowUpdateStaffModal} />
             )}
@@ -152,14 +146,6 @@ items-center justify-between rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.75rem]"
                     setShowStaffDetail={setShowStaffDetail}
                 />
             )}
-            {/* Delete product modal */}
-            {/* {showDeleteProductModal === true && (
-                <DeleteProductItem
-                    productCode={product?.id as string}
-                    setShowDeleteProductModal={setShowDeleteProductModal}
-                    setShowProductDetail={setShowProductDetail}
-                />
-            )} */}
         </div>
     );
 }

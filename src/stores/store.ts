@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { createLogger } from 'redux-logger';
 import productSlice from './slices/productSlice';
 import alertSlice from './slices/alertSlice';
 import selectedProductSlice from './slices/selectedProductSlice';

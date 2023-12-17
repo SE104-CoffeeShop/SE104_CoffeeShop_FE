@@ -83,7 +83,6 @@ export default function UpdateProduct({ product, setShowUpdateProductModal }: Up
         return () => clearTimeout(timeout);
     }, [errorProductName, errorProductPrice]);
 
-    // TODO: Handle image upload
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         // Check if already have image file then remove it
         if (imageFile) {

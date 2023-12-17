@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { select } from '@material-tailwind/react';
-import { stat } from 'fs';
-import { clear } from 'console';
 
 export interface CustomerState {
     selectedCustomer: string[];

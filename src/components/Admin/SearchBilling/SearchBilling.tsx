@@ -28,6 +28,7 @@ export default function SearchBilling({
             <input
                 type="text"
                 id="search"
+                value={searchBillID}
                 onChange={handleSearchBill}
                 placeholder="Theo mã hóa đơn"
                 className="
@@ -46,6 +47,7 @@ export default function SearchBilling({
             <input
                 type="text"
                 id="search"
+                value={searchCustomerID}
                 onChange={handleSearchCustomer}
                 placeholder="Theo mã khách hàng"
                 className="

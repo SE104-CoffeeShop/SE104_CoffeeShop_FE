@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../stores/store';
-import selectedProductSlice, {
-    setSelectedProduct,
-    removeProduct,
-    removeProducts,
-    addProduct,
-} from '../../../stores/slices/selectedProductSlice';
+import { setSelectedProduct, removeProducts } from '../../../stores/slices/selectedProductSlice';
 
 export default function SelectAllProduct() {
     const dispatch = useDispatch();
     // State for check if all product is selected
     const [checked, setChecked] = useState<boolean>(false);
-    // State for selected product list
-    const selectedProducts = useSelector((state: RootState) => state.selectedProduct);
+
     // State for product list
     const products = useSelector((state: RootState) => state.product.products);
     return (

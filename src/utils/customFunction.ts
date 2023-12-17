@@ -1,6 +1,4 @@
-import { Invoice } from '../hooks/useGetInvoices';
-import { dateRange } from '../components/Admin/TimeFilter/TimeFilter';
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export function boDau(str: string) {
     // Chuẩn hóa chuỗi Unicode về dạng NFD
     str = str.normalize('NFD');

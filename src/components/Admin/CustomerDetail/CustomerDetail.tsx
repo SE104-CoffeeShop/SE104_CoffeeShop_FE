@@ -137,21 +137,6 @@ items-center justify-between rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.75rem]"
                     </div>
                 </div>
             </div>
-
-            {/* {showUpdateVoucherModal === true && (
-                <UpdateVoucher
-                    voucher={voucher as Voucher}
-                    setShowUpdateVoucherModal={setShowUpdateVoucherModal}
-                />
-            )} */}
-            {/* 
-            {showDeleteVoucherModal === true && (
-                <DeleteVoucherItem
-                    voucherCode={String(voucher.id)}
-                    setShowVoucherDetail={setShowVoucherDetail}
-                    setShowDeleteVoucherModal={setShowDeleteVoucherModal}
-                />
-            )} */}
             {showUpdateCustomerModal === true && (
                 <UpdateCustomer
                     customer={customer}

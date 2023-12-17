@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { clearStaff, removeStaff } from '../../../stores/slices/selectedStaffSlice';
+import { clearStaff } from '../../../stores/slices/selectedStaffSlice';
 import axiosClient from '../../../utils/axiosClient';
 import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
 import { removeStaffItem } from '../../../stores/slices/staffSlice';

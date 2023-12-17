@@ -25,12 +25,12 @@ export default function deleteProductAPI(
                 setShowDeleteProductModal(false);
                 setShowProductDetail(false);
             } else {
-                throw new Error('Xoá hàng hoá thất bại');
+                throw new Error('Xoá hàng hoá thất bại !');
             }
         })
         .catch((error) => {
             // Update close state to show error alert
-            dispatch(setSuccess('Xoá hàng hoá thất bại'));
+            dispatch(setSuccess('Xoá hàng hoá thất bại !'));
             setShowDeleteProductModal(false);
         });
 }

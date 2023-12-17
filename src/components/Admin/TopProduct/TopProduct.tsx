@@ -56,8 +56,6 @@ const defaultTimeRange = [
     },
 ];
 
-// TODO: Refactor this component to use TailwindCSS and remove the inline styles below
-// TODO: Add props to this component to make it reusable, also use the props to change the chart data, unify style with others chart components
 function TopProducts() {
     const [selectedMetric, setSelectedMetric] = useState<string>('');
     const [selectedTimeRange, setSelectedTimeRange] = useState<string>('');

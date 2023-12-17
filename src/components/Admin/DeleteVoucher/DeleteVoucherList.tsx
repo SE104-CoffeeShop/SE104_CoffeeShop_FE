@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { stat } from 'fs';
 import { RootState } from '../../../stores/store';
-import { clearProduct } from '../../../stores/slices/selectedProductSlice';
-import deleteListProductAPI from '../../../api/deleteListProductAPI';
 import { clearVoucher } from '../../../stores/slices/selectedVoucherSlice';
 import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
 import axiosClient from '../../../utils/axiosClient';

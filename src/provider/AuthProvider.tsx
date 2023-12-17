@@ -1,12 +1,5 @@
-import React, {
-    ReactNode,
-    ReactPortal,
-    createContext,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-} from 'react';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import React, { ReactNode, createContext, useContext, useEffect, useMemo, useState } from 'react';
 import axiosClient from '../utils/axiosClient';
 
 const AuthContext = createContext<{

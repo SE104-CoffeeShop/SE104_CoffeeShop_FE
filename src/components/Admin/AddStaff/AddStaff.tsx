@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Staff } from '../../../hooks/useGetStaffs';
 import { clearMessage, setError, setSuccess } from '../../../stores/slices/alertSlice';
 import axiosClient from '../../../utils/axiosClient';
 
@@ -103,7 +102,7 @@ export default function AddStaff({ setShowAddStaffModal }: AddStaffProps) {
             setErrorRePassword(true);
             return;
         }
-        // TODO: Call API to update staff
+
         dispatch(clearMessage());
         axiosClient
             .post('/staffs', { name, email, password })
