@@ -23,13 +23,11 @@ axiosClient.interceptors.response.use(
             // If get 401 error code,remove access token and redirect to login page
             localStorage.removeItem('ACCESS_TOKEN');
             // Reload to perform authentication check again and redirect to login page
-            window.location.reload();
+            window.location.href = '/login';
         } else if (response.status === 404) {
             // If get 404 error code, redirect to 404 page
             window.location.href = '/404';
-        }
-
-        throw error;
+        } else throw error;
     },
 );
 

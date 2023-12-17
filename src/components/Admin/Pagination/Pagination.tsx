@@ -1,26 +1,38 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import { set } from 'react-hook-form';
+import useGetProducts from '../../../hooks/useGetProducts';
+import useGetInvoices from '../../../hooks/useGetInvoices';
+import useGetVouchers from '../../../hooks/useGetVouchers';
+import useGetStaffs from '../../../hooks/useGetStaffs';
+import useGetCustomers from '../../../hooks/useGetCustomers';
 
 export interface PaginationProps {
-    itemsPerPage: number;
+    path: string;
     totalPage: number;
-    itemOffset: number;
-    itemLength: number;
-    setItemOffset: (itemOffset: number) => void;
+    activePage: number;
+    setActivePage: (activePage: number) => void;
 }
 
 export default function Pagination({
-    itemsPerPage,
+    path,
     totalPage,
-    itemOffset,
-    itemLength,
-    setItemOffset,
+    activePage,
+    setActivePage,
 }: PaginationProps) {
+    // Get products from API
+    const { getProducts } = useGetProducts();
+    const { getInvoices } = useGetInvoices();
+    const { getVouchers } = useGetVouchers();
+    const { getCustomers } = useGetCustomers();
+    const { getStaffs } = useGetStaffs();
     const handlePageClick = (data: { selected: number }) => {
-        const selectedPage = data.selected;
-        const offset = (selectedPage * itemsPerPage) % itemLength;
-        setItemOffset(offset);
+        setActivePage(data.selected + 1);
+        // Check path to get products or invoices from API and update state (prevent re-render lost active page)
+        if (path === '/products' || path === '/checkout') getProducts(data.selected + 1);
+        if (path === '/invoices') getInvoices(data.selected + 1);
+        if (path === '/vouchers') getVouchers(data.selected + 1);
+        if (path === '/staffs') getStaffs(data.selected + 1);
+        if (path === '/customers') getCustomers(data.selected + 1);
     };
     return (
         <div className="mt-[0.75rem] h-[3.625rem] w-fit">
@@ -56,6 +68,7 @@ export default function Pagination({
                 breakLabel="..."
                 pageCount={totalPage}
                 initialPage={0}
+                forcePage={activePage - 1}
                 onPageChange={handlePageClick}
                 marginPagesDisplayed={1}
                 pageRangeDisplayed={3}

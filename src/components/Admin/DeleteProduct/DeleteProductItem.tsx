@@ -1,38 +1,26 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeProductItem } from '../../../stores/slices/productSlice';
-import { RootState } from '../../../stores/store';
-import SuccessAlert from '../../SuccessAlert/SuccessAlert';
+import { useDispatch } from 'react-redux';
+import { clearMessage } from '../../../stores/slices/alertSlice';
+import deleteProductAPI from '../../../api/deleteProductAPI';
 
 interface DeleteProductItemProps {
     productCode: string;
     setShowDeleteProductModal: (showDeleteProductModal: boolean) => void;
+    setShowProductDetail: (showProductDetail: boolean) => void;
 }
 
 export default function DeleteProductItem({
     productCode,
     setShowDeleteProductModal,
+    setShowProductDetail,
 }: DeleteProductItemProps) {
     const dispatch = useDispatch();
-    // State for show success alert when delete product successfully
-    const [close, setClose] = React.useState<boolean>(true);
-    // Auto close success alert after 3s
-    React.useEffect(() => {
-        const timeout = setTimeout(() => {
-            if (close === false) {
-                setClose(true);
-                // Close delete product modal after 3s
-                setShowDeleteProductModal(false);
-            }
-        }, 3000);
-        // Clear timeout if component unmount
-        return () => clearTimeout(timeout);
-    }, [close]);
+
     // Handle delete product item
     const handleDeleteProductItem = () => {
-        dispatch(removeProductItem(productCode));
-        // Update close state to show success alert
-        setClose(false);
+        dispatch(clearMessage());
+        // Call API
+        deleteProductAPI(productCode, setShowDeleteProductModal, setShowProductDetail, dispatch);
     };
     return (
         <div
@@ -43,16 +31,6 @@ export default function DeleteProductItem({
         >
             <div className="fixed inset-0 backdrop-blur-lg" />
             <div className="fixed inset-0 z-10 w-screen">
-                {/* Success alert */}
-                {!close && (
-                    <SuccessAlert
-                        message="Xoá hàng hoá  thành công"
-                        className="absolute right-5  top-5 z-10 mr-[1.25rem] mt-[1.25rem] h-[3.75rem] w-[26.5625rem] items-center"
-                        close={close}
-                        onClose={setClose}
-                    />
-                )}
-                {/* Modal */}
                 <div className="flex h-full items-center justify-center">
                     <div className="relative flex h-[24rem] w-[33.125rem] transform flex-col items-center justify-start overflow-hidden rounded-md bg-white p-[3.12rem] shadow-[0px_5px_12px_0px_rgba(0,0,0,0.10)] transition-all">
                         {/* Modal icon */}

@@ -3,6 +3,7 @@ import AdminLayout from '../../../layout/AdminLayout/AdminLayout';
 import TodayResult from '../../../components/Admin/TodayResult/TodayResult';
 import { RecentProfit } from '../../../components/Admin/RecentProfit/RecentProfit';
 import TopProduct from '../../../components/Admin/TopProduct/TopProduct';
+// import CustomerNum from '../../../components/Admin/CustomerNum/CustomerNum';
 
 export default function DashboardPage() {
     return (
@@ -18,6 +19,7 @@ export default function DashboardPage() {
             />
             <RecentProfit />
             <TopProduct />
+            {/* <CustomerNum /> */}
         </AdminLayout>
     );
 }

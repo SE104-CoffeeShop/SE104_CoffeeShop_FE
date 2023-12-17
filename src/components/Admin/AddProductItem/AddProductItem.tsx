@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import uploadImage from '../../../assets/images/upload_image.jpg';
-import { products } from '../../../stores/slices/productSlice';
 import { RootState } from '../../../stores/store';
+import { clearMessage, setError } from '../../../stores/slices/alertSlice';
+import addProductAPI from '../../../api/addProductAPI';
 
 interface AddProductItemProps {
     setShowAddProductModal: (show: boolean) => void;
@@ -11,8 +12,10 @@ interface AddProductItemProps {
 const productTypes = ['Đồ ăn', 'Đồ uống', 'Khác'];
 
 export default function AddProductItem({ setShowAddProductModal }: AddProductItemProps) {
+    const dispatch = useDispatch();
     // State for upload image file
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [filePath, setFilePath] = useState<string>('');
     const products = useSelector((state: RootState) => state.product.products);
     // State for each product field
     const [productName, setProductName] = useState<string>('');
@@ -22,24 +25,83 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     // State for show product type dropdown
     const [showProductTypeDropdown, setShowProductTypeDropdown] = useState<boolean>(false);
+    // State for error input
+    const [errorProductName, setErrorProductName] = useState<boolean>(false);
+    const [errorProductPrice, setErrorProductPrice] = useState<boolean>(false);
+
+    // useRef for type dropdown
+    const typeDropdownRef = useRef<HTMLDivElement>(null);
+    const inputNameRef = useRef<HTMLInputElement>(null);
+    const inputPriceRef = useRef<HTMLInputElement>(null);
+    // Handle click outside type dropdown
+    const handleClickOutside = (e: MouseEvent) => {
+        // If click outside type dropdown then close it
+        if (typeDropdownRef.current && !typeDropdownRef.current.contains(e.target as Node)) {
+            setShowProductTypeDropdown(false);
+        }
+    };
+    // Add event listener for click outside type dropdown
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+    // Handle remove error input when user type using ref
+    useEffect(() => {
+        if (errorProductPrice && inputPriceRef.current) {
+            inputPriceRef.current.addEventListener('input', () => {
+                setErrorProductPrice(false);
+            });
+        }
+    }, [errorProductPrice]);
+    // Handle remove error input when user type using ref
+    useEffect(() => {
+        if (errorProductName && inputNameRef.current) {
+            inputNameRef.current.addEventListener('input', () => {
+                setErrorProductName(false);
+            });
+        }
+    }, [errorProductName]);
+
+    // Set timeout for error
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (errorProductName) setErrorProductName(false);
+            if (errorProductPrice) setErrorProductPrice(false);
+        }, 3000);
+        return () => clearTimeout(timeout);
+    }, [errorProductName, errorProductPrice]);
+
     // TODO: Handle image upload
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // Check if already have image file then remove it
+        if (imageFile) {
+            setImageFile(null);
+            setFilePath('');
+            setPreviewImage(null);
+        }
         const file = e.target.files?.[0];
+        // Get image full path
         if (file) {
             setImageFile(file);
-            // Convert image file to URL for preview
+            setFilePath(e.target.value);
+            // Convert image file to URL Mime type
             setPreviewImage(URL.createObjectURL(file));
         }
     };
+
     // Handle product name
     const handleProductName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setProductName(e.target.value);
     };
+
     // Handle product type
     // Format product price
     const formatCurrency = (price: number) => {
         return new Intl.NumberFormat('en-US').format(price);
     };
+
     // Handle product price
     const handleProductPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         // Only allow number input
@@ -49,8 +111,21 @@ export default function AddProductItem({ setShowAddProductModal }: AddProductIte
         const formattedPrice = inputPrice === '' ? '' : formatCurrency(parseInt(inputPrice, 10));
         setProductPrice(formattedPrice);
     };
-    // Get latest product_code from store
-    const latestProductCode = products[products.length - 1].product_code;
+
+    // Handle save product
+    const handleSaveProduct = () => {
+        // Check if exist empty field then show error and do nothing
+        if (productName === '' || productPrice === '') {
+            dispatch(clearMessage());
+            dispatch(setError('Vui lòng điền đầy đủ thông tin!'));
+            if (productName === '') setErrorProductName(true);
+            if (productPrice === '') setErrorProductPrice(true);
+            return;
+        }
+        dispatch(clearMessage());
+        const price = parseInt(productPrice.replace(/\D/g, ''), 10);
+        addProductAPI(imageFile, productName, productType, price, dispatch, setShowAddProductModal);
+    };
     return (
         <div
             className="relative z-10 flex items-center justify-start overflow-hidden"
@@ -144,34 +219,34 @@ rounded-md bg-white"
                                 {/* Product INPUT */}
                                 <div className="grid grid-flow-col grid-cols-2 items-center justify-start gap-[1rem]">
                                     {/* Product delete and Product update button */}
-                                    <h1 className="font-sans text-[1rem] font-medium">
-                                        Mã hàng hoá:{' '}
-                                    </h1>
-                                    <input
-                                        type="text"
-                                        value={latestProductCode}
-                                        className="col-start-2 rounded-md border border-[#DFE4EA] bg-white py-[0.75rem] pl-[1.25rem] pr-[1rem]"
-                                        disabled
-                                    />
+
                                     <h1 className="font-sans text-[1rem] font-medium">
                                         Tên hàng hoá:
                                     </h1>
                                     <input
                                         type="text"
+                                        ref={inputNameRef}
                                         value={productName}
                                         onChange={handleProductName}
                                         maxLength={255}
                                         placeholder="Nhập tên hàng hoá"
-                                        className="col-start-2 rounded-md border border-[#DFE4EA] bg-white py-[0.75rem] pl-[1.25rem] pr-[1rem] placeholder:text-[rgba(0,0,0,0.55)]"
+                                        className={`col-start-2 rounded-md border ${
+                                            errorProductName ? 'border-red-500' : 'border-[#DFE4EA]'
+                                        } bg-white py-[0.75rem] pl-[1.25rem] pr-[1rem] placeholder:text-[rgba(0,0,0,0.55)]`}
                                     />
                                     <h1 className="font-sans text-[1rem] font-medium">Giá bán: </h1>
                                     <input
                                         type="text"
+                                        ref={inputPriceRef}
                                         value={productPrice}
                                         onChange={handleProductPrice}
                                         maxLength={255}
                                         placeholder="Nhập giá bán hàng hoá"
-                                        className="col-start-2 rounded-md border border-[#DFE4EA] bg-white py-[0.75rem] pl-[1.25rem] pr-[1rem] placeholder:text-[rgba(0,0,0,0.55)]"
+                                        className={`col-start-2 rounded-md border ${
+                                            errorProductPrice
+                                                ? 'border-red-500'
+                                                : 'border-[#DFE4EA]'
+                                        } bg-white py-[0.75rem] pl-[1.25rem] pr-[1rem] placeholder:text-[rgba(0,0,0,0.55)]`}
                                     />
 
                                     <h1 className="font-sans text-[1rem] font-medium">
@@ -200,7 +275,10 @@ rounded-md bg-white"
                                     </button>
                                     {/* Product type dropdown */}
                                     {showProductTypeDropdown && (
-                                        <div className="absolute right-[9.5rem] top-[23rem] z-10 flex w-[11.625rem] flex-col rounded-md bg-white shadow-[0px_2px_8px_0px_rgba(0,0,0,0.16)]">
+                                        <div
+                                            ref={typeDropdownRef}
+                                            className="absolute right-[9.5rem] top-[18rem] z-10 flex w-[11.625rem] flex-col rounded-md bg-white shadow-[0px_2px_8px_0px_rgba(0,0,0,0.16)]"
+                                        >
                                             {productTypes.map((type) => (
                                                 <button
                                                     type="button"
@@ -217,6 +295,14 @@ rounded-md bg-white"
                                         </div>
                                     )}
                                 </div>
+                                {/* Product save button */}
+                                <button
+                                    type="button"
+                                    onClick={handleSaveProduct}
+                                    className="mt-[3.37em] inline-flex h-[3.125rem] w-[11.875rem] items-center justify-center rounded-md border border-[#DFE4EA] bg-[#12582E] px-[1.75rem] py-[0.81rem] font-sans text-white"
+                                >
+                                    Lưu
+                                </button>
                             </div>
                         </div>
                     </div>

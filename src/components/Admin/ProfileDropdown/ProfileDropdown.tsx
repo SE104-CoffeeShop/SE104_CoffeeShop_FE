@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import axiosClient from '../../../utils/axiosClient';
 import { useAuth } from '../../../provider/AuthProvider';
 
-export default function ProfileDropdown() {
+export interface ProfileDropdownProps {
+    setShowDropdown: (showDropdown: boolean) => void;
+    setShowAccountModal?: (showAccountModal: boolean) => void;
+}
+
+export default function ProfileDropdown({
+    setShowDropdown,
+    setShowAccountModal,
+}: ProfileDropdownProps) {
+    const clickOutsideRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
     const { setUser, setToken } = useAuth();
+    // Handle click outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                clickOutsideRef.current &&
+                !clickOutsideRef.current.contains(event.target as Node)
+            ) {
+                setShowDropdown(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
     // handleLogout
     const handleLogout = async () => {
         try {
@@ -13,16 +38,25 @@ export default function ProfileDropdown() {
             setUser(null);
             setToken(null);
             localStorage.removeItem('userId');
+            localStorage.removeItem('user');
+            localStorage.removeItem('ACCESS_TOKEN');
             navigate('/login');
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
     return (
-        <div className="absolute right-0 top-0 z-40 mt-[3.1275rem] flex h-[6.125rem] w-[11.125rem] flex-col items-center justify-start rounded-md border border-[#000000] bg-white py-[0.62rem] shadow-[0px_1px_3px_0px_rgba(166,175,195,0.40)]">
+        <div
+            ref={clickOutsideRef}
+            className="absolute right-0 top-0 z-40 mt-[3.1275rem] flex h-fit w-[11.125rem] flex-col items-center justify-start rounded-md border border-[#000000] bg-white shadow-[0px_1px_3px_0px_rgba(166,175,195,0.40)]"
+        >
             <button
                 type="button"
                 className="flex w-full flex-row items-center justify-center px-[1rem] py-[0.44rem] hover:bg-gray-300"
+                onClick={() => {
+                    setShowAccountModal && setShowAccountModal(true);
+                    setShowDropdown(false);
+                }}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

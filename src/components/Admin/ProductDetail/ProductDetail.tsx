@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Product } from '../../../api/productAPI';
+import { Product } from '../../../hooks/useGetProducts';
 import DeleteProductItem from '../DeleteProduct/DeleteProductItem';
+import ImageLoader from '../ImageLoader/ImageLoader';
+import UpdateProduct from '../UpdateProduct/UpdateProduct';
 
 interface ProductDetailProps {
     product: Product | null;
@@ -11,7 +12,12 @@ interface ProductDetailProps {
 export default function ProductDetail({ product, setShowProductDetail }: ProductDetailProps) {
     // State for show/hide delete product modal
     const [showDeleteProductModal, setShowDeleteProductModal] = useState<boolean>(false);
+    // State for update product modal
+    const [showUpdateProductModal, setShowUpdateProductModal] = useState<boolean>(false);
     // Format product price to currency format: 1000000 => 1.000.000
+    const formatImageURL = (imageURL: string) => {
+        return process.env.REACT_APP_IMAGE_URL + imageURL;
+    };
     const formatCurrency = (price: number) => {
         return new Intl.NumberFormat('en-US').format(price);
     };
@@ -52,28 +58,23 @@ w-[54.0625rem] transform flex-col items-start justify-start overflow-hidden roun
                         </button>
                         {/* Modal title */}
                         <h1 className="text-left font-sans text-[1.5rem] font-bold text-[#1C3FB7]">
-                            {product?.product_name.toUpperCase()}
+                            {product?.name.toUpperCase()}
                         </h1>
                         {/* Product info */}
                         <div className="mt-[1.56rem] flex w-full flex-row items-start justify-start">
                             {/* Product image */}
-                            <img
-                                src={product?.product_img}
-                                alt={product?.product_name}
-                                className="h-[13.98369rem]
-w-[10.38731rem]"
-                            />
+                            <ImageLoader imageURL={formatImageURL(product?.image as string)} />
                             {/* Product info */}
                             <div className="ml-[2rem] flex flex-col items-start justify-start">
                                 {/* Product name and price */}
                                 <div className="grid grid-flow-col grid-cols-2 items-center justify-start gap-[1rem]">
                                     <h1 className="font-sans text-[1rem]">Mã hàng hoá:</h1>
                                     <p className="col-start-2 font-sans text-[1rem] font-bold">
-                                        {product?.product_code}
+                                        {product?.id}
                                     </p>
                                     <h1 className="font-sans text-[1rem]">Giá bán: </h1>
                                     <p className="col-start-2 font-sans text-[1rem] font-bold">
-                                        {formatCurrency(product?.product_price || 0)}đ
+                                        {formatCurrency(product?.unit_price || 0)}đ
                                     </p>
                                 </div>
                                 {/* Product delete and Product update button */}
@@ -83,6 +84,9 @@ w-[10.38731rem]"
                                         type="button"
                                         className="inline-flex h-[3.051rem] w-[7.836rem] items-center
 justify-between rounded-md bg-[#12582E] px-[0.86rem] pb-[0.8rem] pt-[0.75rem]"
+                                        onClick={() => {
+                                            setShowUpdateProductModal(true);
+                                        }}
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -137,11 +141,19 @@ items-center justify-between rounded-md bg-[#E10E0E] px-[1.75rem] py-[0.75rem]"
                     </div>
                 </div>
             </div>
+            {/* Update product modal */}
+            {showUpdateProductModal === true && (
+                <UpdateProduct
+                    product={product as Product}
+                    setShowUpdateProductModal={setShowUpdateProductModal}
+                />
+            )}
             {/* Delete product modal */}
             {showDeleteProductModal === true && (
                 <DeleteProductItem
-                    productCode={product?.product_code as string}
+                    productCode={product?.id as string}
                     setShowDeleteProductModal={setShowDeleteProductModal}
+                    setShowProductDetail={setShowProductDetail}
                 />
             )}
         </div>
