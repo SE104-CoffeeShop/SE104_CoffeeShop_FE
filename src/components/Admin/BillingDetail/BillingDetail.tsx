@@ -140,7 +140,7 @@ rounded-[0.625rem] shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                                                     {item.id}
                                                 </td>
                                                 <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
-                                                    Cà phê
+                                                    {item.product_name}
                                                 </td>
                                                 <td className="select-none px-6 py-4 font-sans text-[0.875rem] font-medium">
                                                     {item.quantity}
