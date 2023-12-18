@@ -9,7 +9,6 @@
     "plugins": ["import"],
     "extends": [
         "eslint:recommended",
-        "airbnb",
         "react-app",
         "react-app/jest",
         "plugin:prettier/recommended",
