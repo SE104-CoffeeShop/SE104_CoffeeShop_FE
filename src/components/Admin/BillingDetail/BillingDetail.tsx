@@ -47,7 +47,7 @@ w-[54.0625rem] transform flex-col items-start justify-start overflow-hidden roun
                                 </svg>
                             </button>
                             {/* Header */}
-                            <div className="grid grid-flow-col grid-cols-2 grid-rows-4 items-center justify-start gap-[0.75rem]">
+                            <div className="grid grid-flow-col grid-cols-2 grid-rows-5 items-center justify-start gap-[0.75rem]">
                                 <p className="font-sans text-[1rem] font-medium">Mã hoá đơn:</p>
                                 <p className="col-start-2 font-sans text-[1rem] font-bold">
                                     {invoice.id}
@@ -78,6 +78,14 @@ w-[54.0625rem] transform flex-col items-start justify-start overflow-hidden roun
                                         {invoice.customer === null
                                             ? 'Khách vãng lai'
                                             : invoice.customer.name}
+                                    </p>
+                                </div>
+                                <p className="font-sans text-[1rem] font-medium">Bàn:</p>
+                                <div className="col-start-2 flex flex-row items-center justify-between border-b border-[#DFE4EA]">
+                                    <p className="font-sans text-[1rem] font-medium text-[#1C3FB7]">
+                                        {invoice.table_number === null || invoice.table_number === 0
+                                            ? 'Không cớ'
+                                            : invoice.table_number}
                                     </p>
                                 </div>
                                 <p className="font-sans text-[1rem] font-medium">Trạng thái:</p>

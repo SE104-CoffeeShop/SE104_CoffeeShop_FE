@@ -34,6 +34,8 @@ export default function CheckoutDetail({
     const [phone, setPhone] = useState<string>('');
     const [money, setMoney] = useState<string>('');
     const [tableData, setTableData] = useState<number>(0);
+    // State for disable continue button when not calculate return money
+    const [disableContinue, setDisableContinue] = useState<boolean>(true);
     // State for show pay bill modal
     const [showPayBillModal, setShowPayBillModal] = useState<boolean>(false);
     const [returnMoney, setReturnMoney] = useState<string>('');
@@ -62,37 +64,44 @@ export default function CheckoutDetail({
     const handleCheckout = () => {
         dispatch(clearMessage());
         // Verify voucher code and get discount price
-        axiosClient
-            .post('/vouchers-verify', { voucher_code: voucherCode })
-            .then((res) => {
-                if (res.status === 200) {
-                    // check type of voucher
-                    if (res.data.voucher_type === 'percent') {
-                        // Get discount price
-                        dispatch(
-                            updateDiscountPrice(
-                                (res.data.voucher_amount * checkouts.totalPrice) / 100,
-                            ),
-                        );
+        if (voucherCode) {
+            axiosClient
+                .post('/vouchers-verify', { voucher_code: voucherCode })
+                .then((res) => {
+                    if (res.status === 200) {
+                        // check type of voucher
+                        if (res.data.voucher_type === 'percent') {
+                            // Get discount price
+                            dispatch(
+                                updateDiscountPrice(
+                                    (res.data.voucher_amount * checkouts.totalPrice) / 100,
+                                ),
+                            );
+                        } else {
+                            // Get discount price
+                            dispatch(updateDiscountPrice(res.data.voucher_amount));
+                        }
+                        dispatch(updateVoucherCode(voucherCode));
+                        // Update table data
+                        dispatch(updateTableNumber(tableData));
+                        // Show pay bill modal
+                        setShowPayBillModal(true);
                     } else {
-                        // Get discount price
-                        dispatch(updateDiscountPrice(res.data.voucher_amount));
+                        throw new Error('Voucher không hợp lệ hoặc đã hết hạn');
                     }
-                    dispatch(updateVoucherCode(voucherCode));
-                    // Update table data
-                    dispatch(updateTableNumber(tableData));
-                    // Show pay bill modal
-                    setShowPayBillModal(true);
-                } else {
-                    throw new Error('Voucher không hợp lệ hoặc đã hết hạn');
-                }
-            })
-            .catch((err) => {
-                dispatch(updateVoucherCode(null));
-                setVoucher('');
-                dispatch(setError('Voucher không hợp lệ hoặc đã hết hạn'));
-                return;
-            });
+                })
+                .catch((err) => {
+                    dispatch(updateVoucherCode(null));
+                    setVoucher('');
+                    dispatch(setError('Voucher không hợp lệ hoặc đã hết hạn'));
+                    return;
+                });
+        } else {
+            // Update table data
+            dispatch(updateTableNumber(tableData));
+            // Show pay bill modal
+            setShowPayBillModal(true);
+        }
     };
     // Handle product type
     // Format product price
@@ -129,6 +138,8 @@ export default function CheckoutDetail({
         }
         // Set money state to formatted return money
         setReturnMoney(formatCurrency(returnMoney));
+        // Enable continue button
+        setDisableContinue(false);
     };
     // Handle finish checkout
     const handleFinishCheckout = () => {
@@ -349,10 +360,10 @@ rounded-[0.625rem] shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                 >
                     <div className="fixed inset-0 backdrop-blur-lg" />
                     <div className="fixed inset-0 z-10 w-screen">
-                        <div className="flex h-full items-center justify-center">
+                        <div className="flex h-full w-full items-center justify-center">
                             <div
                                 className="relative flex h-fit
-w-[59.5rem] transform flex-col items-start justify-start overflow-hidden rounded-md bg-white pb-[2.92rem] pl-[1.62rem] pr-[1rem] pt-[0.56rem] drop-shadow-[0px_4px_4px_rgba(0,0,0,0.25)] transition-all"
+w-[59.5rem] transform flex-col items-start justify-start overflow-hidden rounded-md bg-white pb-[0.56rem] pl-[1.62rem] pr-[1rem] pt-[0.56rem] drop-shadow-[0px_4px_4px_rgba(0,0,0,0.25)] transition-all"
                             >
                                 {/* close button */}
                                 <button
@@ -438,8 +449,8 @@ rounded-[0.625rem] shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                                     </div>
                                 </div>
                                 {/* Total price */}
-                                <div className="mt-[0.5rem] flex h-full w-full flex-col items-center justify-start">
-                                    <div className=" grid-rows-8 grid grid-cols-2 gap-1 self-end">
+                                <div className="mt-[0.5rem] flex h-fit w-full flex-col items-center justify-start">
+                                    <div className=" grid h-fit grid-cols-2 grid-rows-7 gap-[0.5rem] self-end">
                                         <p className="font-sans text-[1rem] font-bold text-[#111928]">
                                             Tổng tiền:
                                         </p>
@@ -449,39 +460,31 @@ rounded-[0.625rem] shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                                         <p className="font-sans text-[1rem] font-bold text-[#111928]">
                                             Số bàn:
                                         </p>
-                                        <p className="font-sans text-[1rem] text-[#111928]">
+                                        <p className=" font-sans text-[1rem] text-[#111928]">
                                             {checkouts.tableNumber}
                                         </p>
-                                        {voucherCode && (
-                                            <>
-                                                <p className="font-sans text-[1rem] font-bold text-[#111928]">
-                                                    Voucher:
-                                                </p>
-                                                <p className="font-sans text-[1rem] text-[#111928]">
-                                                    {voucherCode}
-                                                </p>
-                                            </>
-                                        )}
-                                        {checkouts.discountPrice && (
-                                            <>
-                                                <p className="font-sans text-[1rem] font-bold text-[#111928]">
-                                                    Giảm giá:
-                                                </p>
-                                                <p className="font-sans text-[1rem] text-[#111928]">
-                                                    {formatCurrency(checkouts.discountPrice)}
-                                                </p>
-                                            </>
-                                        )}
-                                        {checkouts.customerPhone && (
-                                            <>
-                                                <p className="font-sans text-[1rem] font-bold text-[#111928]">
-                                                    Số điện thoại:
-                                                </p>
-                                                <p className="font-sans text-[1rem] text-[#111928]">
-                                                    {checkouts.customerPhone}
-                                                </p>
-                                            </>
-                                        )}
+
+                                        <p className="font-sans text-[1rem] font-bold text-[#111928]">
+                                            Voucher:
+                                        </p>
+                                        <p className=" font-sans text-[1rem] text-[#111928]">
+                                            {voucherCode || 'Không có'}
+                                        </p>
+
+                                        <p className="font-sans text-[1rem] font-bold text-[#111928]">
+                                            Giảm giá:
+                                        </p>
+                                        <p className="font-sans text-[1rem] text-[#111928]">
+                                            {formatCurrency(checkouts.discountPrice) || 0}
+                                        </p>
+
+                                        <p className="font-sans text-[1rem] font-bold text-[#111928]">
+                                            Số điện thoại:
+                                        </p>
+                                        <p className="font-sans text-[1rem] text-[#111928]">
+                                            {checkouts.customerPhone || 'Không có'}
+                                        </p>
+
                                         <p className="font-sans text-[1rem] font-bold text-[#111928]">
                                             Khách cần trả:
                                         </p>
@@ -496,14 +499,17 @@ rounded-[0.625rem] shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                                         <p className="font-sans text-[1rem] font-bold text-[#111928]">
                                             Khách đưa:
                                         </p>
-                                        <input
-                                            type="text"
-                                            value={money}
-                                            onChange={handleMoney}
-                                            placeholder="Nhập số tiền khách đưa"
-                                            className="rounded-md border-b border-[#DFE4EA] focus:outline-none focus:ring-0"
-                                        />
-                                        {returnMoney && (
+                                        <div>
+                                            <input
+                                                type="text"
+                                                value={money}
+                                                readOnly={returnMoney !== ''}
+                                                onChange={handleMoney}
+                                                placeholder="Nhập số tiền khách đưa"
+                                                className="rounded-md border-b border-[#DFE4EA] focus:outline-none focus:ring-0"
+                                            />
+                                        </div>
+                                        {returnMoney ? (
                                             <>
                                                 <p className="font-sans text-[1rem] font-bold text-[#111928]">
                                                     Tiền thừa:
@@ -512,7 +518,7 @@ rounded-[0.625rem] shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                                                     {returnMoney}
                                                 </p>
                                             </>
-                                        )}
+                                        ) : null}
                                         <button
                                             type="button"
                                             className="h-[3.125rem] w-[11.875rem] rounded-md bg-[#005B6F] px-[1.75rem] py-[0.81rem] font-sans font-medium text-white"
@@ -526,7 +532,14 @@ rounded-[0.625rem] shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                                             type="button"
                                             className="h-[3.125rem] w-[11.875rem] rounded-md bg-[#12582E] px-[1.75rem] py-[0.81rem] font-sans font-medium text-white"
                                             onClick={() => {
-                                                handleFinishCheckout();
+                                                if (disableContinue) {
+                                                    dispatch(
+                                                        setError(
+                                                            'Vui lòng thực hiện tính tiền trước',
+                                                        ),
+                                                    );
+                                                    return;
+                                                } else handleFinishCheckout();
                                             }}
                                         >
                                             Hoàn thành

@@ -26,8 +26,8 @@ export default function StatusFilter({ selectedStatus, setSelectedStatus }: Stat
                         {selectedStatus === 'allStatus'
                             ? 'Chọn trạng thái'
                             : selectedStatus === 'pending'
-                            ? 'Đang chờ'
-                            : 'Đã hoàn thành'}
+                              ? 'Đang chờ'
+                              : 'Đã hoàn thành'}
                     </p>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -61,8 +61,8 @@ export default function StatusFilter({ selectedStatus, setSelectedStatus }: Stat
                                 {key === 'allStatus'
                                     ? 'Tất cả'
                                     : key === 'pending'
-                                    ? 'Đang chờ'
-                                    : 'Đã hoàn thành'}
+                                      ? 'Đang chờ'
+                                      : 'Đã hoàn thành'}
                             </p>
                         </button>
                     ))}
