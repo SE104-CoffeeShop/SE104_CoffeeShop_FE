@@ -151,17 +151,6 @@ export default function UpdateVoucher({ voucher, setShowUpdateVoucherModal }: Up
         } else formattedAmoiunt = inputAmount;
         setVoucherAmount(formattedAmoiunt);
     };
-    const handleStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Only allow number
-        const data = e.target.value;
-        const inputStartDate = autoFormatDateString(data);
-        setVoucherStartDate(inputStartDate);
-    };
-    const handleEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const data = e.target.value;
-        const inputEndDate = autoFormatDateString(data);
-        setVoucherEndDate(inputEndDate);
-    };
     // Format date
     const autoFormatDateString = (data: string) => {
         // Remove any existing slashes from the input and remove any non-digit characters
@@ -183,6 +172,18 @@ export default function UpdateVoucher({ voucher, setShowUpdateVoucherModal }: Up
 
         return input;
     };
+    const handleStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // Only allow number
+        const data = e.target.value;
+        const inputStartDate = autoFormatDateString(data);
+        setVoucherStartDate(inputStartDate);
+    };
+    const handleEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const data = e.target.value;
+        const inputEndDate = autoFormatDateString(data);
+        setVoucherEndDate(inputEndDate);
+    };
+
     // Handle save voucher
     const handleSaveVoucher = () => {
         if (

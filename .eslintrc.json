@@ -10,6 +10,7 @@
     "extends": [
         "eslint:recommended",
         "react-app",
+        "airbnb",
         "react-app/jest",
         "plugin:prettier/recommended",
         "plugin:react/recommended",
@@ -39,6 +40,7 @@
         "jsx-a11y/click-events-have-key-events": "off",
         "jsx-a11y/no-static-element-interactions": "off",
         "import/first": "off",
+        "no-restricted-globals": "off",
         "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
         "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
         "react/require-default-props": "off",

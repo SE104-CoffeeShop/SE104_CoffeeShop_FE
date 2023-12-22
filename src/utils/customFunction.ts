@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function boDau(str: string) {
     // Chuẩn hóa chuỗi Unicode về dạng NFD

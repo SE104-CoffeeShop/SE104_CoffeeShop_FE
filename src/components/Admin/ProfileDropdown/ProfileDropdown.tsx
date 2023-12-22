@@ -54,7 +54,7 @@ export default function ProfileDropdown({
                 type="button"
                 className="flex w-full flex-row items-center justify-center px-[1rem] py-[0.44rem] hover:bg-gray-300"
                 onClick={() => {
-                    setShowAccountModal && setShowAccountModal(true);
+                    if (setShowAccountModal) setShowAccountModal(true);
                     setShowDropdown(false);
                 }}
             >

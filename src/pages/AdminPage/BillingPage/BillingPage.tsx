@@ -5,7 +5,7 @@ import Loading from '../../../components/Loading/Loading';
 import SearchBilling from '../../../components/Admin/SearchBilling/SearchBilling';
 import TimeFilter from '../../../components/Admin/TimeFilter/TimeFilter';
 import BillingTable from '../../../components/Admin/BillingTable/BillingTable';
-import StatusFilter from '../../../components/Admin/StatusFilter.tsx/StatusFilter';
+import StatusFilter from '../../../components/Admin/StatusFilter/StatusFilter';
 import useGetInvoices, { Invoice } from '../../../hooks/useGetInvoices';
 import { setInvoices } from '../../../stores/slices/invoiceSlice';
 import fuzzyMatch, { filterByTimeRange } from '../../../utils/customFunction';
@@ -37,15 +37,6 @@ export default function BillingPage() {
         dispatch(setInvoices(invoicesList));
         setFilterBillList(invoices);
     }, []);
-
-    useEffect(() => {
-        let newFilterList = invoices;
-        newFilterList = filterByBillID(newFilterList, searchBillID);
-        newFilterList = filterByCustomerID(newFilterList, searchCustomerID);
-        newFilterList = filterByDateRange(newFilterList, selectedDateRange);
-        newFilterList = filterByStatus(newFilterList, selectedStatus);
-        setFilterBillList(newFilterList);
-    }, [searchBillID, searchCustomerID, selectedDateRange, selectedStatus, invoices]);
     // Check user role to render table content
     // If admin then show all invoices
     // If staff then show only invoices that in status pending
@@ -72,14 +63,6 @@ export default function BillingPage() {
             return true;
         });
     };
-    // Check user role to render table content (staff only show pending invoices and admin show all invoices)
-    useEffect(() => {
-        if (user?.role !== 1) {
-            setFilterBillList(invoices.filter((invoice) => invoice.status === 'pending'));
-        } else {
-            setFilterBillList(invoices);
-        }
-    }, [user, invoices]);
     // Filter invoices by date range
     const filterByDateRange = (invoices: Invoice[], selectedDateRange: string) => {
         return filterByTimeRange(invoices, selectedDateRange);
@@ -91,6 +74,24 @@ export default function BillingPage() {
             return invoice.status === selectedStatus;
         });
     };
+    useEffect(() => {
+        let newFilterList = invoices;
+        newFilterList = filterByBillID(newFilterList, searchBillID);
+        newFilterList = filterByCustomerID(newFilterList, searchCustomerID);
+        newFilterList = filterByDateRange(newFilterList, selectedDateRange);
+        newFilterList = filterByStatus(newFilterList, selectedStatus);
+        setFilterBillList(newFilterList);
+    }, [searchBillID, searchCustomerID, selectedDateRange, selectedStatus, invoices]);
+
+    // Check user role to render table content (staff only show pending invoices and admin show all invoices)
+    useEffect(() => {
+        if (user?.role !== 1) {
+            setFilterBillList(invoices.filter((invoice) => invoice.status === 'pending'));
+        } else {
+            setFilterBillList(invoices);
+        }
+    }, [user, invoices]);
+
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>

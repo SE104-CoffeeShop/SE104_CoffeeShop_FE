@@ -68,7 +68,7 @@ export default function CheckoutDetail({
             axiosClient
                 .post('/vouchers-verify', { voucher_code: voucherCode })
                 .then((res) => {
-                    if (res.status === 200) {
+                    if (res.status === 200 && res.data.is_available) {
                         // check type of voucher
                         if (res.data.voucher_type === 'percent') {
                             // Get discount price
@@ -539,7 +539,8 @@ rounded-[0.625rem] shadow-[0px_3px_8px_0px_rgba(0,0,0,0.08)]"
                                                         ),
                                                     );
                                                     return;
-                                                } else handleFinishCheckout();
+                                                }
+                                                handleFinishCheckout();
                                             }}
                                         >
                                             Hoàn thành

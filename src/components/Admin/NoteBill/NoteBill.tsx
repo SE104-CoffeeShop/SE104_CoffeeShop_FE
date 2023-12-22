@@ -12,6 +12,7 @@ export interface NoteBillProps {
 export default function NoteBill({ showNote, setShowNote }: NoteBillProps) {
     // State for note input
     const [note, setNote] = useState<string>('');
+    const noteBill = useSelector((state: RootState) => state.checkout.checkoutList.note);
     // Check if has note then set note to note input
     useEffect(() => {
         if (noteBill) {
@@ -19,7 +20,7 @@ export default function NoteBill({ showNote, setShowNote }: NoteBillProps) {
         }
     }, []);
     const dispatch = useDispatch();
-    const noteBill = useSelector((state: RootState) => state.checkout.checkoutList.note);
+
     return (
         <div
             className="relative z-10 flex items-center justify-center overflow-hidden"

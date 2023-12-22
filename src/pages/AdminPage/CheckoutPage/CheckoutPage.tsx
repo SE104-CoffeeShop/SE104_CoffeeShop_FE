@@ -51,13 +51,6 @@ export default function CheckoutPage() {
         dispatch(setProducts(productsList));
         setFilterProductList(products);
     }, []);
-    // Update product list when search value and product type change
-    useEffect(() => {
-        let filteredProductList = filterByProductType(products, selectedProductType);
-
-        filteredProductList = filterBySearchValue(filteredProductList, searchValue);
-        setFilterProductList(filteredProductList);
-    }, [selectedProductType, searchValue, filterProductList, products]);
     const filterBySearchValue = (products: Product[], searchValue: string) => {
         return products.filter(
             (product) =>
@@ -73,6 +66,14 @@ export default function CheckoutPage() {
             return product.type === selectedProductType;
         });
     };
+    // Update product list when search value and product type change
+    useEffect(() => {
+        let filteredProductList = filterByProductType(products, selectedProductType);
+
+        filteredProductList = filterBySearchValue(filteredProductList, searchValue);
+        setFilterProductList(filteredProductList);
+    }, [selectedProductType, searchValue, filterProductList, products]);
+
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>

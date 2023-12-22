@@ -134,17 +134,6 @@ export default function AddVoucherItem({ setShowAddVoucherModal }: AddVoucherIte
     const convertCurrencyToNumber = (data: string) => {
         return data.replace(/\D/g, '');
     };
-    const handleStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Only allow number
-        const data = e.target.value;
-        const inputStartDate = autoFormatDateString(data);
-        setVoucherStartDate(inputStartDate);
-    };
-    const handleEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const data = e.target.value;
-        const inputEndDate = autoFormatDateString(data);
-        setVoucherEndDate(inputEndDate);
-    };
     // Format date
     const autoFormatDateString = (data: string) => {
         // Remove any existing slashes from the input and remove any non-digit characters
@@ -166,6 +155,18 @@ export default function AddVoucherItem({ setShowAddVoucherModal }: AddVoucherIte
 
         return input;
     };
+    const handleStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // Only allow number
+        const data = e.target.value;
+        const inputStartDate = autoFormatDateString(data);
+        setVoucherStartDate(inputStartDate);
+    };
+    const handleEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const data = e.target.value;
+        const inputEndDate = autoFormatDateString(data);
+        setVoucherEndDate(inputEndDate);
+    };
+
     // Handle save voucher
     const handleSaveVoucher = () => {
         if (

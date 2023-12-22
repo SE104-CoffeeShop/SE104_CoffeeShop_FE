@@ -48,6 +48,11 @@ export default function UpdateProduct({ product, setShowUpdateProductModal }: Up
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+    // Handle product type
+    // Format product price
+    const formatCurrency = (price: number) => {
+        return new Intl.NumberFormat('en-US').format(price);
+    };
     // Load product info when component mount
     useEffect(() => {
         if (product) {
@@ -103,12 +108,6 @@ export default function UpdateProduct({ product, setShowUpdateProductModal }: Up
     // Handle product name
     const handleProductName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setProductName(e.target.value);
-    };
-
-    // Handle product type
-    // Format product price
-    const formatCurrency = (price: number) => {
-        return new Intl.NumberFormat('en-US').format(price);
     };
 
     // Handle product price

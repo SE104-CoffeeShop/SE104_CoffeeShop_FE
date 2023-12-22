@@ -30,14 +30,6 @@ export default function StaffPage() {
         dispatch(setStaff(staffList));
         setFilterStaffList(staffList);
     }, []);
-    // Filter staff list by search value and set to filterStaffList
-    useEffect(() => {
-        let filteredStaffList = staffs;
-
-        filteredStaffList = filterBySearchValue(staffs, searchValue);
-
-        setFilterStaffList(filteredStaffList);
-    }, [searchValue, staffs, filterStaffList]);
     const filterBySearchValue = (staffList: Staff[], searchValue: string) => {
         return staffList.filter((staff) => {
             return (
@@ -48,6 +40,15 @@ export default function StaffPage() {
             );
         });
     };
+    // Filter staff list by search value and set to filterStaffList
+    useEffect(() => {
+        let filteredStaffList = staffs;
+
+        filteredStaffList = filterBySearchValue(staffs, searchValue);
+
+        setFilterStaffList(filteredStaffList);
+    }, [searchValue, staffs, filterStaffList]);
+
     return (
         <>
             {loading ? (

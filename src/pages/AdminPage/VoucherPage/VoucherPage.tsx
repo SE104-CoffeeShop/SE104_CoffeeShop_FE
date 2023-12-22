@@ -28,17 +28,6 @@ export default function VoucherPage() {
         dispatch(setVouchers(vouchersList));
         setFilteredVoucherList(vouchersList);
     }, []);
-    // Filter voucher list when search value, or selected voucher type change
-    useEffect(() => {
-        let filteredVoucherList = vouchers;
-        if (searchValue) {
-            filteredVoucherList = filterVoucherBySearchValue(vouchersList, searchValue);
-        }
-        if (selectedVoucherType) {
-            filteredVoucherList = filterVoucherByType(filteredVoucherList, selectedVoucherType);
-        }
-        setFilteredVoucherList(filteredVoucherList);
-    }, [searchValue, selectedVoucherType, vouchers, filteredVoucherList]);
     // filter voucher list by search value
     const filterVoucherBySearchValue = (vouchers: Voucher[], searchValue: string) => {
         return vouchers.filter((voucher) => {
@@ -56,6 +45,18 @@ export default function VoucherPage() {
             return voucher.type === type;
         });
     };
+    // Filter voucher list when search value, or selected voucher type change
+    useEffect(() => {
+        let filteredVoucherList = vouchers;
+        if (searchValue) {
+            filteredVoucherList = filterVoucherBySearchValue(vouchersList, searchValue);
+        }
+        if (selectedVoucherType) {
+            filteredVoucherList = filterVoucherByType(filteredVoucherList, selectedVoucherType);
+        }
+        setFilteredVoucherList(filteredVoucherList);
+    }, [searchValue, selectedVoucherType, vouchers, filteredVoucherList]);
+
     return (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>

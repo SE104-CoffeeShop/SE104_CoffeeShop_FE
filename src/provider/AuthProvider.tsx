@@ -2,6 +2,16 @@
 import React, { ReactNode, createContext, useContext, useEffect, useMemo, useState } from 'react';
 import axiosClient from '../utils/axiosClient';
 
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    email_verified_at: string;
+    role: number;
+    created_at: string;
+    updated_at: string;
+}
+
 const AuthContext = createContext<{
     user: User | null;
     setUser: (user: User | null) => void;
@@ -13,16 +23,6 @@ const AuthContext = createContext<{
     token: null,
     setToken: () => {},
 });
-
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    email_verified_at: string;
-    role: number;
-    created_at: string;
-    updated_at: string;
-}
 
 function AuthProvider({ children }: { children: ReactNode }) {
     // State to hold user information

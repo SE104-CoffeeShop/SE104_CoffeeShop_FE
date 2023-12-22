@@ -32,13 +32,6 @@ export default function CustomerPage() {
         dispatch(setCustomers(customerList));
         setFilterCustomerList(customerList);
     }, []);
-
-    // Filter staff list when searchValue change
-    useEffect(() => {
-        let filteredCustomerList = customers;
-        filteredCustomerList = filterCustomerBySearchValue(filteredCustomerList, searchValue);
-        setFilterCustomerList(filteredCustomerList);
-    }, [searchValue, customers, searchValue, filterCustomerList]);
     const filterCustomerBySearchValue = (customerList: Customer[], searchValue: string) => {
         return customerList.filter((customer) => {
             return (
@@ -49,6 +42,13 @@ export default function CustomerPage() {
             );
         });
     };
+    // Filter staff list when searchValue change
+    useEffect(() => {
+        let filteredCustomerList = customers;
+        filteredCustomerList = filterCustomerBySearchValue(filteredCustomerList, searchValue);
+        setFilterCustomerList(filteredCustomerList);
+    }, [searchValue, customers, searchValue, filterCustomerList]);
+
     return (
         <>
             {loading === true ? (
